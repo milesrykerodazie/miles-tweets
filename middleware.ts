@@ -44,7 +44,7 @@ export async function middleware(req: NextRequest, response: NextResponse) {
 
 export const config = {
   matcher: [
-    "/home",
+    "/home:path*",
     "/notifications",
     "/profile/:path*",
     "/",

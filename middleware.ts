@@ -18,7 +18,7 @@ export default withAuth(
       pathname.startsWith(route)
     );
 
-    const sensitiveRoutes = ["/home", "/notifications", "/profile/:path*"];
+    const sensitiveRoutes = ["/home", "/notifications", "/profile"];
     const isAccessingSensitiveRoute = sensitiveRoutes.some((route) =>
       pathname.startsWith(route)
     );

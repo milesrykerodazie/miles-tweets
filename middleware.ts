@@ -11,25 +11,44 @@ export async function middleware(req: NextRequest, response: NextResponse) {
 
   const pathname = req.nextUrl.pathname;
 
+  const notSensitiveRoutes = ["/login", "/register"];
+  const isAccessingNotSensitiveRoute = notSensitiveRoutes.some((route) =>
+    pathname.startsWith(route)
+  );
+
+  const sensitiveRoutes = ["/home", "/notifications", "/profile/:path*"];
+  const isAccessingSensitiveRoute = sensitiveRoutes.some((route) =>
+    pathname.startsWith(route)
+  );
+
   const homePath = pathname.startsWith("/home");
 
   // if (check !== null) {
   //   return NextResponse.redirect(new URL("/home", req.url));
   // }
-
-  if (homePath) {
-    if (check === null) {
-      return NextResponse.redirect(new URL("/", req.url));
-    }
-  }
-
-  if (pathname === "/") {
+  if (isAccessingNotSensitiveRoute) {
     if (check !== null) {
       return NextResponse.redirect(new URL("/home", req.url));
     }
+    return NextResponse.next();
+  }
+
+  if (check === null && isAccessingSensitiveRoute) {
+    return NextResponse.redirect(new URL("/", req.url));
+  }
+
+  if (pathname === "/") {
+    return NextResponse.redirect(new URL("/home", req.url));
   }
 }
 
 export const config = {
-  matcher: ["/notifications", "/profile/:path*", "/", "/home"],
+  matcher: [
+    "/home",
+    "/notifications",
+    "/profile/:path*",
+    "/",
+    "/login",
+    "/register",
+  ],
 };

@@ -26,11 +26,9 @@ export async function middleware(req: NextRequest, response: NextResponse) {
   // if (check !== null) {
   //   return NextResponse.redirect(new URL("/home", req.url));
   // }
-  if (isAccessingNotSensitiveRoute) {
-    if (check !== null) {
-      return NextResponse.redirect(new URL("/home", req.url));
-    }
-    return NextResponse.next();
+
+  if (check !== null && isAccessingNotSensitiveRoute) {
+    return NextResponse.redirect(new URL("/home", req.url));
   }
 
   if (check === null && isAccessingSensitiveRoute) {

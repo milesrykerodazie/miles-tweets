@@ -77,7 +77,7 @@ export default withAuth(
     const sensitiveRoutes = ["/home", "/notifications", "/profile"];
     const isAccessingSensitiveRoute = sensitiveRoutes.includes(pathname);
 
-    if (isLoginPage) {
+    if (pathname === "/login") {
       if (isAuth) {
         return NextResponse.redirect(new URL("/home", req.url));
       }

@@ -45,7 +45,7 @@ const SidebarItem = ({ currentUser }: SessionProp) => {
       id: 1,
       icon: BsHouseFill,
       label: "Home",
-      href: "/",
+      href: "/home",
     },
     {
       id: 2,

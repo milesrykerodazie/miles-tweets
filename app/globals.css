@@ -1,27 +1,51 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap");
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
-  }
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+  font-family: Inter;
+}
+
+@layer base {
+  body {
+    @apply bg-black;
+  }
+}
+
+@layer component {
+  .trans {
+    @apply transition duration-500 ease-out;
+  }
+}
+
+.modal {
+  @apply fixed z-10 inset-0 bg-red-400/40;
+}
+
+.authmodal {
+  @apply fixed z-10 inset-0 bg-gray-700/50;
+}
+
+.editModal {
+  @apply fixed z-70 inset-0 bg-gray-700/70 flex justify-center transition duration-300 ease-in;
+}
+
+.project_modal_wrapper {
+  @apply flex flex-col absolute h-[95%] w-full bottom-0 bg-black/90 rounded-t-xl md:px-20 px-3 pt-10 pb-20 overflow-auto;
+}
+
+.edit_modal_wrapper {
+  @apply flex flex-col absolute md:max-w-4xl mx-auto h-[95%] w-full bottom-0 bg-black rounded-t-xl pt-3 pb-20 overflow-auto transition duration-300 ease-in;
+}
+
+.modal_wrapper {
+  @apply flex justify-start items-center flex-col absolute h-[100vh] md:h-[95%] w-full md:w-4/5 lg:w-2/5 bottom-0 md:bottom-5 bg-black md:rounded-xl pt-10 pb-20 overflow-auto trans;
 }

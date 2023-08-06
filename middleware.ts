@@ -69,24 +69,36 @@ const secret = process.env.NEXTAUTH_SECRET;
 
 export default withAuth(
   async function middleware(req) {
-    const check = await getToken({ req, secret });
+    const isAuth = await getToken({ req, secret });
     const pathname = req.nextUrl.pathname;
 
-    const notSensitiveRoutes = ["/", "/login", "/register"];
-    const isAccessingNotSensitiveRoute = notSensitiveRoutes.includes(pathname);
-
+    const isLoginPage = pathname.startsWith("/login");
+    const isRegisterPage = pathname.startsWith("/register");
     const sensitiveRoutes = ["/home", "/notifications", "/profile"];
     const isAccessingSensitiveRoute = sensitiveRoutes.includes(pathname);
 
-    if (check === null && isAccessingSensitiveRoute) {
+    if (isLoginPage) {
+      if (isAuth) {
+        return NextResponse.redirect(new URL("/home", req.url));
+      }
+
+      return NextResponse.next();
+    }
+    if (isRegisterPage) {
+      if (isAuth) {
+        return NextResponse.redirect(new URL("/home", req.url));
+      }
+
+      return NextResponse.next();
+    }
+
+    if (!isAuth && isAccessingSensitiveRoute) {
       return NextResponse.redirect(new URL("/login", req.url));
     }
 
-    if (check !== null && isAccessingNotSensitiveRoute) {
+    if (pathname === "/") {
       return NextResponse.redirect(new URL("/home", req.url));
     }
-
-    return NextResponse.next();
   },
   {
     callbacks: {
@@ -96,3 +108,7 @@ export default withAuth(
     },
   }
 );
+
+export const config = {
+  matcher: ["/", "/login", "/home", "/notifications", "/profile/:path*"],
+};

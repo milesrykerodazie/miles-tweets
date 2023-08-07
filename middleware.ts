@@ -17,7 +17,7 @@ export async function middleware(req: NextRequest) {
     pathname.startsWith(route)
   );
 
-  const sensitiveRoutes = ["/home-page", "/notifications", "/profile"];
+  const sensitiveRoutes = ["/home-page", "/notification", "/profile"];
   const isAccessingSensitiveRoute = sensitiveRoutes.some((route) =>
     pathname.startsWith(route)
   );
@@ -26,7 +26,7 @@ export async function middleware(req: NextRequest) {
     return NextResponse.redirect(new URL("/home-page", req.url));
   }
 
-  if (isAccessingSensitiveRoute) {
+  if (pathname === "/notification") {
     if (!check) {
       return NextResponse.redirect(new URL("/", req.url));
     }

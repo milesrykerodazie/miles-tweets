@@ -51,7 +51,7 @@ const SidebarItem = ({ currentUser }: SessionProp) => {
       id: 2,
       icon: BsBellFill,
       label: "Notifications",
-      href: "/notifications",
+      href: "/notification",
       auth: true,
       alert: false,
     },

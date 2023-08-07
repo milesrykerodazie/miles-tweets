@@ -8,6 +8,7 @@ import { followSuggestions } from "./actions";
 import { Follow } from "@/types";
 import { getCurrentUser } from "./lib/auth";
 import AuthPage from "./components/AuthPage";
+import { redirect } from "next/navigation";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -26,6 +27,7 @@ export default async function RootLayout({
 
   //get suggested users to follow
   const users = (await followSuggestions()) as Follow[];
+
   return (
     <html lang="en">
       <body className={inter.className}>

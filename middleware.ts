@@ -11,7 +11,7 @@ export default withAuth(
     //get all cookies
     const isAuth = await getToken({ req, secret });
     const cookies = await req.cookies.getAll();
-    const cookie = await req.cookies.get("next-auth.session-token");
+    const cookie = await req.cookies.get("__Secure-next-auth.session-token");
     const token = await req.nextauth.token;
 
     console.log("the auth token => ", token);

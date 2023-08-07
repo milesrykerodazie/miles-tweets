@@ -3,6 +3,7 @@ const nextConfig = {
   images: {
     domains: ["lh3.googleusercontent.com", "res.cloudinary.com"],
   },
+  skipMiddlewareUrlNormalize: true,
 };
 
 module.exports = nextConfig;

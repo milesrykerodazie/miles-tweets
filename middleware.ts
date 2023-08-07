@@ -8,7 +8,9 @@ const secret = process.env.NEXTAUTH_SECRET;
 
 export async function middleware(req: NextRequest) {
   //get all cookies
-  const check = await getToken({ req, secret });
+  const isAuth = await getToken({ req, secret });
+
+  console.log("is Auth => ", isAuth);
 
   const pathname = req.nextUrl.pathname;
 
@@ -22,17 +24,24 @@ export async function middleware(req: NextRequest) {
     pathname.startsWith(route)
   );
 
-  if (pathname === "/" && check) {
+  if (pathname === "/" && isAuth !== null) {
     return NextResponse.redirect(new URL("/home-page", req.url));
   }
 
-  if (pathname === "/notification") {
-    if (!check) {
-      return NextResponse.redirect(new URL("/", req.url));
-    }
-    return NextResponse.next();
+  if (isAuth === null && pathname === "/notification") {
+    return NextResponse.redirect(new URL("/", req.url));
+  }
+  if (isAuth === null && pathname === "/profile") {
+    return NextResponse.redirect(new URL("/", req.url));
+  }
+  if (isAuth === null && pathname === "/home-page") {
+    return NextResponse.redirect(new URL("/", req.url));
   }
 }
+
+export const config = {
+  matcher: ["/", "/home-page", "/notification", "/profile/:path*"],
+};
 
 // if (check !== null) {
 //   return NextResponse.redirect(new URL("/home", req.url));

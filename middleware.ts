@@ -71,10 +71,10 @@ export default withAuth(
   async function middleware(req) {
     const isAuth = await getToken({ req, secret });
     const pathname = req.nextUrl.pathname;
-    console.log("the path name => ", pathname);
+    console.log("the path name => ", pathname, typeof pathname);
     console.log("the path => ", req.url);
 
-    console.log("includes => ", req.url.includes("login"));
+    console.log("includes => ", req.url.includes("/"));
 
     const isLoginPage = pathname.startsWith("/login");
     const isRegisterPage = pathname.startsWith("/register");
@@ -114,5 +114,5 @@ export default withAuth(
 );
 
 export const config = {
-  matcher: ["/", "/login", "/home", "/notifications", "/profile/:path*"],
+  matcher: ["/", "/login", "/home:path*", "/notifications", "/profile/:path*"],
 };

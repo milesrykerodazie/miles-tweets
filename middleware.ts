@@ -26,8 +26,16 @@ export default withAuth(
 
     console.log("the pathname => ", pathname);
 
+    const notSensitiveRoutes = ["/login", "/register"];
+    const isAccessingNotSensitiveRoute = notSensitiveRoutes.includes(pathname);
+
+    //sensitive stuff
     const sensitiveRoutes = ["/home-page", "/notification", "/profile"];
     const isAccessingSensitiveRoute = sensitiveRoutes.includes(pathname);
+
+    if (isAuth !== null && isAccessingNotSensitiveRoute) {
+      return NextResponse.redirect(new URL("/home-page", req.url));
+    }
 
     if (isAuth === null && isAccessingSensitiveRoute) {
       return NextResponse.redirect(new URL("/", req.url));

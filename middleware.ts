@@ -8,7 +8,7 @@ export default withAuth(
   async function middleware(req) {
     //get all cookies
     const cookies = await req.cookies.getAll();
-    const cookie = await req.cookies.get("next-auth.session-token");
+    const cookie = await req.cookies.get("__Secure-next-auth.session-token");
     const token = await req.nextauth.token;
 
     console.log("the auth token => ", token);

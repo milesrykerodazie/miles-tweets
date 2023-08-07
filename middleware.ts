@@ -40,7 +40,12 @@ export async function middleware(req: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/", "/home-page", "/notification", "/profile/:path*"],
+  matcher: [
+    "/",
+    "/home-page/:path*",
+    "/notification/:path*",
+    "/profile/:path*",
+  ],
 };
 
 // if (check !== null) {

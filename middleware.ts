@@ -27,16 +27,6 @@ export async function middleware(req: NextRequest) {
   if (pathname === "/" && isAuth !== null) {
     return NextResponse.redirect(new URL("/home-page", req.url));
   }
-
-  if (isAuth === null && pathname === "/notification") {
-    return NextResponse.redirect(new URL("/", req.url));
-  }
-  if (isAuth === null && pathname === "/profile") {
-    return NextResponse.redirect(new URL("/", req.url));
-  }
-  if (isAuth === null && pathname === "/home-page") {
-    return NextResponse.redirect(new URL("/", req.url));
-  }
 }
 
 export const config = {

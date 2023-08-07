@@ -9,20 +9,13 @@ const secret = process.env.NEXTAUTH_SECRET;
 export async function middleware(req: NextRequest) {
   //get all cookies
   const isAuth = await getToken({ req, secret });
+  const cookies = await req.cookies.getAll();
+
+  console.log("the cookies => ", cookies);
 
   console.log("is Auth => ", isAuth);
 
   const pathname = req.nextUrl.pathname;
-
-  const notSensitiveRoutes = ["/login", "/register"];
-  const isAccessingNotSensitiveRoute = notSensitiveRoutes.some((route) =>
-    pathname.startsWith(route)
-  );
-
-  const sensitiveRoutes = ["/home-page", "/notification", "/profile"];
-  const isAccessingSensitiveRoute = sensitiveRoutes.some((route) =>
-    pathname.startsWith(route)
-  );
 
   if (pathname === "/" && isAuth !== null) {
     return NextResponse.redirect(new URL("/home-page", req.url));

@@ -45,13 +45,13 @@ const SidebarItem = ({ currentUser }: SessionProp) => {
       id: 1,
       icon: BsHouseFill,
       label: "Home",
-      href: "/home",
+      href: "/",
     },
     {
       id: 2,
       icon: BsBellFill,
       label: "Notifications",
-      href: "/notification",
+      href: "/notifications",
       auth: true,
       alert: false,
     },
@@ -68,33 +68,44 @@ const SidebarItem = ({ currentUser }: SessionProp) => {
 
   return (
     <div>
-      {items?.map((item) => (
-        <div
-          key={item?.id}
-          className="flex flex-row items-center"
-          onClick={() => route.push(`${item?.href}`)}
-        >
-          <div className="relative rounded-full h-14 w-14 flex items-center justify-center p-4 hover:bg-slate-300 hover:bg-opacity-10 cursor-pointer lg:hidden">
-            <item.icon size={28} color="white" />
-            {item?.alert ? (
-              <BsDot
-                className="text-sky-500 absolute -top-4 left-0"
-                size={70}
-              />
-            ) : null}
+      <div>
+        {/* home */}
+        <Link href={"/home"}>
+          <div className="flex flex-row items-center">
+            <div className="relative rounded-full h-14 w-14 flex items-center justify-center p-4 hover:bg-slate-300 hover:bg-opacity-10 cursor-pointer lg:hidden">
+              <BsHouseFill size={28} color="white" />
+            </div>
+            <div className="relative hidden lg:flex items-row gap-4 p-4 rounded-fullhover:bg-slate-300 hover:bg-opacity-10 cursor-pointer items-center">
+              <BsHouseFill size={28} color="white" />
+              <p className="hidden lg:block text-white text-xl">Home</p>
+            </div>
           </div>
-          <div className="relative hidden lg:flex items-row gap-4 p-4 rounded-fullhover:bg-slate-300 hover:bg-opacity-10 cursor-pointer items-center">
-            <item.icon size={28} color="white" />
-            <p className="hidden lg:block text-white text-xl">{item?.label}</p>
-            {item?.alert ? (
-              <BsDot
-                className="text-sky-500 absolute -top-4 left-0"
-                size={70}
-              />
-            ) : null}
+        </Link>
+        {/* notifications */}
+        <Link href={"/notification"}>
+          <div className="flex flex-row items-center">
+            <div className="relative rounded-full h-14 w-14 flex items-center justify-center p-4 hover:bg-slate-300 hover:bg-opacity-10 cursor-pointer lg:hidden">
+              <BsBellFill size={28} color="white" />
+            </div>
+            <div className="relative hidden lg:flex items-row gap-4 p-4 rounded-fullhover:bg-slate-300 hover:bg-opacity-10 cursor-pointer items-center">
+              <BsBellFill size={28} color="white" />
+              <p className="hidden lg:block text-white text-xl">Notification</p>
+            </div>
           </div>
-        </div>
-      ))}
+        </Link>
+        {/* profile */}
+        <Link href={`/profile/${currentUser?.user?.id}`}>
+          <div className="flex flex-row items-center">
+            <div className="relative rounded-full h-14 w-14 flex items-center justify-center p-4 hover:bg-slate-300 hover:bg-opacity-10 cursor-pointer lg:hidden">
+              <FaUser size={28} color="white" />
+            </div>
+            <div className="relative hidden lg:flex items-row gap-4 p-4 rounded-fullhover:bg-slate-300 hover:bg-opacity-10 cursor-pointer items-center">
+              <FaUser size={28} color="white" />
+              <p className="hidden lg:block text-white text-xl">Profile</p>
+            </div>
+          </div>
+        </Link>
+      </div>
       {currentUser ? (
         <div className="flex flex-row items-center">
           <div
@@ -119,12 +130,14 @@ const SidebarItem = ({ currentUser }: SessionProp) => {
           >
             <BiLogOut size={28} color="white" />
           </div>
-          <Link href="/login">
-            <div className="relative hidden lg:flex items-row gap-4 p-4 rounded-fullhover:bg-slate-300 hover:bg-opacity-10 cursor-pointer items-center">
-              <BiLogOut size={28} color="white" />
-              <p className="hidden lg:block text-white text-xl">Login</p>
-            </div>
-          </Link>
+          z
+          <div
+            onClick={loginModal.onOpen}
+            className="relative hidden lg:flex items-row gap-4 p-4 rounded-fullhover:bg-slate-300 hover:bg-opacity-10 cursor-pointer items-center"
+          >
+            <BiLogOut size={28} color="white" />
+            <p className="hidden lg:block text-white text-xl">Login</p>
+          </div>
         </div>
       )}
     </div>

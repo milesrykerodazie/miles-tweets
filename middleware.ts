@@ -17,19 +17,20 @@ export async function middleware(req: NextRequest) {
     pathname.startsWith(route)
   );
 
-  const sensitiveRoutes = ["/home", "/notifications", "/profile"];
+  const sensitiveRoutes = ["/home-page", "/notifications", "/profile"];
   const isAccessingSensitiveRoute = sensitiveRoutes.some((route) =>
     pathname.startsWith(route)
   );
-
-  const homePath = pathname.startsWith("/home");
 
   if (pathname === "/" && check) {
     return NextResponse.redirect(new URL("/home-page", req.url));
   }
 
-  if (!check && isAccessingSensitiveRoute) {
-    return NextResponse.redirect(new URL("/", req.url));
+  if (isAccessingSensitiveRoute) {
+    if (!check) {
+      return NextResponse.redirect(new URL("/", req.url));
+    }
+    return NextResponse.next();
   }
 }
 

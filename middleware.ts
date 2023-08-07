@@ -27,6 +27,10 @@ export async function middleware(req: NextRequest) {
   if (pathname === "/" && check) {
     return NextResponse.redirect(new URL("/home-page", req.url));
   }
+
+  if (!check && isAccessingSensitiveRoute) {
+    return NextResponse.redirect(new URL("/", req.url));
+  }
 }
 
 // if (check !== null) {

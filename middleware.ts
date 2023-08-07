@@ -8,7 +8,6 @@ const secret = process.env.NEXTAUTH_SECRET;
 
 export default withAuth(async function middleware(req) {
   //get all cookies
-  const isAuth = await getToken({ req, secret });
   const cookies = await req.cookies.getAll();
   const cookie = await req.cookies.get("next-auth.session-token");
   const token = await req.nextauth.token;
@@ -19,13 +18,9 @@ export default withAuth(async function middleware(req) {
 
   console.log("the cookies => ", cookies);
 
-  console.log("is Auth => ", isAuth);
-
   const pathname = req.nextUrl.pathname;
 
-  if (pathname === "/" && isAuth !== null) {
-    return NextResponse.redirect(new URL("/home-page", req.url));
-  }
+  console.log("the pathname => ", pathname);
 });
 
 export const config = {

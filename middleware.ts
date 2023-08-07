@@ -83,14 +83,14 @@ export default withAuth(
 
     if (pathname === "/login") {
       if (isAuth) {
-        return NextResponse.redirect(new URL("/home", req.url));
+        return NextResponse.redirect(new URL("/notification", req.url));
       }
 
       return NextResponse.next();
     }
     if (isRegisterPage) {
       if (isAuth) {
-        return NextResponse.redirect(new URL("/home", req.url));
+        return NextResponse.redirect(new URL("/notification", req.url));
       }
 
       return NextResponse.next();
@@ -101,7 +101,7 @@ export default withAuth(
     }
 
     if (pathname === "/" && isAuth) {
-      return NextResponse.redirect(new URL("/home", req.url));
+      return NextResponse.redirect(new URL("/notification", req.url));
     }
   },
   {

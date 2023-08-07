@@ -25,6 +25,10 @@ export default withAuth(
     const pathname = req.nextUrl.pathname;
 
     console.log("the pathname => ", pathname);
+
+    if (pathname === "/" && isAuth !== null) {
+      return NextResponse.redirect(new URL("/home-page", req.url));
+    }
   },
   {
     callbacks: {

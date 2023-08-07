@@ -70,7 +70,7 @@ const SidebarItem = ({ currentUser }: SessionProp) => {
     <div>
       <div>
         {/* home */}
-        <Link href={"/home"}>
+        <Link href={"/home-page"}>
           <div className="flex flex-row items-center">
             <div className="relative rounded-full h-14 w-14 flex items-center justify-center p-4 hover:bg-slate-300 hover:bg-opacity-10 cursor-pointer lg:hidden">
               <BsHouseFill size={28} color="white" />

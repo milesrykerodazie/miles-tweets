@@ -32,7 +32,7 @@ const LoginForm = () => {
       .then((response) => {
         if (response?.error === null) {
           toast.success("You are logged in.");
-          router.push("/home");
+          router.push("/home-page");
           router.refresh();
         }
         if (response?.error !== null) {

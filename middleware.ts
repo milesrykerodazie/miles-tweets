@@ -24,26 +24,31 @@ export async function middleware(req: NextRequest) {
 
   const homePath = pathname.startsWith("/home");
 
-  // if (check !== null) {
-  //   return NextResponse.redirect(new URL("/home", req.url));
-  // }
-
-  if (check && isAccessingNotSensitiveRoute) {
-    return NextResponse.redirect(new URL("/home", req.url));
-  }
-
-  if (!check && isAccessingSensitiveRoute) {
-    return NextResponse.redirect(new URL("/", req.url));
-  }
-
   if (pathname === "/" && check) {
-    return NextResponse.redirect(new URL("/home", req.url));
+    return NextResponse.redirect(new URL("/home-page", req.url));
   }
 }
 
-export const config = {
-  matcher: ["/home", "/notifications", "/profile/:path*", "/"],
-};
+// if (check !== null) {
+//   return NextResponse.redirect(new URL("/home", req.url));
+// }
+
+//   if (check && isAccessingNotSensitiveRoute) {
+//     return NextResponse.redirect(new URL("/home", req.url));
+//   }
+
+//   if (!check && isAccessingSensitiveRoute) {
+//     return NextResponse.redirect(new URL("/", req.url));
+//   }
+
+//   if (pathname === "/" && check) {
+//     return NextResponse.redirect(new URL("/home", req.url));
+//   }
+// }
+
+// export const config = {
+//   matcher: ["/home", "/notifications", "/profile/:path*", "/"],
+// };
 
 // import { NextResponse } from "next/server";
 // import { getToken } from "next-auth/jwt";

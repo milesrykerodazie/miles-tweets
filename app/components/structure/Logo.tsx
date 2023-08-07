@@ -7,7 +7,7 @@ const Logo = () => {
 
   return (
     <div
-      onClick={() => router.push("/home")}
+      onClick={() => router.push("/home-page")}
       className="
         rounded-full 
         h-14

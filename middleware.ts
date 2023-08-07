@@ -6,10 +6,16 @@ import { withAuth } from "next-auth/middleware";
 
 const secret = process.env.NEXTAUTH_SECRET;
 
-export async function middleware(req: NextRequest) {
+export default withAuth(async function middleware(req) {
   //get all cookies
   const isAuth = await getToken({ req, secret });
   const cookies = await req.cookies.getAll();
+  const cookie = await req.cookies.get("next-auth.session-token");
+  const token = await req.nextauth.token;
+
+  console.log("the auth token => ", token);
+
+  console.log("the session cookie => ", cookie);
 
   console.log("the cookies => ", cookies);
 
@@ -20,7 +26,7 @@ export async function middleware(req: NextRequest) {
   if (pathname === "/" && isAuth !== null) {
     return NextResponse.redirect(new URL("/home-page", req.url));
   }
-}
+});
 
 export const config = {
   matcher: ["/home-page/:path*", "/notification/:path*", "/profile/:path*"],

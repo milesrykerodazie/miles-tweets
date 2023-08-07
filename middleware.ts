@@ -60,6 +60,8 @@ export const config = {
     "/home-page/:path*",
     "/notification/:path*",
     "/profile/:path*",
+    "/login",
+    "/register",
   ],
 };
 

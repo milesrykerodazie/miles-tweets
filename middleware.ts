@@ -28,17 +28,17 @@ export async function middleware(req: NextRequest) {
   //   return NextResponse.redirect(new URL("/home", req.url));
   // }
 
-  if (check !== null && isAccessingNotSensitiveRoute) {
+  if (check && isAccessingNotSensitiveRoute) {
+    return NextResponse.redirect(new URL("/home", req.url));
+  }
+
+  if (!check && isAccessingSensitiveRoute) {
     return NextResponse.redirect(new URL("/", req.url));
   }
 
-  if (check === null && isAccessingSensitiveRoute) {
-    return NextResponse.redirect(new URL("/", req.url));
+  if (pathname === "/" && check) {
+    return NextResponse.redirect(new URL("/home", req.url));
   }
-
-  // if (pathname === "/") {
-  //   return NextResponse.redirect(new URL("/home", req.url));
-  // }
 }
 
 export const config = {

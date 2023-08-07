@@ -3,5 +3,5 @@ import AuthPage from "./components/AuthPage";
 import { getCurrentUser } from "./lib/auth";
 
 export default async function Home() {
-  return <div></div>;
+  return <div className="text-white">miles tweets</div>;
 }

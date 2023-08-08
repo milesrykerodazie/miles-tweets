@@ -15,11 +15,11 @@ export default withAuth(
     const isAccessingNotSensitiveRoute = notSensitiveRoutes.includes(pathname);
 
     //sensitive stuff
-    const sensitiveRoutes = ["/home-page", "/notification", "/profile"];
+    const sensitiveRoutes = ["/home", "/notification", "/profile"];
     const isAccessingSensitiveRoute = sensitiveRoutes.includes(pathname);
 
     if (isAuth !== null && isAccessingNotSensitiveRoute) {
-      return NextResponse.redirect(new URL("/home-page", req.url));
+      return NextResponse.redirect(new URL("/home", req.url));
     }
 
     if (isAuth === null && isAccessingSensitiveRoute) {
@@ -27,7 +27,7 @@ export default withAuth(
     }
 
     if (pathname === "/" && isAuth !== null) {
-      return NextResponse.redirect(new URL("/home-page", req.url));
+      return NextResponse.redirect(new URL("/home", req.url));
     }
   },
   {
@@ -42,7 +42,7 @@ export default withAuth(
 export const config = {
   matcher: [
     "/",
-    "/home-page/:path*",
+    "/home",
     "/notification/:path*",
     "/profile/:path*",
     "/login",

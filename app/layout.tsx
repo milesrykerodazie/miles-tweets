@@ -36,12 +36,18 @@ export default async function RootLayout({
         <div className="bg-black">
           {currentUser === null && <AuthPage />}
           <div
-            className={`grid grid-cols-4 max-w-7xl mx-auto ${
-              currentUser === null ? "" : "h-screen"
+            className={`${
+              currentUser !== null &&
+              "grid grid-cols-4 max-w-7xl mx-auto h-screen"
             }`}
           >
             {currentUser !== null && <Sidebar />}
-            <main className="col-span-3 lg:col-span-2 border-x-[1px] border-neutral-800">
+            <main
+              className={`${
+                currentUser !== null &&
+                "col-span-3 lg:col-span-2 border-x-[1px] border-neutral-800"
+              }`}
+            >
               {children}
             </main>
             {currentUser !== null && <Followers users={users} />}

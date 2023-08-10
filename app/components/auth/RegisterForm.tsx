@@ -56,7 +56,7 @@ const RegisterForm = () => {
           setUsername("");
           setPassword("");
           setConfirmPassword("");
-          router.push("/login");
+          router.push("/auth/login");
         }
       }
     } catch (error: any) {

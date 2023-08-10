@@ -96,7 +96,7 @@ const LoginForm = () => {
         <div className="text-gray-500 text-center mt-4 font-light">
           <p>
             Are you a new user?
-            <Link href="/register">
+            <Link href="/auth/register">
               <button
                 //   onClick={onToggle}
                 className="text-blue-500 cursor-pointer hover:underline font-semibold"

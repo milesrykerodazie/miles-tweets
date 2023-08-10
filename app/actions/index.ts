@@ -6,10 +6,16 @@ interface UserParams {
 
 //get user details
 export async function getUserById(params: UserParams) {
+  //if user is authenticated
+  const session = await getCurrentUser();
+
+  if (!session) {
+    return;
+  }
   //validate the id
   const { id } = params;
 
-  const user = await prisma.user.findUnique({
+  const user = await prisma.user?.findUnique({
     where: {
       id: id,
     },

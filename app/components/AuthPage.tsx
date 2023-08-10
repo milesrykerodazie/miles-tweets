@@ -4,7 +4,7 @@ import { FcGoogle } from "react-icons/fc";
 
 const AuthPage = () => {
   return (
-    <div className="h-screen bg-primary w-full flex items-center justify-center">
+    <div className=" bg-primary w-full flex items-center justify-center h-screen">
       <main className="w-full mx-auto md:max-w-6xl flex flex-col md:flex-row p-6 xl:p-0 md:justify-between md:space-x-2 lg:space-x-20">
         {/* side one */}
         <div className="flex justify-center items-center w-full">
@@ -41,7 +41,7 @@ const AuthPage = () => {
             <span>-----------</span>
           </div>
           <div className="mb-6">
-            <Link href="/register">
+            <Link href="/auth/register">
               <button className="w-full bg-blue-500 text-white border border-transparent p-2 rounded-md flex items-center justify-center">
                 Create account
               </button>
@@ -56,7 +56,7 @@ const AuthPage = () => {
           </div>
           <div className="w-full">
             <p className="text-white pb-5">Already have an account?</p>
-            <Link href="/login">
+            <Link href="/auth/login">
               <button className="text-blue-500 border rounded-full w-full py-3 border-gray-600">
                 Sign in
               </button>

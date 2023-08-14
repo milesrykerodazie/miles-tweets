@@ -1,9 +1,15 @@
 import prisma from "@/app/lib/prismadb";
 import { getCurrentUser } from "../lib/auth";
+import { PostTypes } from "@/types";
+
 interface UserParams {
   id: string;
 }
 
+interface PostParams {
+  username: string;
+  id: string;
+}
 //get user details
 export async function getUserById(params: UserParams) {
   //if user is authenticated
@@ -28,7 +34,58 @@ export async function getUserById(params: UserParams) {
       bio: true,
       coverImage: true,
       userImage: true,
-      posts: true,
+      posts: {
+        include: {
+          comments: {
+            select: {
+              id: true,
+              body: true,
+              createdAt: true,
+              postId: true,
+              user: {
+                select: {
+                  name: true,
+                  image: true,
+                  email: true,
+                },
+              },
+            },
+          },
+          likes: {
+            select: {
+              id: true,
+              postId: true,
+              User: {
+                select: {
+                  name: true,
+                  image: true,
+                  email: true,
+                },
+              },
+            },
+          },
+          postImages: {
+            select: {
+              id: true,
+              postId: true,
+              public_id: true,
+              url: true,
+              // owner: true,
+            },
+          },
+          user: {
+            select: {
+              name: true,
+              image: true,
+              email: true,
+              username: true,
+            },
+          },
+        },
+        orderBy: {
+          createdAt: "desc",
+        },
+      },
       Followers: true,
       createdAt: true,
     },
@@ -66,4 +123,155 @@ export async function followSuggestions() {
   if (filteredUsers.length > 0) {
     return filteredUsers;
   }
+}
+
+//get all posts from db
+export async function allPosts() {
+  //get the current user
+  const currentUser = await getCurrentUser();
+
+  if (!currentUser) {
+    return;
+  }
+
+  //getting all posts and ordering them by latest first
+
+  const posts = await prisma.post.findMany({
+    include: {
+      comments: {
+        select: {
+          id: true,
+          body: true,
+          createdAt: true,
+          postId: true,
+          user: {
+            select: {
+              name: true,
+              image: true,
+              email: true,
+            },
+          },
+        },
+      },
+      likes: {
+        select: {
+          id: true,
+          postId: true,
+          userId: true,
+          User: {
+            select: {
+              name: true,
+              image: true,
+              email: true,
+            },
+          },
+        },
+      },
+      postImages: {
+        select: {
+          id: true,
+          postId: true,
+          public_id: true,
+          url: true,
+          // owner: true,
+        },
+      },
+      user: {
+        select: {
+          name: true,
+          image: true,
+          email: true,
+          username: true,
+        },
+      },
+    },
+    orderBy: {
+      createdAt: "desc",
+    },
+  });
+
+  return posts;
+}
+
+//get a post
+export async function getPost(params: PostParams) {
+  // get current session
+  const session = await getCurrentUser();
+
+  if (!session) {
+    return;
+  }
+  const { username, id } = params;
+
+  // validate the user name
+  const userExists = await prisma.user.findUnique({
+    where: {
+      username: username,
+    },
+  });
+
+  if (!userExists) {
+    return;
+  }
+
+  // validating postId
+
+  const post = await prisma.post.findUnique({
+    where: {
+      id: id,
+    },
+    include: {
+      comments: {
+        select: {
+          id: true,
+          body: true,
+          createdAt: true,
+          postId: true,
+          user: {
+            select: {
+              name: true,
+              image: true,
+              email: true,
+            },
+          },
+        },
+      },
+      likes: {
+        select: {
+          id: true,
+          postId: true,
+          User: {
+            select: {
+              name: true,
+              image: true,
+              email: true,
+            },
+          },
+        },
+      },
+      postImages: {
+        select: {
+          id: true,
+          postId: true,
+          public_id: true,
+          url: true,
+          // owner: true,
+        },
+      },
+      user: {
+        select: {
+          name: true,
+          image: true,
+          email: true,
+          username: true,
+        },
+      },
+    },
+  });
+
+  if (!post) {
+    return null;
+  }
+
+  return post;
 }

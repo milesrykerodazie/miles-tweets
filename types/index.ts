@@ -11,10 +11,12 @@ export interface SessionInterface extends Session {
 }
 
 export interface Follow {
+  id: string;
   name: string;
   username: string | null;
   userImage: string | null;
-  id: string;
+  userId: string;
+  followerId: string | null;
 }
 
 export interface Profile {
@@ -33,7 +35,9 @@ export interface Profile {
     username: string;
     userImage: string;
     userId: string;
+    followerId: string;
   }[];
+  posts: PostTypes[];
 }
 
 export type FormState = {
@@ -41,4 +45,49 @@ export type FormState = {
   bio: string;
   userImage: string;
   coverImage: string;
+};
+
+export interface PostTypes {
+  id: string;
+  body: string;
+  userId: string;
+  createdAt: Date;
+  updatedAt: Date;
+  user: {
+    name: string;
+    image: string;
+    email: string;
+    username: string;
+  };
+  postImages: {
+    id: string;
+    postId: string;
+    public_id: string;
+    url: string;
+  }[];
+  likes: {
+    id: string;
+    postId: string;
+    userId: string;
+    User: {
+      name: string;
+      image: string;
+      email: string;
+    };
+  }[];
+  comments: {
+    id: string;
+    body: string;
+    createdAt: Date;
+    postId: string;
+    user: {
+      name: string;
+      image: string;
+      email: string;
+    };
+  }[];
+}
+
+export type PostsTypes = {
+  posts: PostTypes[];
 };

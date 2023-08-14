@@ -54,7 +54,9 @@ const Details: FC<DetailsProps> = ({
           </div>
           <div className="flex flex-row items-center gap-1">
             <p className="text-white">{followers.length}</p>
-            <p className="text-neutral-500">Followers</p>
+            <p className="text-neutral-500">
+              {followers?.length === 1 ? "Follower" : "Followers"}
+            </p>
           </div>
         </div>
       </div>

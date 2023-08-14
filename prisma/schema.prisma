@@ -36,12 +36,13 @@ model User {
 }
 
 model Followers {
-  id        String  @id @default(auto()) @map("_id") @db.ObjectId
-  name      String?
-  username  String? @unique
-  userImage String?
-  userId    String  @db.ObjectId
-  user      User    @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id         String  @id @default(auto()) @map("_id") @db.ObjectId
+  name       String?
+  username   String? @unique
+  userImage  String?
+  followerId String? @unique
+  userId     String  @db.ObjectId
+  user       User    @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
 model Account {
@@ -80,13 +81,13 @@ model CoverImage {
 }
 
 model Post {
-  id        String      @id @default(auto()) @map("_id") @db.ObjectId
-  body      String
-  createdAt DateTime    @default(now())
-  updatedAt DateTime    @updatedAt
-  userId    String      @db.ObjectId
-  likes     Likes[]
-  images    PostImage[]
+  id         String      @id @default(auto()) @map("_id") @db.ObjectId
+  body       String
+  createdAt  DateTime    @default(now())
+  updatedAt  DateTime    @updatedAt
+  userId     String      @db.ObjectId
+  likes      Likes[]
+  postImages PostImage[]
 
   user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
@@ -98,8 +99,8 @@ model PostImage {
   postId    String @db.ObjectId
   public_id String @default("")
   url       String @default("")
-  owner     String @unique
-  post      Post   @relation(fields: [postId], references: [id], onDelete: Cascade)
+  owner     String
+  Post      Post   @relation(fields: [postId], references: [id], onDelete: Cascade)
 }
 
 model Likes {

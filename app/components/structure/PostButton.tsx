@@ -1,9 +1,15 @@
 "use client";
 import { useCallback } from "react";
-import { FaFeather } from "react-icons/fa";
 import { useRouter } from "next/navigation";
+import { AiOutlineSend } from "react-icons/ai";
 
-const PostButton = () => {
+interface ButtonProps {
+  canSubmit?: boolean;
+  disable?: boolean;
+  post: (e: React.MouseEvent<HTMLButtonElement>) => void;
+}
+
+const PostButton = ({ canSubmit, disable, post }: ButtonProps) => {
   const router = useRouter();
 
   return (
@@ -25,34 +31,37 @@ const PostButton = () => {
         cursor-pointer
       "
       >
-        <FaFeather size={24} color="white" />
+        <AiOutlineSend size={24} color="white" />
       </div>
-      <div
-        className="
+      <button
+        onClick={post}
+        type="button"
+        disabled={disable}
+        className=" w-full disabled:opacity-30 disabled:cursor-not-allowed
         mt-6
         hidden 
         lg:block 
         px-4
-        py-2
+        py-1
         rounded-full
         bg-sky-500
         hover:bg-opacity-90 
         cursor-pointer
       "
       >
-        <p
+        <span
           className="
             hidden 
             lg:block 
             text-center
             font-semibold
             text-white 
-            text-[20px]
+            text-sm
         "
         >
           Post
-        </p>
-      </div>
+        </span>
+      </button>
     </div>
   );
 };

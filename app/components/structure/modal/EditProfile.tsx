@@ -16,14 +16,6 @@ interface ModalProps {
   userData: Profile;
 }
 
-const ImageEdit = () => {
-  return (
-    <div className="absolute w-28 h-28 rounded-full bg-black/90">
-      <AiOutlineCamera className="w-12 h-12" />
-    </div>
-  );
-};
-
 const EditProfile: FC<ModalProps> = ({ setOpenEdit, userData }) => {
   const route = useRouter();
   const [isLoading, setIsLoading] = useState(false);
@@ -194,7 +186,6 @@ const EditProfile: FC<ModalProps> = ({ setOpenEdit, userData }) => {
                   id="coverImage"
                   type="file"
                   accept="image/*"
-                  multiple
                   hidden
                   className="form_image-input"
                   onChange={(e) => handleChange(e, "coverImage")}

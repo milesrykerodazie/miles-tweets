@@ -135,6 +135,7 @@ const RegisterForm = () => {
           label="Register"
           onClick={handleRegister}
           disabled={isLoading}
+          isPlain
         />
         <hr />
         <AuthButton

@@ -86,7 +86,12 @@ const LoginForm = () => {
       </div>
 
       <div className="flex flex-col gap-4 mt-3">
-        <AuthButton label="Login" onClick={handleLogin} disabled={isLoading} />
+        <AuthButton
+          label="Login"
+          onClick={handleLogin}
+          disabled={isLoading}
+          isPlain
+        />
         <hr />
         <AuthButton
           label="Login With Google"

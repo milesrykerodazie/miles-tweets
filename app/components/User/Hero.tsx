@@ -2,15 +2,24 @@
 import Image from "next/image";
 import React, { FC, useState } from "react";
 import Avatar from "../Avatar";
-import { Profile } from "@/types";
+import { Follow, Profile } from "@/types";
 import EditProfile from "../structure/modal/EditProfile";
 
 interface HeroProps {
   userData: Profile;
   canEdit: boolean;
+  follow: (e: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void;
+  hasFollowed: Follow[];
+  disable: boolean;
 }
 
-const Hero: FC<HeroProps> = ({ userData, canEdit }) => {
+const Hero: FC<HeroProps> = ({
+  userData,
+  canEdit,
+  follow,
+  hasFollowed,
+  disable,
+}) => {
   //get the modal open
   const [openEdit, setOpenEdit] = useState(false);
   return (
@@ -33,15 +42,20 @@ const Hero: FC<HeroProps> = ({ userData, canEdit }) => {
         <div className="flex justify-end mr-3 mt-3 ">
           <button
             onClick={() => setOpenEdit(true)}
-            className="border border-primarygrey px-3 py-1 rounded-full"
+            className="border border-primarygrey px-3 py-1 rounded-full text-white"
           >
             Edit profile
           </button>
         </div>
       ) : (
         <div className="flex justify-end mr-3 mt-3">
-          <button className="bg-white text-primary px-3 py-1 rounded-full">
-            Follow
+          <button
+            type="button"
+            disabled={disable}
+            onClick={follow}
+            className="bg-white text-primary px-3 py-1 rounded-full"
+          >
+            {hasFollowed?.length > 0 ? "Following" : "Follow"}
           </button>
         </div>
       )}

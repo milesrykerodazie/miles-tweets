@@ -1,3 +1,4 @@
+"use client";
 import { PostTypes } from "@/types";
 import React, { FC } from "react";
 import PostCard from "./PostCard";

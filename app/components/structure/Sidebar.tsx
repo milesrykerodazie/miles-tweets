@@ -1,7 +1,7 @@
 import Logo from "./Logo";
 import SidebarItem from "./SidebarItem";
-import PostButton from "./PostButton";
 import { getCurrentUser } from "@/app/lib/auth";
+import SideButton from "./sideButton";
 
 const Sidebar = async () => {
   //get current user
@@ -14,7 +14,7 @@ const Sidebar = async () => {
           <Logo />
 
           <SidebarItem currentUser={currentUser} />
-          <PostButton />
+          <SideButton />
         </div>
       </div>
     </div>

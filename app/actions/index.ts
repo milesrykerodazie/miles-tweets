@@ -1,6 +1,5 @@
 import prisma from "@/app/lib/prismadb";
 import { getCurrentUser } from "../lib/auth";
-import { PostTypes } from "@/types";
 
 interface UserParams {
   id: string;

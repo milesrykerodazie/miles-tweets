@@ -1,9 +1,8 @@
 import React from "react";
-import { BiArrowBack } from "react-icons/bi";
 import Form from "../components/Form";
-import AllPosts from "../components/post/Posts";
 import { allPosts } from "../actions";
 import { PostTypes } from "@/types";
+import AllPosts from "../components/post/Posts";
 
 const HomePage = async () => {
   //get all posts

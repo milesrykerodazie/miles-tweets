@@ -1,11 +1,9 @@
 "use client";
-import React, { useCallback, useState } from "react";
+import React, { useState } from "react";
 import Avatar from "./Avatar";
-import PostButton from "./structure/PostButton";
 import TextareaAutosize from "react-textarea-autosize";
 import { BsCardImage } from "react-icons/bs";
 import Image from "next/image";
-import { AiOutlineCamera } from "react-icons/ai";
 import { IoMdClose } from "react-icons/io";
 import { toast } from "react-hot-toast";
 import axios from "axios";
@@ -23,7 +21,7 @@ interface FormData {
   postImages: string[];
 }
 
-const Form: React.FC<FormProps> = ({ placeholder, isComment, postId }) => {
+const Form: React.FC<FormProps> = ({ placeholder }) => {
   //next route
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false); //states
@@ -117,8 +115,6 @@ const Form: React.FC<FormProps> = ({ placeholder, isComment, postId }) => {
         imageFiles: postImages?.length > 0 ? postImages : [],
       });
       if (response?.data) {
-        console.log("response data => ", response?.data);
-
         if (response?.data?.success === true) {
           toast.success(response?.data?.message);
           setPost({

@@ -1,11 +1,9 @@
 "use client";
-import { Follow, Profile, SessionInterface } from "@/types";
-import Image from "next/image";
+import { Follow, Profile } from "@/types";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
 import { BiArrowBack } from "react-icons/bi";
 import { format } from "date-fns";
-import { BiCalendar } from "react-icons/bi";
 import Hero from "./Hero";
 import Details from "./Details";
 import { toast } from "react-hot-toast";
@@ -91,7 +89,7 @@ const Profile = ({ userData, userId }: UserTypes) => {
         followers={userData?.Followers}
       />
       {/* user posts section */}
-      <AllPosts posts={userData?.posts} />
+      <AllPosts posts={userData?.posts} userId={userId} />
     </div>
   );
 };

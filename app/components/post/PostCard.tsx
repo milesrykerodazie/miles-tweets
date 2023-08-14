@@ -14,7 +14,7 @@ import { useRouter } from "next/navigation";
 
 interface PostPropType {
   post: PostTypes;
-  userId: string;
+  userId: string | undefined;
 }
 
 const PostCard: FC<PostPropType> = ({ post, userId }) => {

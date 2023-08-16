@@ -13,7 +13,13 @@ const Post = async ({ params }: { params: PostParams }) => {
   const session = await getCurrentUser();
   //get post details
   const fetchPost = (await getPost(params)) as PostTypes;
-  return <PostDetails postData={fetchPost} userImage={session?.user?.image!} />;
+  return (
+    <PostDetails
+      postData={fetchPost}
+      userImage={session?.user?.image!}
+      userId={session?.user?.id}
+    />
+  );
 };
 
 export default Post;

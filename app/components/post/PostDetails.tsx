@@ -7,35 +7,69 @@ import Avatar from "../Avatar";
 import { BsThreeDots } from "react-icons/bs";
 import Image from "next/image";
 import { FaRegComment, FaSpinner } from "react-icons/fa";
-import { AiOutlineHeart, AiOutlineRetweet } from "react-icons/ai";
+import { AiFillHeart, AiOutlineHeart, AiOutlineRetweet } from "react-icons/ai";
 import TextareaAutosize from "react-textarea-autosize";
+import { toast } from "react-hot-toast";
+import axios from "axios";
+import { handleLike } from "@/app/helper";
+import ReplyCard from "./ReplyCard";
+import Header from "../structure/Header";
 
 interface PostDataTypes {
   postData: PostTypes;
   userImage: string;
+  userId: string;
 }
 
-const PostDetails: FC<PostDataTypes> = ({ postData, userImage }) => {
+const PostDetails: FC<PostDataTypes> = ({ postData, userImage, userId }) => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
+  const [replying, setReplying] = useState(false);
+  const [reply, setReply] = useState("");
 
-  const canSubmit = "";
+  //has liked post
+  const hasLiked = postData?.likes?.filter((like) => like?.userId === userId);
+  const id = postData?.id;
+
+  const canSubmit = reply !== "";
+
+  // handle reply post
+  const handleReply = async (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
+    e.preventDefault();
+    setReplying(true);
+    if (!canSubmit) {
+      toast.error("Input needed!.");
+      return;
+    }
+
+    try {
+      const response = await axios.post(`/api/post/comment/${postData?.id}`, {
+        reply,
+      });
+      if (response?.data) {
+        if (response?.data?.success === true) {
+          setReplying(false);
+          toast.success(response?.data?.message);
+          setReply("");
+          router.refresh();
+        }
+        if (response?.data?.success === false) {
+          toast.error(response?.data?.message);
+        }
+      }
+    } catch (error) {
+      toast.error("Something went wrong!");
+    } finally {
+      setReplying(false);
+    }
+  };
+
   return (
     <div>
       {/* section 1 */}
-      <div className="border-b-[1px] border-neutral-800 p-5">
-        <div className="flex flex-row items-center gap-2">
-          <BiArrowBack
-            onClick={() => router.back()}
-            color="white"
-            size={20}
-            className="cursor-pointer hover:opacity-70 transition"
-          />
-
-          <h1 className="text-white text-xl font-semibold">Post</h1>
-        </div>
-      </div>
-
+      <Header title="Post" />
       {/* section 2 */}
       <div className="p-3 border-b border-neutral-800">
         <div className="flex space-x-2">
@@ -92,14 +126,29 @@ const PostDetails: FC<PostDataTypes> = ({ postData, userImage }) => {
           </div>
           <div>
             <span>{postData?.likes.length}</span>{" "}
-            <span className="text-gray-600">Likes</span>
+            <span className="text-gray-600">
+              {postData?.likes.length === 1 ? "Like" : "Likes"}
+            </span>
           </div>
         </div>
         {/* section 2.4 */}
         <div className="text-gray-500  border-b border-neutral-800 p-4 flex items-center justify-between space-x-5">
           <FaRegComment className="h-5 w-5" />
           <AiOutlineRetweet className="h-5 w-5" />
-          <AiOutlineHeart className="h-5 w-5" />
+          <button
+            type="button"
+            disabled={isLoading}
+            onClick={(e) => {
+              e.preventDefault();
+              handleLike(setIsLoading, userId, id, router);
+            }}
+          >
+            {hasLiked?.length > 0 ? (
+              <AiFillHeart className="h-5 w-5 text-red-600" />
+            ) : (
+              <AiOutlineHeart className="h-5 w-5" />
+            )}
+          </button>
         </div>
 
         {/* section 2.5  */}
@@ -110,8 +159,8 @@ const PostDetails: FC<PostDataTypes> = ({ postData, userImage }) => {
           <div className="text-white flex-1">
             <TextareaAutosize
               name="postReply"
-              // value={postText}
-              // onChange={handleChange}
+              value={reply}
+              onChange={(e) => setReply(e.target.value)}
               cacheMeasurements
               className="disabled:opacity-80 peer resize-none w-full mb-4 bg-black ring-0 outline-none text-[20px] placeholder-neutral-500 text-white overflow-y-hidden"
               placeholder="Post your reply!"
@@ -120,11 +169,13 @@ const PostDetails: FC<PostDataTypes> = ({ postData, userImage }) => {
             <div className="flex justify-end">
               <button
                 type="button"
+                disabled={replying}
+                onClick={handleReply}
                 className={`trans disabled:opacity-30 disabled:cursor-not-allowed mt-6 px-4 py-1 rounded-full bg-sky-500 hover:bg-opacity-90 cursor-pointer ${
                   !canSubmit && "opacity-30 cursor-not-allowed"
                 }`}
               >
-                {isLoading ? <FaSpinner className="animate-spin" /> : "Reply"}
+                {replying ? <FaSpinner className="animate-spin" /> : "Reply"}
               </button>
             </div>
           </div>
@@ -132,7 +183,15 @@ const PostDetails: FC<PostDataTypes> = ({ postData, userImage }) => {
       </div>
       {/* section 3- comment session */}
       <div className="text-white border-b border-neutral-800">
-        <div className="p-3">comments here</div>
+        <div className="">
+          {postData?.comments?.length > 0 && (
+            <div className="space-y-3">
+              {postData?.comments?.map((comment) => (
+                <ReplyCard key={comment?.id} reply={comment} />
+              ))}
+            </div>
+          )}
+        </div>
       </div>
     </div>
   );

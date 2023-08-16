@@ -38,6 +38,7 @@ export async function POST(
       userImage: true,
       posts: true,
       Followers: true,
+      hasNotification: true,
     },
   });
 
@@ -89,6 +90,13 @@ export async function POST(
         id: followed[0].id,
       },
     });
+
+    //remove following
+    await prisma.following.delete({
+      where: {
+        followingId: userValid?.id,
+      },
+    });
     return NextResponse.json({
       success: true,
       message: "UnFollowed!.",
@@ -104,6 +112,40 @@ export async function POST(
         userId: userValid?.id,
       },
     });
+
+    //add following
+    await prisma.following.create({
+      data: {
+        name: userValid?.name,
+        username: userValid?.username,
+        userImage: userValid?.userImage,
+        followingId: userValid?.id,
+        userId: validFollower?.id,
+      },
+    });
+
+    //follow notification
+    //create the notification
+    await prisma.notification.create({
+      data: {
+        body: "followed you!",
+        notifierName: validFollower?.name!,
+        notifierusername: validFollower?.username!,
+        notifierImage: validFollower?.image!,
+        userId: userValid?.id!,
+      },
+    });
+
+    //update user notification
+    await prisma.user.update({
+      where: {
+        id: userValid?.id,
+      },
+      data: {
+        hasNotification: userValid?.hasNotification! + 1,
+      },
+    });
+
     return NextResponse.json({
       success: true,
       message: "Followed!.",

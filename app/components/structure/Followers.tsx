@@ -7,7 +7,7 @@ import Avatar from "../Avatar";
 const Followers = ({ users }: { users: Follow[] }) => {
   return (
     <div className="px-6 py-4 hidden lg:block trans">
-      <div className="bg-neutral-800 rounded-xl p-4">
+      <div className="bg-neutral-800 rounded-xl p-4 sticky top-3">
         <h2 className="text-white text-xl font-semibold">You might like</h2>
         <div className="flex flex-col gap-6 mt-4">
           {users.map((user) => (

@@ -10,6 +10,15 @@ export interface SessionInterface extends Session {
   };
 }
 
+export interface NotificationTypes {
+  id: string;
+  body: string;
+  notifierName: string;
+  notifierusername: string;
+  notifierImage: string;
+  createdAt: Date;
+}
+
 export interface Follow {
   id: string;
   name: string;
@@ -19,6 +28,11 @@ export interface Follow {
   followerId: string | null;
 }
 
+export interface Notification {
+  id: string;
+  hasNotification: number;
+}
+
 export interface Profile {
   id: string;
   name: string;
@@ -26,6 +40,7 @@ export interface Profile {
   email: string;
   image: string;
   userImage: string;
+  hasNotification: number;
   coverImage: string;
   bio: string;
   createdAt: Date;
@@ -36,6 +51,14 @@ export interface Profile {
     userImage: string;
     userId: string;
     followerId: string;
+  }[];
+  Following: {
+    id: string;
+    name: string;
+    username: string;
+    userImage: string;
+    userId: string;
+    followingId: string;
   }[];
   posts: PostTypes[];
 }
@@ -84,6 +107,7 @@ export interface PostTypes {
       name: string;
       image: string;
       email: string;
+      username: string;
     };
   }[];
 }
@@ -91,3 +115,16 @@ export interface PostTypes {
 export type PostsTypes = {
   posts: PostTypes[];
 };
+
+export interface ReplyTypes {
+  id: string;
+  body: string;
+  createdAt: Date;
+  postId: string;
+  user: {
+    name: string;
+    image: string;
+    email: string;
+    username: string;
+  };
+}

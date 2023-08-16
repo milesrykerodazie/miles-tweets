@@ -9,6 +9,7 @@ import Details from "./Details";
 import { toast } from "react-hot-toast";
 import axios from "axios";
 import AllPosts from "../post/Posts";
+import Header from "../structure/Header";
 
 interface UserTypes {
   userData: Profile;
@@ -55,22 +56,7 @@ const Profile = ({ userData, userId }: UserTypes) => {
   return (
     <div>
       {/* section 1 */}
-      <div className="border-b-[1px] border-neutral-800 p-5">
-        <div className="flex flex-row items-center gap-2">
-          <BiArrowBack
-            onClick={() => router.back()}
-            color="white"
-            size={20}
-            className="
-              cursor-pointer 
-              hover:opacity-70 
-              transition
-          "
-          />
-
-          <h1 className="text-white text-xl font-semibold">{userData?.name}</h1>
-        </div>
-      </div>
+      <Header title={userData?.name} />
       {/* section 2 */}
       <Hero
         userData={userData}
@@ -87,6 +73,7 @@ const Profile = ({ userData, userId }: UserTypes) => {
         bio={userData?.bio}
         dateRegistered={format(userData?.createdAt, "MMM-dd-yyy")}
         followers={userData?.Followers}
+        following={userData?.Following}
       />
       {/* user posts section */}
       <AllPosts posts={userData?.posts} userId={userId} />

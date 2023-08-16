@@ -12,6 +12,15 @@ interface DetailsProps {
     username: string;
     userImage: string;
     userId: string;
+    followerId: string;
+  }[];
+  following: {
+    id: string;
+    name: string;
+    username: string;
+    userImage: string;
+    userId: string;
+    followingId: string;
   }[];
 }
 
@@ -21,6 +30,7 @@ const Details: FC<DetailsProps> = ({
   bio,
   dateRegistered,
   followers,
+  following,
 }) => {
   return (
     <div className="border-b-[1px] border-neutral-800 pb-4">
@@ -49,7 +59,7 @@ const Details: FC<DetailsProps> = ({
         </div>
         <div className="flex flex-row items-center mt-4 gap-6">
           <div className="flex flex-row items-center gap-1">
-            <p className="text-white">0</p>
+            <p className="text-white">{following?.length}</p>
             <p className="text-neutral-500">Following</p>
           </div>
           <div className="flex flex-row items-center gap-1">

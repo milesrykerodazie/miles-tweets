@@ -3,22 +3,22 @@ import Form from "../components/Form";
 import { allPosts } from "../actions";
 import { PostTypes } from "@/types";
 import AllPosts from "../components/post/Posts";
+import { getCurrentUser } from "../lib/auth";
+import Header from "../components/structure/Header";
 
 const HomePage = async () => {
+  // get session
+  const session = await getCurrentUser();
   //get all posts
   const posts = (await allPosts()) as PostTypes[];
   return (
     <main className="text-white">
       {/* section 1 */}
-      <div className="border-b-[1px] border-neutral-800 p-3">
-        <div className="flex flex-row items-center gap-2">
-          <h1 className="text-white text-xl font-semibold">Home</h1>
-        </div>
-      </div>
+      <Header title="Home" isHome={true} />
       {/* section 2  */}
       <Form placeholder="What is happening?!" />
       {/* the posts here */}
-      <AllPosts posts={posts} />
+      <AllPosts posts={posts} userId={session?.user?.id} />
     </main>
   );
 };

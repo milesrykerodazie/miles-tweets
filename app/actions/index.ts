@@ -33,6 +33,7 @@ export async function getUserById(params: UserParams) {
       bio: true,
       coverImage: true,
       userImage: true,
+      hasNotification: true,
       posts: {
         include: {
           comments: {
@@ -46,6 +47,7 @@ export async function getUserById(params: UserParams) {
                   name: true,
                   image: true,
                   email: true,
+                  username: true,
                 },
               },
             },
@@ -54,6 +56,7 @@ export async function getUserById(params: UserParams) {
             select: {
               id: true,
               postId: true,
+              userId: true,
               User: {
                 select: {
                   name: true,
@@ -86,6 +89,7 @@ export async function getUserById(params: UserParams) {
         },
       },
       Followers: true,
+      Following: true,
       createdAt: true,
     },
   });
@@ -93,6 +97,29 @@ export async function getUserById(params: UserParams) {
     return null;
   }
   return user;
+}
+
+//get user notification
+export async function getUserNotification() {
+  const session = await getCurrentUser();
+
+  if (!session) {
+    return;
+  }
+
+  const notification = await prisma.user?.findUnique({
+    where: {
+      id: session?.user?.id,
+    },
+    select: {
+      id: true,
+      hasNotification: true,
+    },
+  });
+  if (!notification) {
+    return null;
+  }
+  return notification;
 }
 
 //get users to follow suggestions
@@ -231,14 +258,19 @@ export async function getPost(params: PostParams) {
               name: true,
               image: true,
               email: true,
+              username: true,
             },
           },
+        },
+        orderBy: {
+          createdAt: "desc",
         },
       },
       likes: {
         select: {
           id: true,
           postId: true,
+          userId: true,
           User: {
             select: {
               name: true,
@@ -273,4 +305,43 @@ export async function getPost(params: PostParams) {
   }
 
   return post;
+}
+
+//get user notifications
+export async function getNotificaions() {
+  const currentUser = await getCurrentUser();
+
+  if (!currentUser) {
+    return;
+  }
+  // validate user id
+  const notifications = await prisma.notification?.findMany({
+    where: {
+      userId: currentUser?.user?.id,
+    },
+    include: {
+      user: {
+        select: {
+          name: true,
+          username: true,
+          image: true,
+        },
+      },
+    },
+    orderBy: {
+      createdAt: "desc",
+    },
+  });
+
+  //update the user notifications
+  await prisma.user.update({
+    where: {
+      id: currentUser?.user.id,
+    },
+    data: {
+      hasNotification: 0,
+    },
+  });
+
+  return notifications;
 }

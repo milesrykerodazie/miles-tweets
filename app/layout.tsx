@@ -4,11 +4,10 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import Followers from "@/app/components/structure/Followers";
 import ToastProvider from "@/provider/ToastProvider";
-import { followSuggestions } from "./actions";
-import { Follow } from "@/types";
+import { followSuggestions, getUserNotification } from "./actions";
+import { Follow, Notification } from "@/types";
 import { getCurrentUser } from "./lib/auth";
 import AuthPage from "./components/AuthPage";
-import { redirect } from "next/navigation";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -27,6 +26,8 @@ export default async function RootLayout({
 
   //get suggested users to follow
   const users = (await followSuggestions()) as Follow[];
+  //get user notification
+  const notification = (await getUserNotification()) as Notification;
 
   return (
     <html lang="en">
@@ -41,7 +42,7 @@ export default async function RootLayout({
               "grid grid-cols-4 max-w-7xl mx-auto h-screen"
             }`}
           >
-            {currentUser !== null && <Sidebar />}
+            {currentUser !== null && <Sidebar notification={notification} />}
             <main
               className={`${
                 currentUser !== null &&

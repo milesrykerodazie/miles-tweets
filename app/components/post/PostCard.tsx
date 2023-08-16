@@ -11,10 +11,11 @@ import { AiFillHeart, AiOutlineHeart, AiOutlineRetweet } from "react-icons/ai";
 import { toast } from "react-hot-toast";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import { handleLike } from "@/app/helper";
 
 interface PostPropType {
   post: PostTypes;
-  userId: string | undefined;
+  userId: string;
 }
 
 const PostCard: FC<PostPropType> = ({ post, userId }) => {
@@ -25,36 +26,36 @@ const PostCard: FC<PostPropType> = ({ post, userId }) => {
   const hasLiked = post?.likes?.filter((like) => like?.userId === userId);
 
   //handle loke post
-  const handleLike = async (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  ) => {
-    e.preventDefault();
+  // const handleLike = async (
+  //   e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  // ) => {
+  //   e.preventDefault();
 
-    setIsLoading(true);
-    try {
-      if (!userId) {
-        toast.error("Login to like.");
-        return;
-      }
-      const response = await axios.post(`/api/like-post/${post?.id}`, {
-        userId: userId,
-      });
-      if (response?.data) {
-        if (response?.data?.success === true) {
-          setIsLoading(false);
-          toast.success(response?.data?.message);
-          router.refresh();
-        }
-        if (response?.data?.success === false) {
-          toast.error(response?.data?.message);
-        }
-      }
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  //   setIsLoading(true);
+  //   try {
+  //     if (!userId) {
+  //       toast.error("Login to like.");
+  //       return;
+  //     }
+  //     const response = await axios.post(`/api/like-post/${post?.id}`, {
+  //       userId: userId,
+  //     });
+  //     if (response?.data) {
+  //       if (response?.data?.success === true) {
+  //         setIsLoading(false);
+  //         toast.success(response?.data?.message);
+  //         router.refresh();
+  //       }
+  //       if (response?.data?.success === false) {
+  //         toast.error(response?.data?.message);
+  //       }
+  //     }
+  //   } catch (error) {
+  //     console.log(error);
+  //   } finally {
+  //     setIsLoading(false);
+  //   }
+  // };
   return (
     <div className="border-b border-neutral-800">
       <div className="flex flex-row gap-4 p-3">
@@ -117,7 +118,10 @@ const PostCard: FC<PostPropType> = ({ post, userId }) => {
             <button
               type="button"
               disabled={isLoading}
-              onClick={handleLike}
+              onClick={(e) => {
+                e.preventDefault();
+                handleLike(setIsLoading, userId, post?.id, router);
+              }}
               className="flex items-center space-x-3"
             >
               {hasLiked?.length > 0 ? (

@@ -13,21 +13,8 @@ export default function Modal({ children }: { children: ReactNode }) {
     router.push("/");
   }, [router]);
 
-  const handleClick = useCallback(
-    (e: React.MouseEvent<HTMLDivElement>) => {
-      if (e.target === overlay.current && onDismiss) {
-        onDismiss();
-      }
-    },
-    [onDismiss, overlay]
-  );
-
   return (
-    <div
-      ref={overlay}
-      className="authmodal trans"
-      // onClick={(e) => handleClick(e)}
-    >
+    <div ref={overlay} className="authmodal trans">
       <div className="flex items-center justify-center">
         <div ref={wrapper} className="modal_wrapper">
           <button

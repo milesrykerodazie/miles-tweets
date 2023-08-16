@@ -86,6 +86,13 @@ export async function POST(
     });
   }
 
+  //get post owner
+  const postOwner = await prisma.user.findUnique({
+    where: {
+      id: foundPost?.userId,
+    },
+  });
+
   //   validate user
   const userValid = await prisma.user.findUnique({
     where: {
@@ -130,6 +137,28 @@ export async function POST(
         userId: userValid?.id,
       },
     });
+
+    //create the notification
+    await prisma.notification.create({
+      data: {
+        body: "liked your post!",
+        notifierName: userValid?.name!,
+        notifierusername: userValid?.username!,
+        notifierImage: userValid?.image!,
+        userId: postOwner?.id!,
+      },
+    });
+
+    //update user notification
+    await prisma.user.update({
+      where: {
+        id: postOwner?.id,
+      },
+      data: {
+        hasNotification: postOwner?.hasNotification! + 1,
+      },
+    });
+
     return NextResponse.json({
       success: true,
       message: "Liked.",

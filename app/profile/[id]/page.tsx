@@ -1,7 +1,6 @@
 import { getUserById } from "@/app/actions";
 import Profile from "@/app/components/User/Profile";
 import { getCurrentUser } from "@/app/lib/auth";
-import { redirect } from "next/navigation";
 import React from "react";
 
 interface UserParams {
@@ -13,10 +12,6 @@ const UserProfile = async ({ params }: { params: UserParams }) => {
   const currentUser = await getCurrentUser();
   //get user profile data
   const userData = await getUserById(params);
-
-  // if (!currentUser) {
-  //   redirect("/");
-  // }
 
   return (
     <section>

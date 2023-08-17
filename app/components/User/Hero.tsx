@@ -42,7 +42,7 @@ const Hero: FC<HeroProps> = ({
         <div className="flex justify-end mr-3 mt-3 ">
           <button
             onClick={() => setOpenEdit(true)}
-            className="border border-primarygrey px-3 py-1 rounded-full text-white"
+            className="border border-primarygrey px-3 py-1 rounded-full text-white text-sm md:text-base trans"
           >
             Edit profile
           </button>
@@ -53,7 +53,7 @@ const Hero: FC<HeroProps> = ({
             type="button"
             disabled={disable}
             onClick={follow}
-            className="bg-white text-primary px-3 py-1 rounded-full"
+            className="bg-white text-primary px-3 py-1 rounded-full text-sm md:text-base trans"
           >
             {hasFollowed?.length > 0 ? "Following" : "Follow"}
           </button>

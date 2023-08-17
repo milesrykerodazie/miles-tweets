@@ -25,7 +25,7 @@ const Header: FC<HeaderPropTypes> = ({ isHome, title }) => {
           "
           />
         )}
-        <h1 className="text-white text-xl font-semibold">{title}</h1>
+        <h1 className="text-white lg:text-xl font-semibold">{title}</h1>
       </div>
     </div>
   );

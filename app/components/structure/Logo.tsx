@@ -10,10 +10,10 @@ const Logo = () => {
       onClick={() => router.push("/home")}
       className="
         rounded-full 
+        hidden sm:block trans
         h-14
         w-14
-        p-4 
-        flex 
+        p-4  
         items-center 
         justify-center 
         hover:bg-blue-300 

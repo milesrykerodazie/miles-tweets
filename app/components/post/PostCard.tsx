@@ -25,49 +25,21 @@ const PostCard: FC<PostPropType> = ({ post, userId }) => {
   // check if user has liked post
   const hasLiked = post?.likes?.filter((like) => like?.userId === userId);
 
-  //handle loke post
-  // const handleLike = async (
-  //   e: React.MouseEvent<HTMLButtonElement, MouseEvent>
-  // ) => {
-  //   e.preventDefault();
-
-  //   setIsLoading(true);
-  //   try {
-  //     if (!userId) {
-  //       toast.error("Login to like.");
-  //       return;
-  //     }
-  //     const response = await axios.post(`/api/like-post/${post?.id}`, {
-  //       userId: userId,
-  //     });
-  //     if (response?.data) {
-  //       if (response?.data?.success === true) {
-  //         setIsLoading(false);
-  //         toast.success(response?.data?.message);
-  //         router.refresh();
-  //       }
-  //       if (response?.data?.success === false) {
-  //         toast.error(response?.data?.message);
-  //       }
-  //     }
-  //   } catch (error) {
-  //     console.log(error);
-  //   } finally {
-  //     setIsLoading(false);
-  //   }
-  // };
   return (
     <div className="border-b border-neutral-800">
-      <div className="flex flex-row gap-4 p-3">
+      <div className="flex flex-row gap-2 md:gap-4 p-3">
         {/* profile pics */}
         <div>
-          <Avatar image={post?.user?.image} size="h-10 w-10" />
+          <Avatar
+            image={post?.user?.image}
+            size="md:h-10 md:w-10 h-7 w-7 trans"
+          />
         </div>
         {/* other attributes */}
         <div className="flex-1">
           {/* section 1  */}
           <div className="flex items-center justify-between ">
-            <div className="flex items-center space-x-2">
+            <div className="flex items-center space-x-2 text-sm md:text-base trans">
               <p className="text-white">{post?.user?.name}</p>
               <p className="text-gray-600">{post?.user?.username}</p>
               <p className="text-gray-600">
@@ -80,7 +52,7 @@ const PostCard: FC<PostPropType> = ({ post, userId }) => {
           </div>
           {/* section 2 */}
           <Link href={`/${post?.user?.username}/status/${post?.id}`}>
-            <div className="cursor-pointer text-white">{post?.body}</div>
+            <div className="cursor-pointer text-white mt-2">{post?.body}</div>
           </Link>
           {/* image section */}
           {post?.postImages && (
@@ -107,13 +79,17 @@ const PostCard: FC<PostPropType> = ({ post, userId }) => {
 
           {/* actions section */}
           <div className="text-gray-500 p-4 flex items-center justify-between space-x-5">
+            <Link href={`/compose/reply/${post?.id}`}>
+              <button className="flex items-center space-x-3">
+                <FaRegComment className="h-4 w-4 md:h-5 md:w-5 trans" />
+                <span className="text-sm md:text-base trans">
+                  {post?.comments?.length}
+                </span>
+              </button>
+            </Link>
             <button className="flex items-center space-x-3">
-              <FaRegComment className="h-5 w-5" />
-              <span>{post?.comments?.length}</span>
-            </button>
-            <button className="flex items-center space-x-3">
-              <AiOutlineRetweet className="h-5 w-5" />
-              <span>0</span>
+              <AiOutlineRetweet className="h-4 w-4 md:h-5 md:w-5 trans" />
+              <span className="text-sm md:text-base trans">0</span>
             </button>
             <button
               type="button"
@@ -125,12 +101,14 @@ const PostCard: FC<PostPropType> = ({ post, userId }) => {
               className="flex items-center space-x-3"
             >
               {hasLiked?.length > 0 ? (
-                <AiFillHeart className="h-5 w-5 text-red-600" />
+                <AiFillHeart className="h-4 w-4 md:h-5 md:w-5 trans text-red-600" />
               ) : (
-                <AiOutlineHeart className="h-5 w-5" />
+                <AiOutlineHeart className="h-4 w-4 md:h-5 md:w-5 trans" />
               )}
 
-              <span>{post?.likes?.length}</span>
+              <span className="text-sm md:text-base trans">
+                {post?.likes?.length}
+              </span>
             </button>
           </div>
         </div>

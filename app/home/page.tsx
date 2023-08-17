@@ -16,7 +16,10 @@ const HomePage = async () => {
       {/* section 1 */}
       <Header title="Home" isHome={true} />
       {/* section 2  */}
-      <Form placeholder="What is happening?!" />
+      <Form
+        placeholder="What is happening?!"
+        userImage={session?.user?.image!}
+      />
       {/* the posts here */}
       <AllPosts posts={posts} userId={session?.user?.id} />
     </main>

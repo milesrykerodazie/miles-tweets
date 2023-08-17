@@ -43,7 +43,7 @@ const FormField = ({
         placeholder={placeHolder}
         value={state}
         onChange={(e) => setState(e.target.value)}
-        className="py-2 outline-none text-white bg-transparent"
+        className="py-2 outline-none text-white bg-transparent text-sm md:text-base trans"
         onFocus={(e) => {
           e.preventDefault();
           setShowCount((current) => !current);

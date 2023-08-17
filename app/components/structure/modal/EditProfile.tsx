@@ -145,9 +145,9 @@ const EditProfile: FC<ModalProps> = ({ setOpenEdit, userData }) => {
         <div className="flex items-center justify-between px-3">
           <div className="flex items-center space-x-4">
             <button onClick={() => setOpenEdit(false)} className="">
-              <IoMdClose className="text-white h-6 w-6" />
+              <IoMdClose className="text-white h-4 w-4 md:h-5 md:w-5 trans" />
             </button>
-            <h4 className="font-semibold text-white text-sm lg:text-base">
+            <h4 className="font-semibold text-white text-sm md:text-base trans">
               Edit Profile
             </h4>
           </div>
@@ -178,9 +178,9 @@ const EditProfile: FC<ModalProps> = ({ setOpenEdit, userData }) => {
               <div className="absolute top-16 left-[40%] right-[30%] flex items-center space-x-3">
                 <label
                   htmlFor="coverImage"
-                  className="w-12 h-12 rounded-full bg-black/40 flex justify-center items-center"
+                  className="w-8 h-8 trans md:w-12 md:h-12 rounded-full bg-black/40 flex justify-center items-center"
                 >
-                  <AiOutlineCamera className="w-6 h-6" />
+                  <AiOutlineCamera className="h-4 w-4 md:h-5 md:w-5 trans" />
                 </label>
                 <input
                   id="coverImage"
@@ -197,9 +197,9 @@ const EditProfile: FC<ModalProps> = ({ setOpenEdit, userData }) => {
                       coverImage: "",
                     }))
                   }
-                  className="w-12 h-12 rounded-full bg-black/40 flex justify-center items-center"
+                  className="w-8 h-8 trans md:w-12 md:h-12 rounded-full bg-black/40 flex justify-center items-center"
                 >
-                  <IoMdClose className="w-6 h-6" />
+                  <IoMdClose className="h-4 w-4 md:h-5 md:w-5 trans" />
                 </div>
               </div>
             </div>
@@ -210,13 +210,13 @@ const EditProfile: FC<ModalProps> = ({ setOpenEdit, userData }) => {
                   image={
                     form?.userImage ? form?.userImage : userData?.userImage
                   }
-                  size="h-20 w-20"
+                  size="trans w-16 h-16 md:h-20 md:w-20 "
                 />
                 <label
                   htmlFor="userImage"
-                  className="absolute top-4 left-4 w-12 h-12 rounded-full bg-black/40 flex justify-center items-center cursor-pointer"
+                  className="absolute top-4 left-4 w-8 h-8 trans md:w-12 md:h-12 rounded-full bg-black/40 flex justify-center items-center cursor-pointer"
                 >
-                  <AiOutlineCamera className="w-6 h-6" />
+                  <AiOutlineCamera className="h-4 w-4 md:h-5 md:w-5 trans" />
                 </label>
                 <input
                   id="userImage"

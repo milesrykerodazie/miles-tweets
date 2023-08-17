@@ -1,6 +1,8 @@
+"use client";
 import Image from "next/image";
 import Link from "next/link";
 import { FcGoogle } from "react-icons/fc";
+import { signIn } from "next-auth/react";
 
 const AuthPage = () => {
   return (
@@ -26,7 +28,11 @@ const AuthPage = () => {
           <div className="text-3xl font-bold text-white pb-5">Join today.</div>
 
           <div className="">
-            <button className="w-full bg-white border border-gray-300 p-2 rounded-md flex items-center justify-center space-x-3">
+            <button
+              type="button"
+              onClick={() => signIn("google")}
+              className="w-full bg-white border border-gray-300 p-2 rounded-md flex items-center justify-center space-x-3"
+            >
               <FcGoogle />
               <span className="text-gray-700 font-medium">
                 Sign up with Google

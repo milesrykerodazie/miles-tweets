@@ -1,22 +1,15 @@
 "use client";
-import { useCallback } from "react";
-import { useRouter } from "next/navigation";
+import Link from "next/link";
 import { AiOutlineSend } from "react-icons/ai";
 
-interface ButtonProps {
-  canSubmit?: boolean;
-  disable?: boolean;
-}
-
-const SideButton = ({ canSubmit, disable }: ButtonProps) => {
-  const router = useRouter();
-
+const SideButton = () => {
   return (
-    <div>
-      <div
-        className="
+    <div className="px-3">
+      <Link href={"/compose/tweet"} className="hidden sm:block trans">
+        <div
+          className="
         mt-6
-        lg:hidden 
+        md:hidden 
         rounded-full 
         h-14
         w-14
@@ -29,16 +22,17 @@ const SideButton = ({ canSubmit, disable }: ButtonProps) => {
         transition 
         cursor-pointer
       "
-      >
-        <AiOutlineSend size={24} color="white" />
-      </div>
-      <button
-        type="button"
-        disabled={disable}
-        className=" w-full disabled:opacity-30 disabled:cursor-not-allowed
+        >
+          <AiOutlineSend size={24} color="white" />
+        </div>
+      </Link>
+      <Link href={"/compose/tweet"}>
+        <button
+          type="button"
+          className=" w-full disabled:opacity-30 disabled:cursor-not-allowed
         mt-6
         hidden 
-        lg:block 
+        md:block 
         px-4
         py-1
         rounded-full
@@ -46,20 +40,21 @@ const SideButton = ({ canSubmit, disable }: ButtonProps) => {
         hover:bg-opacity-90 
         cursor-pointer
       "
-      >
-        <span
-          className="
+        >
+          <span
+            className="
             hidden 
-            lg:block 
+            md:block 
             text-center
             font-semibold
             text-white 
             text-sm
         "
-        >
-          Post
-        </span>
-      </button>
+          >
+            Post
+          </span>
+        </button>
+      </Link>
     </div>
   );
 };

@@ -128,3 +128,17 @@ export interface ReplyTypes {
     username: string;
   };
 }
+
+export interface SinglePostTypes {
+  id: string;
+  body: string;
+  userId: string;
+  createdAt: Date;
+  updatedAt: Date;
+  user: {
+    name: string;
+    image: string;
+    email: string;
+    username: string;
+  };
+}

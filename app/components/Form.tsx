@@ -12,8 +12,8 @@ import { FaSpinner } from "react-icons/fa";
 
 interface FormProps {
   placeholder: string;
-  isComment?: boolean;
-  postId?: string;
+  secondary?: boolean;
+  userImage: string;
 }
 
 interface FormData {
@@ -21,7 +21,7 @@ interface FormData {
   postImages: string[];
 }
 
-const Form: React.FC<FormProps> = ({ placeholder }) => {
+const Form: React.FC<FormProps> = ({ placeholder, secondary, userImage }) => {
   //next route
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false); //states
@@ -121,7 +121,11 @@ const Form: React.FC<FormProps> = ({ placeholder }) => {
             postText: "",
             postImages: [],
           });
-          router.refresh();
+          if (secondary) {
+            router.back();
+          } else {
+            router.refresh();
+          }
         }
         if (response?.data?.success === false) {
           toast.error(response?.data?.message);
@@ -136,11 +140,11 @@ const Form: React.FC<FormProps> = ({ placeholder }) => {
   };
 
   return (
-    <div>
+    <div className="">
       <div className="flex flex-row gap-4 p-3">
         {/* profile pics */}
         <div>
-          <Avatar image={""} size="h-10 w-10" />
+          <Avatar image={userImage} size="md:h-10 md:w-10 h-7 w-7 trans" />
         </div>
         {/* text area section */}
         <div className="w-full">
@@ -149,7 +153,7 @@ const Form: React.FC<FormProps> = ({ placeholder }) => {
             value={postText}
             onChange={handleChange}
             cacheMeasurements
-            className="disabled:opacity-80 peer resize-none w-full mb-3 bg-black ring-0 outline-none text-[20px] placeholder-neutral-500 text-white overflow-y-hidden"
+            className="disabled:opacity-80 peer resize-none w-full mb-3 bg-black ring-0 outline-none text-[20px] placeholder-neutral-500 text-white overflow-y-hidden placeholder:text-sm placeholder:md:text-base"
             placeholder={placeholder}
           />
           {/* display images here */}
@@ -182,37 +186,40 @@ const Form: React.FC<FormProps> = ({ placeholder }) => {
                 </div>
               ))}
           </div>
-          <hr className="border-gray-700 mt-3" />
-          <div className="flex flex-row items-center justify-between">
-            {/* attibutes of post */}
-            <label htmlFor="postImages" className="mt-3">
-              <BsCardImage className="w-5 h-5" />
-            </label>
-            <input
-              id="postImages"
-              type="file"
-              accept="image/*"
-              multiple
-              disabled={isLoading}
-              hidden
-              onChange={handleFileChange}
-            />
-            {/* post button */}
-
-            <button
-              onClick={handleCreatePost}
-              type="button"
-              disabled={isLoading}
-              className={`trans disabled:opacity-30 disabled:cursor-not-allowed mt-6 px-4 py-1 rounded-full bg-sky-500 hover:bg-opacity-90 cursor-pointer ${
-                !canSubmit && "opacity-30 cursor-not-allowed"
-              }`}
-            >
-              {isLoading ? <FaSpinner className="animate-spin" /> : "Post"}
-            </button>
-          </div>
         </div>
       </div>
-      <hr className="border-gray-700 mt-3" />
+
+      <div className="sticky bottom-0 bg-black z-20">
+        <hr className="border-gray-700 mt-3" />
+        <div className="flex flex-row items-center justify-between px-3 py-3">
+          {/* attibutes of post */}
+          <label htmlFor="postImages" className="">
+            <BsCardImage className="h-4 w-4 md:h-5 md:w-5 trans text-white" />
+          </label>
+          <input
+            id="postImages"
+            type="file"
+            accept="image/*"
+            multiple
+            disabled={isLoading}
+            hidden
+            onChange={handleFileChange}
+          />
+          {/* post button */}
+
+          <button
+            onClick={handleCreatePost}
+            type="button"
+            disabled={isLoading}
+            className={`trans disabled:opacity-30 disabled:cursor-not-allowed px-4 py-1 rounded-full bg-sky-500 hover:bg-opacity-90 cursor-pointer text-white text-sm md:text-base ${
+              !canSubmit && "opacity-30 cursor-not-allowed"
+            }`}
+          >
+            {isLoading ? <FaSpinner className="animate-spin" /> : "Post"}
+          </button>
+        </div>
+      </div>
+      {secondary !== true && <hr className="border-gray-700 mt-1" />}
     </div>
   );
 };

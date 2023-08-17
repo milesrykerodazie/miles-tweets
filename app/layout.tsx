@@ -46,7 +46,7 @@ export default async function RootLayout({
             <main
               className={`${
                 currentUser !== null &&
-                "col-span-3 lg:col-span-2 border-x-[1px] border-neutral-800"
+                "col-span-4 sm:col-span-3 lg:col-span-2 border-x-[1px] border-neutral-800"
               }`}
             >
               {children}

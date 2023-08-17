@@ -307,6 +307,38 @@ export async function getPost(params: PostParams) {
   return post;
 }
 
+export async function getSinglePost(params: { id: string }) {
+  // get current session
+  const session = await getCurrentUser();
+
+  if (!session) {
+    return;
+  }
+  const { id } = params;
+
+  const post = await prisma.post.findUnique({
+    where: {
+      id: id,
+    },
+    include: {
+      user: {
+        select: {
+          name: true,
+          image: true,
+          email: true,
+          username: true,
+        },
+      },
+    },
+  });
+
+  if (!post) {
+    return null;
+  }
+
+  return post;
+}
+
 //get user notifications
 export async function getNotificaions() {
   const currentUser = await getCurrentUser();

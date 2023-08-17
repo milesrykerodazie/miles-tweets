@@ -17,7 +17,7 @@ const ReplyCard: FC<ReplyPropTypes> = ({ reply }) => {
         </div>
         <div className="flex-1">
           <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-2">
+            <div className="flex items-center space-x-2 text-sm md:text-base trans">
               <p className="text-white">{reply?.user?.name}</p>
               <p className="text-gray-600">{reply?.user?.username}</p>
               <p className="text-gray-600">
@@ -28,7 +28,7 @@ const ReplyCard: FC<ReplyPropTypes> = ({ reply }) => {
               <BsThreeDots className="text-gray-600" />
             </div>
           </div>
-          <div className="mt-1 text-sm">{reply?.body}</div>
+          <div className="mt-2">{reply?.body}</div>
         </div>
       </div>
     </div>

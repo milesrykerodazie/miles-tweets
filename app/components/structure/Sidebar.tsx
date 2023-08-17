@@ -9,14 +9,15 @@ const Sidebar = async ({ notification }: { notification: Notification }) => {
   const currentUser = await getCurrentUser();
 
   return (
-    <div className="col-span-1 h-full pr-4 md:pr-6 ">
-      <div className="flex flex-col items-end sticky top-0">
-        <div className="space-y-2 lg:w-[230px]">
+    <div className="hidden sm:block sm:col-span-1 lg:pr-6  ">
+      <div className="flex flex-col items-end md:items-start sticky top-0 h-screen">
+        <div className="flex-1 space-y-2 lg:w-[230px]">
           <Logo />
 
           <SidebarItem currentUser={currentUser} notification={notification} />
           <SideButton />
         </div>
+        <div className="text-white pb-5">session logout</div>
       </div>
     </div>
   );

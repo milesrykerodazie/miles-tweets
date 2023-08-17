@@ -1,13 +1,28 @@
-import { Session, User } from "next-auth";
+import { Session } from "next-auth";
+
+export interface User {
+  id: string;
+  name: string;
+  email: string;
+  image: string;
+  coverImage: string;
+  createdAt: Date;
+  hasNotification: number;
+  profileImage: {
+    public_id: string;
+    url: string;
+    userId: string;
+  };
+  userCoverImage: {
+    public_id: string;
+    url: string;
+    userId: string;
+  };
+  username: string;
+}
 
 export interface SessionInterface extends Session {
-  user: User & {
-    profileImage: {
-      public_id: string;
-      url: string;
-      userId: string;
-    };
-  };
+  user: User;
 }
 
 export interface NotificationTypes {
@@ -103,6 +118,7 @@ export interface PostTypes {
     body: string;
     createdAt: Date;
     postId: string;
+    userId: string;
     user: {
       name: string;
       image: string;
@@ -121,6 +137,7 @@ export interface ReplyTypes {
   body: string;
   createdAt: Date;
   postId: string;
+  userId: string;
   user: {
     name: string;
     image: string;

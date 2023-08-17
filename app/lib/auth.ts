@@ -70,7 +70,14 @@ export const authOptions: NextAuthOptions = {
           where: {
             email: email,
           },
-          include: {
+          select: {
+            id: true,
+            name: true,
+            email: true,
+            image: true,
+            coverImage: true,
+            createdAt: true,
+            hasNotification: true,
             profileImage: {
               select: {
                 public_id: true,
@@ -78,6 +85,14 @@ export const authOptions: NextAuthOptions = {
                 userId: true,
               },
             },
+            userCoverImage: {
+              select: {
+                public_id: true,
+                url: true,
+                userId: true,
+              },
+            },
+            username: true,
           },
         });
 

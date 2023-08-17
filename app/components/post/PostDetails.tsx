@@ -11,6 +11,7 @@ import { handleLike } from "@/app/helper";
 import ReplyCard from "./ReplyCard";
 import Header from "../structure/Header";
 import ReplyPost from "./ReplyPost";
+import DeleteModal from "../structure/modal/DeleteModal";
 
 interface PostDataTypes {
   postData: PostTypes;
@@ -21,6 +22,7 @@ interface PostDataTypes {
 const PostDetails: FC<PostDataTypes> = ({ postData, userImage, userId }) => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
+  const [open, setOpen] = useState(false);
 
   //has liked post
   const hasLiked = postData?.likes?.filter((like) => like?.userId === userId);
@@ -31,8 +33,11 @@ const PostDetails: FC<PostDataTypes> = ({ postData, userImage, userId }) => {
       {/* section 1 */}
       <Header title="Post" />
       {/* section 2 */}
-      <div className="p-3 border-b border-neutral-800">
-        <div className="flex space-x-2">
+      <div
+        onClick={() => setOpen(false)}
+        className="p-3 border-b border-neutral-800"
+      >
+        <div className="flex space-x-2 relative">
           <div>
             <Avatar
               image={postData?.user?.image}
@@ -45,10 +50,24 @@ const PostDetails: FC<PostDataTypes> = ({ postData, userImage, userId }) => {
               <p className="text-white">{postData?.user?.name}</p>
               <p className="text-gray-600">@miles_ryker</p>
             </div>
-            <div>
+            <div
+              onClick={(e) => {
+                e.stopPropagation();
+                setOpen((current) => !current);
+              }}
+            >
               <BsThreeDots className="text-gray-600" />
             </div>
           </div>
+
+          {open && (
+            <DeleteModal
+              id={postData?.id}
+              owner={postData?.userId}
+              sessionId={userId}
+              title="Post"
+            />
+          )}
         </div>
         {/* section 2.2 */}
         <div className="mt-2">
@@ -123,7 +142,7 @@ const PostDetails: FC<PostDataTypes> = ({ postData, userImage, userId }) => {
           {postData?.comments?.length > 0 && (
             <div className="space-y-3">
               {postData?.comments?.map((comment) => (
-                <ReplyCard key={comment?.id} reply={comment} />
+                <ReplyCard key={comment?.id} reply={comment} userId={userId} />
               ))}
             </div>
           )}

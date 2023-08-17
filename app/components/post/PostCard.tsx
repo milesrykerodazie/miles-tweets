@@ -12,6 +12,7 @@ import { toast } from "react-hot-toast";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { handleLike } from "@/app/helper";
+import DeleteModal from "../structure/modal/DeleteModal";
 
 interface PostPropType {
   post: PostTypes;
@@ -22,12 +23,13 @@ const PostCard: FC<PostPropType> = ({ post, userId }) => {
   //the route
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
+  const [open, setOpen] = useState(false);
   // check if user has liked post
   const hasLiked = post?.likes?.filter((like) => like?.userId === userId);
 
   return (
-    <div className="border-b border-neutral-800">
-      <div className="flex flex-row gap-2 md:gap-4 p-3">
+    <div onClick={() => setOpen(false)} className="border-b border-neutral-800">
+      <div className="flex flex-row gap-2 md:gap-4 p-3 relative">
         {/* profile pics */}
         <div>
           <Avatar
@@ -46,12 +48,21 @@ const PostCard: FC<PostPropType> = ({ post, userId }) => {
                 . {format(post?.createdAt, "MMM-dd")}
               </p>
             </div>
-            <div>
+            <div
+              onClick={(e) => {
+                e.stopPropagation();
+                setOpen((current) => !current);
+              }}
+              className="cursor-pointer"
+            >
               <BsThreeDots className="text-gray-600" />
             </div>
           </div>
           {/* section 2 */}
-          <Link href={`/${post?.user?.username}/status/${post?.id}`}>
+          <Link
+            href={`/tweet/${post?.user?.username}/status/${post?.id}`}
+            onClick={(e) => e.stopPropagation()}
+          >
             <div className="cursor-pointer text-white mt-2">{post?.body}</div>
           </Link>
           {/* image section */}
@@ -112,6 +123,14 @@ const PostCard: FC<PostPropType> = ({ post, userId }) => {
             </button>
           </div>
         </div>
+        {open && (
+          <DeleteModal
+            id={post?.id}
+            owner={post?.userId}
+            sessionId={userId}
+            title="Post"
+          />
+        )}
       </div>
     </div>
   );

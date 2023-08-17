@@ -78,27 +78,6 @@ const SidebarItem = ({ currentUser, notification }: SessionProp) => {
           </div>
         </Link>
       </div>
-      {currentUser && (
-        <div className="flex flex-row items-center">
-          <div className="hidden sm:block trans">
-            <div
-              className="relative rounded-full h-14 w-14 flex items-center justify-center p-4 hover:bg-slate-300 hover:bg-opacity-10 cursor-pointer md:hidden"
-              onClick={() => signOut()}
-            >
-              <BiLogOut size={28} color="white" />
-            </div>
-          </div>
-          <div
-            className="relative hidden md:flex items-row gap-4 p-4 rounded-fullhover:bg-slate-300 hover:bg-opacity-10 cursor-pointer items-center"
-            onClick={() => signOut()}
-          >
-            <BiLogOut size={28} color="white" />
-            <p className="hidden md:block text-white text-sm md:text-xl">
-              Logout
-            </p>
-          </div>
-        </div>
-      )}
     </div>
   );
 };

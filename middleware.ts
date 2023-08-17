@@ -8,7 +8,13 @@ export async function middleware(req: NextRequest) {
   const isAuth = await getToken({ req, secret });
   const pathname = req.nextUrl.pathname;
 
-  const pathsToCheck = ["/notification", "/home", "/profile", "/compose"];
+  const pathsToCheck = [
+    "/notification",
+    "/home",
+    "/profile",
+    "/compose",
+    "/tweet",
+  ];
 
   if (isAuth !== null && pathname.includes("/auth")) {
     return NextResponse.redirect(new URL("/home", req.url));
@@ -31,5 +37,6 @@ export const config = {
     "/profile/:path*",
     "/auth/:path*",
     "/compose/:path*",
+    "/tweet/:path*",
   ],
 };

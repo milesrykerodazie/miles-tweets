@@ -253,6 +253,7 @@ export async function getPost(params: PostParams) {
           body: true,
           createdAt: true,
           postId: true,
+          userId: true,
           user: {
             select: {
               name: true,

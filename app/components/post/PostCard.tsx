@@ -42,10 +42,16 @@ const PostCard: FC<PostPropType> = ({ post, userId }) => {
           {/* section 1  */}
           <div className="flex items-center justify-between ">
             <div className="flex items-center space-x-2 text-sm md:text-base trans">
-              <Link href="">
+              <Link
+                href={`/profile/${post?.user?.username}`}
+                onClick={(e) => e.stopPropagation()}
+              >
                 <p className="text-white">{post?.user?.name}</p>
               </Link>
-              <Link href="">
+              <Link
+                href={`/profile/${post?.user?.username}`}
+                onClick={(e) => e.stopPropagation()}
+              >
                 <p className="text-gray-600">{post?.user?.username}</p>
               </Link>
 

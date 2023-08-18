@@ -20,13 +20,13 @@ const SidebarItem = ({ currentUser, notification }: SessionProp) => {
       <div>
         {/* home */}
         <Link href={"/home"}>
-          <div className="flex flex-row items-center">
+          <div className="flex flex-row items-center hover:bg-slate-300 trans hover:bg-opacity-10 rounded-full">
             <div className="hidden sm:block trans">
-              <div className="relative rounded-full h-14 w-14 flex items-center justify-center p-4 hover:bg-slate-300 hover:bg-opacity-10 cursor-pointer md:hidden">
+              <div className="relative h-14 w-14 flex items-center justify-center p-4 cursor-pointer md:hidden">
                 <BsHouseFill size={28} color="white" />
               </div>
             </div>
-            <div className="relative hidden md:flex items-row gap-4 p-4 rounded-fullhover:bg-slate-300 hover:bg-opacity-10 cursor-pointer items-center">
+            <div className="relative hidden md:flex items-row gap-4 p-4 cursor-pointer items-center">
               <BsHouseFill size={28} color="white" />
               <p className="hidden md:block text-white text-sm md:text-xl">
                 Home
@@ -36,9 +36,9 @@ const SidebarItem = ({ currentUser, notification }: SessionProp) => {
         </Link>
         {/* notifications */}
         <Link href={"/notification"}>
-          <div className="flex flex-row items-center">
+          <div className="flex flex-row items-center hover:bg-slate-300 trans hover:bg-opacity-10 rounded-full">
             <div className="hidden sm:block trans">
-              <div className="relative rounded-full h-14 w-14 flex items-center justify-center p-4 hover:bg-slate-300 hover:bg-opacity-10 cursor-pointer md:hidden">
+              <div className="relative h-14 w-14 flex items-center justify-center p-4  cursor-pointer md:hidden">
                 <BsBellFill size={28} color="white" />
                 {notification?.hasNotification !== 0 && (
                   <span className="absolute top-3 left-7 w-5 h-5 rounded-full bg-sky-500 text-white flex justify-center items-center cursor-pointer text-xs">
@@ -47,7 +47,7 @@ const SidebarItem = ({ currentUser, notification }: SessionProp) => {
                 )}
               </div>
             </div>
-            <div className="relative hidden md:flex items-row gap-4 p-4 rounded-fullhover:bg-slate-300 hover:bg-opacity-10 cursor-pointer items-center">
+            <div className="relative hidden md:flex items-row gap-4 p-4 cursor-pointer items-center">
               <BsBellFill size={28} color="white" />
               {notification?.hasNotification !== 0 && (
                 <span className="absolute top-3 left-7 w-5 h-5 rounded-full bg-sky-500 text-white flex justify-center items-center cursor-pointer text-xs">
@@ -62,14 +62,14 @@ const SidebarItem = ({ currentUser, notification }: SessionProp) => {
           </div>
         </Link>
         {/* profile */}
-        <Link href={`/profile/${currentUser?.user?.id}`}>
-          <div className="flex flex-row items-center">
-            <div className="hidden sm:block trans">
-              <div className="relative rounded-full h-14 w-14 flex items-center justify-center p-4 hover:bg-slate-300 hover:bg-opacity-10 cursor-pointer md:hidden">
+        <Link href={`/profile/${currentUser?.user?.username}`}>
+          <div className="flex flex-row items-center hover:bg-slate-300 trans hover:bg-opacity-10 rounded-full">
+            <div className="hidden sm:block">
+              <div className="relative rounded-full h-14 w-14 flex items-center justify-center p-4 hover:bg-opacity-10 cursor-pointer md:hidden trans">
                 <FaUser size={28} color="white" />
               </div>
             </div>
-            <div className="relative hidden md:flex items-row gap-4 p-4 rounded-full hover:bg-slate-300 hover:bg-opacity-10 cursor-pointer items-center">
+            <div className="relative hidden md:flex items-row gap-4 p-4  cursor-pointer items-center">
               <FaUser size={28} color="white" />
               <p className="hidden sm:block text-white text-sm md:text-xl">
                 Profile

@@ -4,7 +4,7 @@ import { getCurrentUser } from "@/app/lib/auth";
 import React from "react";
 
 interface UserParams {
-  id: string;
+  username: string;
 }
 
 const UserProfile = async ({ params }: { params: UserParams }) => {

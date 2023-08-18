@@ -28,10 +28,16 @@ const ReplyCard: FC<ReplyPropTypes> = ({ reply, userId }) => {
         <div className="flex-1">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-2 text-sm md:text-base trans">
-              <Link href="">
+              <Link
+                href={`/profile/${reply?.user?.username}`}
+                onClick={(e) => e.stopPropagation()}
+              >
                 <p className="text-white">{reply?.user?.name}</p>
               </Link>
-              <Link href="">
+              <Link
+                href={`/profile/${reply?.user?.username}`}
+                onClick={(e) => e.stopPropagation()}
+              >
                 <p className="text-gray-600">{reply?.user?.username}</p>
               </Link>
               <p className="text-gray-600">

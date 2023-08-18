@@ -30,6 +30,7 @@ const MobileSidebar: FC<MobileTypes> = ({
             ? "fixed top-0 left-0 h-screen bg-main bg-primary shadow-md shadow-white w-[70%] ease-in duration-500 z-80 pt-5 px-4"
             : "fixed -left-[100%] top-0 ease-in duration-300 bg-primary/95 shadow-xl shadow-white w-[80%] md:w-[70%] h-screen z-80 pt-5 px-4"
         }
+        onClick={(e) => e.stopPropagation()}
       >
         <div className="space-y-2">
           <div>

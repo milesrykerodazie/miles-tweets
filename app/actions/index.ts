@@ -2,7 +2,7 @@ import prisma from "@/app/lib/prismadb";
 import { getCurrentUser } from "../lib/auth";
 
 interface UserParams {
-  id: string;
+  username: string;
 }
 
 interface PostParams {
@@ -18,11 +18,11 @@ export async function getUserById(params: UserParams) {
     return;
   }
   //validate the id
-  const { id } = params;
+  const { username } = params;
 
   const user = await prisma.user?.findUnique({
     where: {
-      id: id,
+      username: username,
     },
     select: {
       id: true,

@@ -12,7 +12,7 @@ const Followers = ({ users }: { users: Follow[] }) => {
         <div className="flex flex-col gap-6 mt-4">
           {users.map((user) => (
             <Link
-              href={`/profile/${user?.id}`}
+              href={`/profile/${user?.username}`}
               key={user.id}
               className="flex flex-row gap-4"
             >

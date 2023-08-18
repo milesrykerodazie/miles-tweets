@@ -3,6 +3,7 @@ import { Session } from "next-auth";
 export interface User {
   id: string;
   name: string;
+  username: string;
   email: string;
   image: string;
   coverImage: string;
@@ -18,7 +19,22 @@ export interface User {
     url: string;
     userId: string;
   };
-  username: string;
+  Followers: {
+    id: string;
+    name: string;
+    username: string;
+    userImage: string;
+    userId: string;
+    followerId: string;
+  }[];
+  Following: {
+    id: string;
+    name: string;
+    username: string;
+    userImage: string;
+    userId: string;
+    followingId: string;
+  }[];
 }
 
 export interface SessionInterface extends Session {

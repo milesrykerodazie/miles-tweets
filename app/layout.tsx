@@ -53,6 +53,7 @@ export default async function RootLayout({
             </main>
             {currentUser !== null && <Followers users={users} />}
           </div>
+          {/* the mobile navigation here */}
         </div>
       </body>
     </html>

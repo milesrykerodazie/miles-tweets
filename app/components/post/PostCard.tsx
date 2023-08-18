@@ -42,8 +42,13 @@ const PostCard: FC<PostPropType> = ({ post, userId }) => {
           {/* section 1  */}
           <div className="flex items-center justify-between ">
             <div className="flex items-center space-x-2 text-sm md:text-base trans">
-              <p className="text-white">{post?.user?.name}</p>
-              <p className="text-gray-600">{post?.user?.username}</p>
+              <Link href="">
+                <p className="text-white">{post?.user?.name}</p>
+              </Link>
+              <Link href="">
+                <p className="text-gray-600">{post?.user?.username}</p>
+              </Link>
+
               <p className="text-gray-600">
                 . {format(post?.createdAt, "MMM-dd")}
               </p>
@@ -75,7 +80,9 @@ const PostCard: FC<PostPropType> = ({ post, userId }) => {
               {post?.postImages?.map((image) => (
                 <div
                   key={image?.id}
-                  className="relative w-full h-24 sm:h-36 md:h-60 lg:h-72 trans"
+                  className={`relative w-full h-40 sm:h-44 md:h-60 lg:h-72 trans ${
+                    post?.postImages.length === 1 && "h-60 md:h-72"
+                  }`}
                 >
                   <Image
                     src={image?.url}
@@ -127,6 +134,7 @@ const PostCard: FC<PostPropType> = ({ post, userId }) => {
           <DeleteModal
             id={post?.id}
             owner={post?.userId}
+            username={post?.user?.username}
             sessionId={userId}
             title="Post"
           />

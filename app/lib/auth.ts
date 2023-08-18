@@ -73,6 +73,7 @@ export const authOptions: NextAuthOptions = {
           select: {
             id: true,
             name: true,
+            username: true,
             email: true,
             image: true,
             coverImage: true,
@@ -92,7 +93,8 @@ export const authOptions: NextAuthOptions = {
                 userId: true,
               },
             },
-            username: true,
+            Following: true,
+            Followers: true,
           },
         });
 

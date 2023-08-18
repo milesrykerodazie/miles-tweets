@@ -14,6 +14,7 @@ export async function middleware(req: NextRequest) {
     "/profile",
     "/compose",
     "/tweet",
+    "/logout",
   ];
 
   if (isAuth !== null && pathname.includes("/auth")) {
@@ -38,5 +39,6 @@ export const config = {
     "/auth/:path*",
     "/compose/:path*",
     "/tweet/:path*",
+    "/logout",
   ],
 };

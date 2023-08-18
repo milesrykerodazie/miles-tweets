@@ -5,6 +5,7 @@ import Avatar from "../Avatar";
 import { BsThreeDots } from "react-icons/bs";
 import { format } from "date-fns";
 import DeleteModal from "../structure/modal/DeleteModal";
+import Link from "next/link";
 
 interface ReplyPropTypes {
   reply: ReplyTypes;
@@ -27,8 +28,12 @@ const ReplyCard: FC<ReplyPropTypes> = ({ reply, userId }) => {
         <div className="flex-1">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-2 text-sm md:text-base trans">
-              <p className="text-white">{reply?.user?.name}</p>
-              <p className="text-gray-600">{reply?.user?.username}</p>
+              <Link href="">
+                <p className="text-white">{reply?.user?.name}</p>
+              </Link>
+              <Link href="">
+                <p className="text-gray-600">{reply?.user?.username}</p>
+              </Link>
               <p className="text-gray-600">
                 . {format(reply?.createdAt, "MMM-dd")}
               </p>
@@ -48,6 +53,7 @@ const ReplyCard: FC<ReplyPropTypes> = ({ reply, userId }) => {
           <DeleteModal
             id={reply?.id}
             owner={reply?.userId}
+            username={reply?.user?.username}
             sessionId={userId}
             title="Reply"
           />

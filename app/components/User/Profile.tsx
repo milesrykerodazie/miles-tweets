@@ -56,7 +56,7 @@ const Profile = ({ userData, userId }: UserTypes) => {
   return (
     <div>
       {/* section 1 */}
-      <Header title={userData?.name} />
+      <Header title={userData?.name} allowed />
       {/* section 2 */}
       <Hero
         userData={userData}

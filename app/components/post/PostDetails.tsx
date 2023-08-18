@@ -12,6 +12,7 @@ import ReplyCard from "./ReplyCard";
 import Header from "../structure/Header";
 import ReplyPost from "./ReplyPost";
 import DeleteModal from "../structure/modal/DeleteModal";
+import Link from "next/link";
 
 interface PostDataTypes {
   postData: PostTypes;
@@ -31,7 +32,7 @@ const PostDetails: FC<PostDataTypes> = ({ postData, userImage, userId }) => {
   return (
     <div>
       {/* section 1 */}
-      <Header title="Post" />
+      <Header title="Post" allowed />
       {/* section 2 */}
       <div
         onClick={() => setOpen(false)}
@@ -47,8 +48,12 @@ const PostDetails: FC<PostDataTypes> = ({ postData, userImage, userId }) => {
           {/* section 2.1 */}
           <div className="flex items-center justify-between flex-1">
             <div className="text-sm md:text-base trans">
-              <p className="text-white">{postData?.user?.name}</p>
-              <p className="text-gray-600">@miles_ryker</p>
+              <Link href="">
+                <p className="text-white">{postData?.user?.name}</p>
+              </Link>
+              <Link href="">
+                <p className="text-gray-600">@miles_ryker</p>
+              </Link>
             </div>
             <div
               onClick={(e) => {
@@ -66,6 +71,8 @@ const PostDetails: FC<PostDataTypes> = ({ postData, userImage, userId }) => {
               owner={postData?.userId}
               sessionId={userId}
               title="Post"
+              detail={true}
+              username={postData?.user?.username}
             />
           )}
         </div>

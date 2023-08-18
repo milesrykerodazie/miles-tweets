@@ -69,7 +69,7 @@ const SidebarItem = ({ currentUser, notification }: SessionProp) => {
                 <FaUser size={28} color="white" />
               </div>
             </div>
-            <div className="relative hidden md:flex items-row gap-4 p-4 rounded-fullhover:bg-slate-300 hover:bg-opacity-10 cursor-pointer items-center">
+            <div className="relative hidden md:flex items-row gap-4 p-4 rounded-full hover:bg-slate-300 hover:bg-opacity-10 cursor-pointer items-center">
               <FaUser size={28} color="white" />
               <p className="hidden sm:block text-white text-sm md:text-xl">
                 Profile

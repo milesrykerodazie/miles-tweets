@@ -6,12 +6,17 @@ import { BiArrowBack } from "react-icons/bi";
 interface HeaderPropTypes {
   isHome?: boolean;
   title: string;
+  allowed?: boolean;
 }
 
-const Header: FC<HeaderPropTypes> = ({ isHome, title }) => {
+const Header: FC<HeaderPropTypes> = ({ isHome, title, allowed }) => {
   const router = useRouter();
   return (
-    <div className="border-b-[1px] border-neutral-800 p-3 sticky top-0 bg-black z-20">
+    <div
+      className={`border-b-[1px] border-neutral-800 p-3 sticky top-0 bg-black z-40  ${
+        allowed ? "" : "hidden sm:block"
+      }`}
+    >
       <div className="flex flex-row items-center gap-2">
         {isHome !== true && (
           <BiArrowBack

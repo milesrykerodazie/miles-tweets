@@ -4,6 +4,7 @@ import { BsThreeDots } from "react-icons/bs";
 import Avatar from "../../Avatar";
 import { SessionInterface } from "@/types";
 import { signOut } from "next-auth/react";
+import Link from "next/link";
 
 interface SessionTypes {
   currentUser: SessionInterface;
@@ -31,9 +32,13 @@ const Logout: FC<SessionTypes> = ({ currentUser }) => {
       {/* logout modal */}
       {open && (
         <div className="bg-black shadow-md shadow-white absolute text-white -top-14 left-3 w-full pl-3 py-4 rounded-lg z-20 text-sm lg:text-base">
-          <span onClick={() => signOut()} className="cursor-pointer">
+          <Link
+            href="/logout"
+            className="cursor-pointer"
+            onClick={() => setOpen(false)}
+          >
             Log out {currentUser?.user?.username}
-          </span>
+          </Link>
         </div>
       )}
     </div>

@@ -31,15 +31,15 @@ body {
 }
 
 .authmodal {
-  @apply fixed z-40 inset-0 bg-gray-700/50;
+  @apply fixed z-50 inset-0 bg-gray-700/50;
 }
 
 .logoutModal {
-  @apply fixed w-full z-40 inset-0 bg-gray-800 flex justify-center items-center;
+  @apply fixed w-full z-70 inset-0 bg-gray-800 flex justify-center items-center;
 }
 
 .editModal {
-  @apply fixed z-70 inset-0 bg-gray-700/70 flex justify-center transition duration-300 ease-in;
+  @apply fixed z-50 inset-0 bg-gray-700/70 flex justify-center transition duration-300 ease-in;
 }
 
 .project_modal_wrapper {

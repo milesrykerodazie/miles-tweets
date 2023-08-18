@@ -8,6 +8,8 @@ import { followSuggestions, getUserNotification } from "./actions";
 import { Follow, Notification } from "@/types";
 import { getCurrentUser } from "./lib/auth";
 import AuthPage from "./components/AuthPage";
+import MobileNavigation from "./components/MobileNavigation";
+import AddPostButton from "./components/AddPostButton";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -46,14 +48,19 @@ export default async function RootLayout({
             <main
               className={`${
                 currentUser !== null &&
-                "col-span-4 sm:col-span-3 lg:col-span-2 border-x-[1px] border-neutral-800"
+                "col-span-4 sm:col-span-3 lg:col-span-2 border-x-[1px] border-neutral-800 pb-14 sm:pb-0"
               }`}
             >
               {children}
             </main>
             {currentUser !== null && <Followers users={users} />}
           </div>
+          {/* add tewwt button */}
+          {currentUser !== null && <AddPostButton />}
           {/* the mobile navigation here */}
+          {currentUser !== null && (
+            <MobileNavigation notification={notification} />
+          )}
         </div>
       </body>
     </html>

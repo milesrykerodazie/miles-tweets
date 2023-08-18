@@ -14,7 +14,7 @@ const MobileHeader = ({
 }) => {
   const [navMobile, setNavMobile] = useState(false);
   return (
-    <div className="border-b-[1px] border-neutral-800 p-3 sticky top-0 bg-black z-40 sm:hidden">
+    <div className="border-b-[1px] border-neutral-800 p-3 sticky top-0 bg-black z-80 sm:hidden">
       <div className="flex items-center justify-between">
         <div onClick={() => setNavMobile((current) => !current)}>
           <Avatar image={""} size="lg:h-10 lg:w-10 h-9 w-9 trans" />

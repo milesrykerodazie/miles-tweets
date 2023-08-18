@@ -140,7 +140,7 @@ const Form: React.FC<FormProps> = ({ placeholder, secondary, userImage }) => {
   };
 
   return (
-    <div className="hidden sm:block">
+    <div className={`${secondary ? "" : "hidden sm:block"}`}>
       <div className="flex flex-row gap-4 p-3">
         {/* profile pics */}
         <div>

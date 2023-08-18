@@ -1,6 +1,6 @@
 "use client";
 import Link from "next/link";
-import { AiOutlineSend } from "react-icons/ai";
+import { AiOutlinePlus, AiOutlineSend } from "react-icons/ai";
 
 const SideButton = () => {
   return (
@@ -17,13 +17,13 @@ const SideButton = () => {
         flex
         items-center
         justify-center 
-        bg-sky-500 
+        bg-blue-500 
         hover:bg-opacity-80 
         transition 
         cursor-pointer
       "
         >
-          <AiOutlineSend size={24} color="white" />
+          <AiOutlinePlus size={24} color="white" />
         </div>
       </Link>
       <Link href={"/compose/tweet"}>

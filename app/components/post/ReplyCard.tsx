@@ -17,7 +17,7 @@ const ReplyCard: FC<ReplyPropTypes> = ({ reply, userId }) => {
   return (
     <div
       onClick={() => {
-        setOpen((current) => !current);
+        setOpen(false);
       }}
       className="border-t border-neutral-800"
     >

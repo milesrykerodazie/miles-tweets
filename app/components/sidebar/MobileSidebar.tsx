@@ -33,14 +33,23 @@ const MobileSidebar: FC<MobileTypes> = ({
         onClick={(e) => e.stopPropagation()}
       >
         <div className="space-y-2">
-          <div>
+          <Link
+            href={`/profile/${session?.user?.username}`}
+            onClick={() => setNavMobile(false)}
+          >
             <Avatar image={session?.user?.image} size="h-12 w-12" />
-          </div>
+          </Link>
           <div className="">
-            <Link href="">
+            <Link
+              href={`/profile/${session?.user?.username}`}
+              onClick={() => setNavMobile(false)}
+            >
               <p className="text-white">{session?.user?.name}</p>
             </Link>
-            <Link href="">
+            <Link
+              href={`/profile/${session?.user?.username}`}
+              onClick={() => setNavMobile(false)}
+            >
               <p className="text-gray-600">{session?.user?.username}</p>
             </Link>
           </div>
@@ -61,10 +70,14 @@ const MobileSidebar: FC<MobileTypes> = ({
         </div>
 
         {/* others here  */}
-        <div className="flex items-row gap-4 rounded-full cursor-pointer items-center mt-5">
+        <Link
+          href={`/profile/${session?.user?.username}`}
+          onClick={() => setNavMobile(false)}
+          className="flex items-row gap-4 rounded-full cursor-pointer items-center mt-5"
+        >
           <FaUser size={20} color="white" />
           <p className=" text-white">Profile</p>
-        </div>
+        </Link>
         <hr className="my-5 border-neutral-800" />
         <Link
           href="/logout"

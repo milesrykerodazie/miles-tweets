@@ -91,7 +91,7 @@ const PostDetails: FC<PostDataTypes> = ({ postData, userImage, userId }) => {
               {postData?.postImages?.map((image) => (
                 <div
                   key={image?.id}
-                  className="relative w-full h-24 sm:h-36 md:h-60 lg:h-72 trans"
+                  className="relative w-full h-44 md:h-60 lg:h-72 trans"
                 >
                   <Image
                     src={image?.url}

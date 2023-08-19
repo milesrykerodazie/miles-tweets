@@ -41,6 +41,7 @@ model Followers {
   name       String?
   username   String? @unique
   userImage  String?
+  bio        String?
   followerId String? @unique
   userId     String  @db.ObjectId
   user       User    @relation(fields: [userId], references: [id], onDelete: Cascade)
@@ -51,6 +52,7 @@ model Following {
   name        String?
   username    String? @unique
   userImage   String?
+  bio         String?
   followingId String? @unique
   userId      String  @db.ObjectId
   user        User    @relation(fields: [userId], references: [id], onDelete: Cascade)

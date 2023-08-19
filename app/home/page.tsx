@@ -11,8 +11,6 @@ const HomePage = async () => {
   // get session
   const session = await getCurrentUser();
 
-  console.log("the session => ", session);
-
   //get all posts
   const posts = (await allPosts()) as PostTypes[];
   return (

@@ -31,9 +31,15 @@ export async function middleware(req: NextRequest) {
     return NextResponse.redirect(new URL("/home", req.url));
   }
 
+  if (pathname === `/audience/${isAuth?.username}` && isAuth !== null) {
+    return NextResponse.redirect(
+      new URL(`/audience/${isAuth?.username}/followers`, req.url)
+    );
+  }
+
   if (pathname === "/audience" && isAuth !== null) {
     return NextResponse.redirect(
-      new URL(`/audience/followers/${isAuth?.username}`, req.url)
+      new URL(`/audience/${isAuth?.username}/followers`, req.url)
     );
   }
 }

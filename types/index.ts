@@ -19,22 +19,8 @@ export interface User {
     url: string;
     userId: string;
   };
-  Followers: {
-    id: string;
-    name: string;
-    username: string;
-    userImage: string;
-    userId: string;
-    followerId: string;
-  }[];
-  Following: {
-    id: string;
-    name: string;
-    username: string;
-    userImage: string;
-    userId: string;
-    followingId: string;
-  }[];
+  Followers: Followers[];
+  Following: Following[];
 }
 
 export interface SessionInterface extends Session {
@@ -75,22 +61,8 @@ export interface Profile {
   coverImage: string;
   bio: string;
   createdAt: Date;
-  Followers: {
-    id: string;
-    name: string;
-    username: string;
-    userImage: string;
-    userId: string;
-    followerId: string;
-  }[];
-  Following: {
-    id: string;
-    name: string;
-    username: string;
-    userImage: string;
-    userId: string;
-    followingId: string;
-  }[];
+  Followers: Followers[];
+  Following: Following[];
   posts: PostTypes[];
 }
 
@@ -174,4 +146,23 @@ export interface SinglePostTypes {
     email: string;
     username: string;
   };
+}
+
+export interface Followers {
+  id: string;
+  name: string;
+  username: string;
+  userImage: string;
+  bio: string;
+  userId: string;
+  followerId: string;
+}
+export interface Following {
+  id: string;
+  name: string;
+  username: string;
+  userImage: string;
+  bio: string;
+  userId: string;
+  followingId: string;
 }

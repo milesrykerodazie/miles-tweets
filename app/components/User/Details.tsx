@@ -66,7 +66,7 @@ const Details: FC<DetailsProps> = ({
         </div>
         <div className="flex flex-row items-center mt-4 gap-6">
           <Link
-            href={`/audience/followers/${username}`}
+            href={`/audience/${username}/followers`}
             className="flex flex-row items-center gap-1 text-sm md:text-base trans"
           >
             <p className="text-white">{followers.length}</p>
@@ -74,10 +74,13 @@ const Details: FC<DetailsProps> = ({
               {followers?.length === 1 ? "Follower" : "Followers"}
             </p>
           </Link>
-          <div className="flex flex-row items-center gap-1 text-sm md:text-base trans">
+          <Link
+            href={`/audience/${username}/following`}
+            className="flex flex-row items-center gap-1 text-sm md:text-base trans"
+          >
             <p className="text-white">{following?.length}</p>
             <p className="text-neutral-500">Following</p>
-          </div>
+          </Link>
         </div>
       </div>
     </div>

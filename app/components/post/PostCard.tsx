@@ -83,20 +83,27 @@ const PostCard: FC<PostPropType> = ({ post, userId }) => {
                 post?.postImages.length === 1 ? "grid-cols-1" : "grid-cols-2"
               }`}
             >
-              {post?.postImages?.map((image) => (
-                <div
+              {post?.postImages?.map((image, index) => (
+                <Link
+                  href={`/tweet/${post?.user?.username}/status/${
+                    post?.id
+                  }/photo/${index + 1}`}
                   key={image?.id}
-                  className={`relative w-full h-40 sm:h-44 md:h-60 lg:h-72 trans ${
-                    post?.postImages.length === 1 && "h-60 md:h-72"
-                  }`}
                 >
-                  <Image
-                    src={image?.url}
-                    alt="postimage"
-                    fill
-                    className="object-cover rounded-xl"
-                  />
-                </div>
+                  <div
+                    key={image?.id}
+                    className={`relative w-full h-44 md:h-60 lg:h-72 trans ${
+                      post?.postImages.length === 1 && "h-60 md:h-72"
+                    }`}
+                  >
+                    <Image
+                      src={image?.url}
+                      alt="postimage"
+                      fill
+                      className="object-cover rounded-xl"
+                    />
+                  </div>
+                </Link>
               ))}
             </div>
           )}

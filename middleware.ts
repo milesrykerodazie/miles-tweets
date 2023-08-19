@@ -6,6 +6,7 @@ const secret = process.env.NEXTAUTH_SECRET;
 export async function middleware(req: NextRequest) {
   //is user authenticated
   const isAuth = await getToken({ req, secret });
+
   const pathname = req.nextUrl.pathname;
 
   const pathsToCheck = [
@@ -15,6 +16,7 @@ export async function middleware(req: NextRequest) {
     "/compose",
     "/tweet",
     "/logout",
+    "/audience",
   ];
 
   if (isAuth !== null && pathname.includes("/auth")) {
@@ -28,6 +30,12 @@ export async function middleware(req: NextRequest) {
   if (pathname === "/" && isAuth !== null) {
     return NextResponse.redirect(new URL("/home", req.url));
   }
+
+  if (pathname === "/audience" && isAuth !== null) {
+    return NextResponse.redirect(
+      new URL(`/audience/followers/${isAuth?.username}`, req.url)
+    );
+  }
 }
 
 export const config = {
@@ -40,5 +48,6 @@ export const config = {
     "/compose/:path*",
     "/tweet/:path*",
     "/logout",
+    "/audience/:path*",
   ],
 };

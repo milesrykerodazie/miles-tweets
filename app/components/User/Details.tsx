@@ -1,3 +1,4 @@
+import Link from "next/link";
 import React, { FC } from "react";
 import { BiCalendar } from "react-icons/bi";
 
@@ -64,15 +65,18 @@ const Details: FC<DetailsProps> = ({
           </div>
         </div>
         <div className="flex flex-row items-center mt-4 gap-6">
-          <div className="flex flex-row items-center gap-1 text-sm md:text-base trans">
-            <p className="text-white">{following?.length}</p>
-            <p className="text-neutral-500">Following</p>
-          </div>
-          <div className="flex flex-row items-center gap-1 text-sm md:text-base trans">
+          <Link
+            href={`/audience/followers/${username}`}
+            className="flex flex-row items-center gap-1 text-sm md:text-base trans"
+          >
             <p className="text-white">{followers.length}</p>
             <p className="text-neutral-500">
               {followers?.length === 1 ? "Follower" : "Followers"}
             </p>
+          </Link>
+          <div className="flex flex-row items-center gap-1 text-sm md:text-base trans">
+            <p className="text-white">{following?.length}</p>
+            <p className="text-neutral-500">Following</p>
           </div>
         </div>
       </div>

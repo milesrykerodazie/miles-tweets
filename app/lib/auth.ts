@@ -18,9 +18,11 @@ export const authOptions: NextAuthOptions = {
     CredentialsProvider({
       name: "credentials",
       credentials: {
-        email: { label: "email", type: "text" },
+        email: { label: "email", type: "email" },
         password: { label: "password", type: "password" },
       },
+
+      //@ts-expect-error
       async authorize(credentials) {
         if (!credentials?.email || !credentials?.password) {
           throw new Error("Invalid credentials");
@@ -52,19 +54,19 @@ export const authOptions: NextAuthOptions = {
     }),
   ],
 
-  debug: process.env.NODE_ENV === "development",
-  session: {
-    strategy: "jwt",
-  },
-  jwt: {
-    secret: process.env.NEXTAUTH_SECRET,
-  },
-  secret: process.env.NEXTAUTH_SECRET,
-
   callbacks: {
+    async jwt({ token, user }) {
+      if (user) {
+        return {
+          ...token,
+          username: user?.username,
+        };
+      }
+      return token;
+    },
+
     async session({ session }: any) {
       const email = session?.user?.email as string;
-
       try {
         const data = await prisma.user.findUnique({
           where: {
@@ -115,6 +117,12 @@ export const authOptions: NextAuthOptions = {
       }
     },
   },
+
+  secret: process.env.NEXTAUTH_SECRET,
+  session: {
+    strategy: "jwt",
+  },
+  debug: process.env.NODE_ENV === "development",
 };
 
 export async function getCurrentUser() {

@@ -14,7 +14,8 @@ import ReplyPost from "./ReplyPost";
 import ReplyCard from "./ReplyCard";
 import { BiArrowFromLeft, BiArrowFromRight } from "react-icons/bi";
 import { IoMdClose } from "react-icons/io";
-import Image from "next/image";
+import { Carousel } from "react-responsive-carousel";
+import "react-responsive-carousel/lib/styles/carousel.min.css";
 
 interface PostDataTypes {
   postData: PostTypes;
@@ -98,13 +99,20 @@ const PostImageDetails: FC<PostDataTypes> = ({
         </div>
         {/* images start here */}
         <div className="py-3 flex-1">
-          <div className="w-full h-[550px] xl:h-[650px] trans">
-            <img
-              src={postData?.postImages[1].url}
-              alt="postimage"
-              className="object-contain w-full h-full"
-            />
-          </div>
+          <Carousel infiniteLoop={true} showThumbs={false}>
+            {postData?.postImages?.map((image) => (
+              <div
+                key={image?.id}
+                className="w-full h-[550px] xl:h-[650px] trans"
+              >
+                <img
+                  src={image?.url}
+                  alt="postimage"
+                  className="object-contain w-full h-full"
+                />
+              </div>
+            ))}
+          </Carousel>
         </div>
         {/* actions section */}
         <div className="text-white p-6 flex items-center justify-between space-x-5">

@@ -3,11 +3,15 @@ import React from "react";
 import FollowingCard from "./FollowingCard";
 
 const Following = ({
+  sessionId,
   following,
-  followers,
+  sessionFollowing,
 }: {
+  sessionId: string;
+
   following: Following[];
-  followers: Followers[];
+
+  sessionFollowing: Following[];
 }) => {
   return (
     <div className="p-3">
@@ -17,7 +21,8 @@ const Following = ({
             <FollowingCard
               key={follow?.id}
               follow={follow}
-              followers={followers}
+              sessionId={sessionId}
+              sessionFollowing={sessionFollowing}
             />
           ))}
         </div>

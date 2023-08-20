@@ -1,5 +1,6 @@
 import { getUserById } from "@/app/actions";
 import Following from "@/app/components/audience/Following";
+import { getCurrentUser } from "@/app/lib/auth";
 import { Profile } from "@/types";
 import React from "react";
 
@@ -8,13 +9,15 @@ interface UserParams {
 }
 
 const FollowingPage = async ({ params }: { params: UserParams }) => {
+  const session = await getCurrentUser();
   const userData = (await getUserById(params)) as Profile;
 
   return (
     <div className="text-white">
       <Following
+        sessionId={session?.user?.id}
         following={userData?.Following}
-        followers={userData?.Followers}
+        sessionFollowing={session?.user?.Following}
       />
     </div>
   );

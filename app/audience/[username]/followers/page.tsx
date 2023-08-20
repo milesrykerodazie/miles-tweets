@@ -9,13 +9,15 @@ interface UserParams {
 }
 
 const FollowersPage = async ({ params }: { params: UserParams }) => {
+  const session = await getCurrentUser();
   const userData = (await getUserById(params)) as Profile;
 
   return (
     <div className="text-white">
       <Followers
+        sessionId={session?.user?.id}
+        sessionFollowing={session?.user?.Following}
         followers={userData?.Followers}
-        following={userData?.Following}
       />
     </div>
   );

@@ -1,18 +1,29 @@
+"use client";
 import Link from "next/link";
-import React, { FC } from "react";
+import React, { FC, useState } from "react";
 import Avatar from "../Avatar";
 import { Followers, Following } from "@/types";
 import { BsThreeDots } from "react-icons/bs";
+import { useRouter } from "next/navigation";
+import { handleUserFollow } from "@/app/helper";
 
 interface AudienceTypes {
-  followers: Followers[];
+  sessionId: string;
   follow: Following;
+  sessionFollowing: Following[];
 }
 
-const FollowingCard: FC<AudienceTypes> = ({ followers, follow }) => {
+const FollowingCard: FC<AudienceTypes> = ({
+  follow,
+  sessionId,
+  sessionFollowing,
+}) => {
+  //the route
+  const router = useRouter();
+  const [isLoading, setIsLoading] = useState(false);
   //check if i am following the following
-  const checkFollowing = followers?.some(
-    (follower) => follower?.followerId === follow?.followingId
+  const checkFollowing = sessionFollowing?.some(
+    (follower) => follower?.followingId === follow?.followingId
   );
 
   return (
@@ -38,11 +49,38 @@ const FollowingCard: FC<AudienceTypes> = ({ followers, follow }) => {
             {checkFollowing === true ? (
               <button
                 type="button"
+                disabled={isLoading}
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleUserFollow(
+                    sessionId,
+                    follow?.followingId,
+                    setIsLoading,
+                    router
+                  );
+                }}
                 className="text-white px-4 py-1 rounded-full text-sm md:text-base bg-black border border-gray-600 hover:text-red-500 hover:border hover:border-red-500 follow-button trans"
               ></button>
+            ) : follow?.followingId === sessionId ? (
+              <button
+                type="button"
+                className="text-gray-600 py-1 text-sm md:text-base trans"
+              >
+                You
+              </button>
             ) : (
               <button
                 type="button"
+                disabled={isLoading}
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleUserFollow(
+                    sessionId,
+                    follow?.followingId,
+                    setIsLoading,
+                    router
+                  );
+                }}
                 className="bg-white text-primary px-3 py-1 rounded-full text-sm md:text-base trans"
               >
                 Follow

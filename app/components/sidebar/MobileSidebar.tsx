@@ -54,18 +54,26 @@ const MobileSidebar: FC<MobileTypes> = ({
             </Link>
           </div>
           <div className="flex flex-row items-center mt-4 gap-6">
-            <div className="flex flex-row items-center gap-1">
-              <p className="text-white">{session?.user?.Following.length}</p>
-              <p className="text-neutral-500">Following</p>
-            </div>
-            <div className="flex flex-row items-center gap-1">
+            <Link
+              href={`/audience/${session?.user?.username}/following`}
+              onClick={() => setNavMobile(false)}
+              className="flex flex-row items-center gap-1"
+            >
               <p className="text-white">{session?.user?.Followers.length}</p>
               <p className="text-neutral-500">
                 {session?.user?.Followers.length === 1
                   ? "Follower"
                   : "Followers"}
               </p>
-            </div>
+            </Link>
+            <Link
+              href={`/audience/${session?.user?.username}/following`}
+              onClick={() => setNavMobile(false)}
+              className="flex flex-row items-center gap-1"
+            >
+              <p className="text-white">{session?.user?.Following.length}</p>
+              <p className="text-neutral-500">Following</p>
+            </Link>
           </div>
         </div>
 

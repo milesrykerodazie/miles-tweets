@@ -22,37 +22,10 @@ const Profile = ({ userData, userId }: UserTypes) => {
   const canEdit = userData?.id === userId;
 
   //check if user has followed
-  const hasFollowed = userData?.Followers?.filter(
+  const hasFollowed = userData?.Followers?.some(
     (user) => user?.followerId === userId
-  ) as Follow[];
+  );
 
-  //handle follow user
-  const handleUserFollow = async () => {
-    try {
-      if (!userId) {
-        toast.error("Login to follow!");
-        return;
-      }
-
-      const response = await axios.post(`/api/follow-user/${userData?.id}`, {
-        userId: userId,
-      });
-      if (response?.data) {
-        if (response?.data?.success === true) {
-          toast.success(response?.data?.message);
-          setIsLoading(false);
-          router.refresh();
-        }
-        if (response?.data?.success === false) {
-          toast.error(response?.data?.message);
-        }
-      }
-    } catch (error) {
-      toast.error("Something went wrong!");
-    } finally {
-      setIsLoading(false);
-    }
-  };
   return (
     <div>
       {/* section 1 */}
@@ -61,9 +34,8 @@ const Profile = ({ userData, userId }: UserTypes) => {
       <Hero
         userData={userData}
         canEdit={canEdit}
-        follow={handleUserFollow}
+        userId={userId}
         hasFollowed={hasFollowed}
-        disable={isLoading}
       />
 
       {/* section 3 */}

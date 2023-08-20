@@ -34,7 +34,7 @@ const Details: FC<DetailsProps> = ({
   following,
 }) => {
   return (
-    <div className="border-b-[1px] border-neutral-800 pb-4">
+    <div className="border-b border-neutral-800 pb-4">
       <div className="mt-6 px-4">
         <div className="flex flex-col">
           <p className="text-white text-base md:text-2xl font-semibold">

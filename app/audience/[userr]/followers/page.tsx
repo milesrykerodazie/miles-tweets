@@ -8,7 +8,10 @@ const FollowersPage = async () => {
 
   return (
     <div className="text-white">
-      <Followers followers={session?.user?.Followers} />
+      <Followers
+        followers={session?.user?.Followers}
+        following={session?.user?.Following}
+      />
     </div>
   );
 };

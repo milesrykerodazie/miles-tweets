@@ -7,7 +7,10 @@ const FollowingPage = async () => {
   const session = await getCurrentUser();
   return (
     <div className="text-white">
-      <Following following={session?.user?.Following} />
+      <Following
+        following={session?.user?.Following}
+        followers={session?.user?.Followers}
+      />
     </div>
   );
 };

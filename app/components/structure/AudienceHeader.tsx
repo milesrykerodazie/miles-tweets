@@ -6,16 +6,16 @@ import { BiArrowBack } from "react-icons/bi";
 
 interface AudienceHeaderPropTypes {
   name: string;
-  username: string;
+  usernamee: string;
 }
 
-const AudienceHeader: FC<AudienceHeaderPropTypes> = ({ name, username }) => {
+const AudienceHeader: FC<AudienceHeaderPropTypes> = ({ name, usernamee }) => {
   const router = useRouter();
-  const { userr } = useParams();
+  const { username } = useParams();
   const path = usePathname();
 
-  const followers = `/audience/${userr}/followers`;
-  const following = `/audience/${userr}/following`;
+  const followers = `/audience/${username}/followers`;
+  const following = `/audience/${username}/following`;
 
   return (
     <div
@@ -34,12 +34,12 @@ const AudienceHeader: FC<AudienceHeaderPropTypes> = ({ name, username }) => {
         />
         <div className="flex flex-col">
           <h1 className="text-white lg:text-xl font-semibold">{name}</h1>
-          <h2 className="text-gray-600 text-sm font-semibold">{username}</h2>
+          <h2 className="text-gray-600 text-sm font-semibold">{usernamee}</h2>
         </div>
       </div>
       <div className="flex items-center text-white">
         <Link
-          href={`/audience/${username}/followers`}
+          href={`/audience/${usernamee}/followers`}
           className={`w-full  pt-5 text-center ${
             path === followers ? "bg-[#e7e9ea]/10" : ""
           }`}
@@ -52,7 +52,7 @@ const AudienceHeader: FC<AudienceHeaderPropTypes> = ({ name, username }) => {
           )}
         </Link>
         <Link
-          href={`/audience/${username}/following`}
+          href={`/audience/${usernamee}/following`}
           className={`w-full  pt-5 text-center ${
             path === following ? "bg-[#e7e9ea]/10" : ""
           }`}

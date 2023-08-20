@@ -18,6 +18,7 @@ export async function getUserById(params: UserParams) {
     return;
   }
   //validate the id
+
   const { username } = params;
 
   const user = await prisma.user?.findUnique({

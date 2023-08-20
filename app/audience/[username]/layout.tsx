@@ -1,5 +1,7 @@
+import { getUserById } from "@/app/actions";
 import AudienceHeader from "@/app/components/structure/AudienceHeader";
 import { getCurrentUser } from "@/app/lib/auth";
+import { Profile } from "@/types";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
@@ -8,17 +10,16 @@ export const metadata: Metadata = {
 
 export default async function AudienceLayout({
   children,
+  params,
 }: {
   children: React.ReactNode;
+  params: { username: string };
 }) {
   //get session
-  const session = await getCurrentUser();
+  const userData = (await getUserById(params)) as Profile;
   return (
     <main>
-      <AudienceHeader
-        name={session?.user?.name}
-        username={session?.user?.username}
-      />
+      <AudienceHeader name={userData?.name} usernamee={userData?.username} />
       {children}
     </main>
   );

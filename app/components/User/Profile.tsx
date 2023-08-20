@@ -1,13 +1,10 @@
 "use client";
-import { Follow, Profile } from "@/types";
+import { Profile } from "@/types";
 import { useRouter } from "next/navigation";
 import React, { useState } from "react";
-import { BiArrowBack } from "react-icons/bi";
 import { format } from "date-fns";
 import Hero from "./Hero";
 import Details from "./Details";
-import { toast } from "react-hot-toast";
-import axios from "axios";
 import AllPosts from "../post/Posts";
 import Header from "../structure/Header";
 

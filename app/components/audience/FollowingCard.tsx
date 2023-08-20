@@ -15,8 +15,6 @@ const FollowingCard: FC<AudienceTypes> = ({ followers, follow }) => {
     (follower) => follower?.followerId === follow?.followingId
   );
 
-  console.log(" check following => ", checkFollowing);
-
   return (
     <div>
       <div className="flex space-x-2 relative">

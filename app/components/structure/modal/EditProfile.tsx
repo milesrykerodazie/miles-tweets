@@ -152,8 +152,10 @@ const EditProfile: FC<ModalProps> = ({ setOpenEdit, userData }) => {
             </h4>
           </div>
           <button
+            type="button"
+            disabled={isLoading}
             onClick={handleEdit}
-            className="px-4 py-1 text-sm bg-white text-primary rounded-full"
+            className="px-4 py-1 text-sm bg-white text-primary rounded-full disabled:cursor-not-allowed disabled:opacity-50"
           >
             save
           </button>

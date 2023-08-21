@@ -78,3 +78,7 @@ body {
 .postImageModal_wrapper {
   @apply flex flex-col absolute z-70 w-full h-[100vh] bg-black lg:bg-black/70 top-0 trans;
 }
+
+.editPostModal_wrapper {
+  @apply flex flex-col absolute h-[100vh] w-full md:w-4/5 lg:w-3/5 top-0 bg-black overflow-auto trans;
+}

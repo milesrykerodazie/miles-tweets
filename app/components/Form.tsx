@@ -153,7 +153,7 @@ const Form: React.FC<FormProps> = ({ placeholder, secondary, userImage }) => {
             value={postText}
             onChange={handleChange}
             cacheMeasurements
-            className="disabled:opacity-80 peer resize-none w-full mb-3 bg-black ring-0 outline-none text-[20px] placeholder-neutral-500 text-white overflow-y-hidden placeholder:text-sm placeholder:md:text-base"
+            className="disabled:opacity-80 peer resize-none w-full mb-3 bg-black ring-0 outline-none text-sm lg:text-base placeholder-neutral-500 text-white overflow-y-hidden placeholder:text-sm placeholder:md:text-base"
             placeholder={placeholder}
           />
           {/* display images here */}
@@ -166,7 +166,11 @@ const Form: React.FC<FormProps> = ({ placeholder, secondary, userImage }) => {
               postImages?.map((img, index) => (
                 <div
                   key={index}
-                  className="relative w-full h-24 sm:h-36 md:h-60 lg:h-72 trans"
+                  className={`relative w-full  trans ${
+                    postImages?.length < 3
+                      ? "h-[500px]"
+                      : "h-44 md:h-60 lg:h-72"
+                  }`}
                 >
                   <Image
                     src={img}

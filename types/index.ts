@@ -21,6 +21,7 @@ export interface User {
   };
   Followers: Followers[];
   Following: Following[];
+  notifications: NotificationTypes[];
 }
 
 export interface SessionInterface extends Session {

@@ -92,8 +92,10 @@ const PostCard: FC<PostPropType> = ({ post, userId }) => {
                 >
                   <div
                     key={image?.id}
-                    className={`relative w-full h-44 md:h-60 lg:h-72 trans ${
-                      post?.postImages.length === 1 && "h-60 md:h-72"
+                    className={`relative w-full trans ${
+                      post?.postImages.length < 3
+                        ? "h-[450px]"
+                        : "h-44 md:h-60 lg:h-72"
                     }`}
                   >
                     <Image

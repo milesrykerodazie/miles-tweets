@@ -22,6 +22,7 @@ const Notification = async () => {
             <NotificationPage
               key={notification?.id}
               notificationData={notification}
+              username={session?.user?.username}
             />
           ))}
         </div>

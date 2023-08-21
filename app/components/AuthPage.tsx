@@ -10,7 +10,7 @@ const AuthPage = () => {
       <main className="w-full mx-auto md:max-w-6xl flex flex-col md:flex-row p-6 xl:p-0 md:justify-between md:space-x-2 lg:space-x-20">
         {/* side one */}
         <div className="flex justify-center items-center w-full">
-          <div className="h-72 w-72  lg:h-[500px] md:w-[500px] relative trans">
+          <div className="h-48 w-48 lg:h-[500px] md:w-[500px] relative trans">
             <Image
               fill
               src="/images/tweet.png"

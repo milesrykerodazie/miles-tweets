@@ -88,18 +88,29 @@ const PostDetails: FC<PostDataTypes> = ({ postData, userImage, userId }) => {
                   : "grid-cols-2"
               }`}
             >
-              {postData?.postImages?.map((image) => (
-                <div
+              {postData?.postImages?.map((image, index) => (
+                <Link
+                  href={`/tweet/${postData?.user?.username}/status/${
+                    postData?.id
+                  }/photo/${index + 1}`}
                   key={image?.id}
-                  className="relative w-full h-44 md:h-60 lg:h-72 trans"
                 >
-                  <Image
-                    src={image?.url}
-                    alt="postimage"
-                    fill
-                    className="object-cover rounded-xl"
-                  />
-                </div>
+                  <div
+                    key={image?.id}
+                    className={`relative w-full trans ${
+                      postData?.postImages.length < 3
+                        ? "h-[450px]"
+                        : "h-44 md:h-60 lg:h-72"
+                    }`}
+                  >
+                    <Image
+                      src={image?.url}
+                      alt="postimage"
+                      fill
+                      className="object-cover rounded-xl"
+                    />
+                  </div>
+                </Link>
               ))}
             </div>
           )}

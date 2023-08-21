@@ -97,6 +97,7 @@ export const authOptions: NextAuthOptions = {
             },
             Following: true,
             Followers: true,
+            notifications: true,
           },
         });
 

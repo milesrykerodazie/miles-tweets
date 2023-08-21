@@ -8,9 +8,15 @@ import Header from "./structure/Header";
 
 interface NotificationPropTypes {
   notificationData: NotificationTypes;
+  username: string;
 }
 
-const NotificationPage: FC<NotificationPropTypes> = ({ notificationData }) => {
+const NotificationPage: FC<NotificationPropTypes> = ({
+  notificationData,
+  username,
+}) => {
+  const me = notificationData?.notifierusername === username;
+
   return (
     <div className="border-t border-neutral-800">
       <div className="flex space-x-2 p-3">
@@ -23,11 +29,22 @@ const NotificationPage: FC<NotificationPropTypes> = ({ notificationData }) => {
         <div className="flex-1">
           <div className="flex items-center justify-between">
             <div className="flex items-center space-x-2">
-              <p className="text-white">{notificationData?.notifierName}</p>
-              <p className="text-gray-600">
-                {notificationData?.notifierusername}
-              </p>
-              <p className="text-gray-600">
+              {me === true && (
+                <p className="text-gray-600 text-sm lg:text-base trans">You</p>
+              )}
+
+              {me === false && (
+                <p className="text-white truncate text-sm lg:text-base trans">
+                  {notificationData?.notifierName}
+                </p>
+              )}
+
+              {me === false && (
+                <p className="text-gray-600 truncate text-sm lg:text-base trans">
+                  {notificationData?.notifierusername}
+                </p>
+              )}
+              <p className="text-gray-600 truncate text-sm lg:text-base trans">
                 . {format(notificationData?.createdAt, "MMM-dd")}
               </p>
             </div>

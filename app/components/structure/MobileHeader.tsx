@@ -4,6 +4,7 @@ import Avatar from "../Avatar";
 import Logo from "./Logo";
 import MobileSidebar from "../sidebar/MobileSidebar";
 import { SessionInterface } from "@/types";
+import ClearNotification from "../ClearNotification";
 
 const MobileHeader = ({
   title,
@@ -21,7 +22,11 @@ const MobileHeader = ({
         </div>
         {!title && <Logo mobile={true} />}
         {title && <h1 className="text-white font-semibold">{title}</h1>}
-        <div></div>
+
+        {title === "Notifications" &&
+          session?.user?.notifications?.length > 0 && <ClearNotification />}
+        {session?.user?.notifications?.length < 1 && <div></div>}
+        {title !== "Notifications" && <div></div>}
       </div>
 
       <MobileSidebar

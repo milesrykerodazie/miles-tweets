@@ -36,6 +36,8 @@ const EditPost: FC<EditPostPropTypes> = ({ userImage, postData }) => {
     postImages: [],
   });
 
+  const [selectedImage, setSelectedImage] = useState("");
+
   const { postText, postImages } = post;
 
   const numOfImages = postImages?.length;
@@ -106,6 +108,39 @@ const EditPost: FC<EditPostPropTypes> = ({ userImage, postData }) => {
   const onDismiss = useCallback(() => {
     router.back();
   }, [router]);
+
+  //delete an image
+  const handleImgDelete = async (
+    e: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
+    e.preventDefault();
+    setDeletingImg(true);
+
+    if (!selectedImage) {
+      return;
+    }
+
+    try {
+      const deleteResponse = await axios.delete(
+        `/api/post/delete-image/${selectedImage}`
+      );
+      if (deleteResponse?.data) {
+        if (deleteResponse?.data?.success === true) {
+          toast.success(deleteResponse?.data?.message);
+          setDeletingImg(false);
+          setOpenDelete(false);
+          router.refresh();
+        }
+        if (deleteResponse?.data?.success === false) {
+          toast.error(deleteResponse?.data?.message);
+        }
+      }
+    } catch (error) {
+      toast.error("Something went wrong.");
+    } finally {
+      setDeletingImg(false);
+    }
+  };
 
   //handle post edit
   const handleUpdate = async (
@@ -250,7 +285,10 @@ const EditPost: FC<EditPostPropTypes> = ({ userImage, postData }) => {
                     className="object-contain w-full h-full"
                   />
                   <div
-                    onClick={() => setOpenDelete((current) => !current)}
+                    onClick={() => {
+                      setSelectedImage(image?.id);
+                      setOpenDelete(true);
+                    }}
                     className="absolute top-2 right-16 w-10 h-10 trans rounded-full bg-gray-700/50 flex justify-center items-center cursor-pointer"
                   >
                     <AiFillDelete className="text-red-600 w-5 h-5" />
@@ -273,7 +311,13 @@ const EditPost: FC<EditPostPropTypes> = ({ userImage, postData }) => {
                       deletingImg && "hidden"
                     }`}
                   >
-                    <button className="text-red-500">Yes</button>
+                    <button
+                      type="button"
+                      onClick={handleImgDelete}
+                      className="text-red-500"
+                    >
+                      Yes
+                    </button>
                     <span>/</span>
                     <button onClick={() => setOpenDelete(false)}>No</button>
                   </div>

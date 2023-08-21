@@ -94,6 +94,7 @@ const DeleteModal: FC<DeleteTypes> = ({
         <div>
           <Link
             href={`/tweet/${username}/edit/${id}`}
+            onClick={(e) => e.stopPropagation()}
             className="flex items-center space-x-2"
           >
             <AiFillEdit />

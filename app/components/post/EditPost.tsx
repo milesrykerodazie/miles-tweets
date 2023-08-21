@@ -10,8 +10,10 @@ import { useRouter } from "next/navigation";
 import { FaSpinner } from "react-icons/fa";
 import Avatar from "../Avatar";
 import { PostTypes } from "@/types";
+import { AiFillDelete } from "react-icons/ai";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
+import { ImSpinner } from "react-icons/im";
 
 interface EditPostPropTypes {
   userImage: string;
@@ -27,6 +29,8 @@ const EditPost: FC<EditPostPropTypes> = ({ userImage, postData }) => {
   //next route
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false); //states
+  const [openDelete, setOpenDelete] = useState(false);
+  const [deletingImg, setDeletingImg] = useState(false);
   const [post, setPost] = useState<FormData>({
     postText: postData?.body,
     postImages: [],
@@ -53,7 +57,7 @@ const EditPost: FC<EditPostPropTypes> = ({ userImage, postData }) => {
     if (files) {
       const selectedImages = Array.from(files);
 
-      if (selectedImages?.length + numOfImages > 4) {
+      if (selectedImages?.length + postData?.postImages.length > 4) {
         toast.error("Only 4 images allowed.");
         return;
       }
@@ -99,12 +103,17 @@ const EditPost: FC<EditPostPropTypes> = ({ userImage, postData }) => {
 
   const canSubmit = postText !== "" || postImages.length > 0;
 
-  // //post function
-  const handleCreatePost = async (
+  const onDismiss = useCallback(() => {
+    router.back();
+  }, [router]);
+
+  //handle post edit
+  const handleUpdate = async (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
-    e.preventDefault;
+    e.preventDefault();
     setIsLoading(true);
+
     if (!canSubmit) {
       toast.error("Empty post not allowed.");
       setIsLoading(false);
@@ -112,20 +121,28 @@ const EditPost: FC<EditPostPropTypes> = ({ userImage, postData }) => {
     }
 
     try {
-      const response = await axios.post("/api/post/create", {
-        post: postText ? postText : "",
-        imageFiles: postImages?.length > 0 ? postImages : [],
-      });
+      const response = await axios.patch(
+        `/api/post/edit/${postData?.user?.username}/${postData?.id}`,
+        {
+          text: postText,
+          Images: postImages,
+        }
+      );
       if (response?.data) {
         if (response?.data?.success === true) {
           toast.success(response?.data?.message);
-          setPost({
-            postText: "",
+          setIsLoading(false);
+          setPost((prev) => ({
+            ...prev,
             postImages: [],
-          });
-          router.refresh();
+          }));
+          router.push(
+            `/tweet/${response?.data?.owner}/status/${response?.data?.postId}`
+          );
         }
+
         if (response?.data?.success === false) {
+          setIsLoading(false);
           toast.error(response?.data?.message);
         }
       }
@@ -133,13 +150,8 @@ const EditPost: FC<EditPostPropTypes> = ({ userImage, postData }) => {
       toast.error("Something went wrong.");
     } finally {
       setIsLoading(false);
-      router.refresh();
     }
   };
-
-  const onDismiss = useCallback(() => {
-    router.back();
-  }, [router]);
 
   return (
     <div className="">
@@ -165,7 +177,7 @@ const EditPost: FC<EditPostPropTypes> = ({ userImage, postData }) => {
 
           {/* post button */}
           <button
-            onClick={handleCreatePost}
+            onClick={handleUpdate}
             type="button"
             disabled={isLoading}
             className={`trans disabled:opacity-30 disabled:cursor-not-allowed px-4 py-1 rounded-full bg-sky-500 hover:bg-opacity-90 cursor-pointer text-white text-sm md:text-base ${
@@ -199,8 +211,10 @@ const EditPost: FC<EditPostPropTypes> = ({ userImage, postData }) => {
               postImages?.map((img, index) => (
                 <div
                   key={index}
-                  className={`relative w-full h-48 md:h-60 lg:h-72 trans ${
-                    numOfImages === 1 && "h-72"
+                  className={`relative w-full  trans ${
+                    numOfImages === 1
+                      ? "h-72 md:h-[500px]"
+                      : "h-48 md:h-60 lg:h-72"
                   }`}
                 >
                   <Image
@@ -223,21 +237,52 @@ const EditPost: FC<EditPostPropTypes> = ({ userImage, postData }) => {
           </div>
 
           {/* display post images */}
-          <div className={postImages?.length > 0 ? "hidden" : ""}>
+          <div className={postImages?.length > 0 ? "hidden" : "relative"}>
             <Carousel infiniteLoop={true} showThumbs={false}>
               {postData?.postImages?.map((image) => (
                 <div
                   key={image?.id}
-                  className="w-full h-[550px] xl:h-[650px] trans"
+                  className="w-full h-[550px] xl:h-[650px] trans relative"
                 >
                   <img
                     src={image?.url}
                     alt="postimage"
                     className="object-contain w-full h-full"
                   />
+                  <div
+                    onClick={() => setOpenDelete((current) => !current)}
+                    className="absolute top-2 right-16 w-10 h-10 trans rounded-full bg-gray-700/50 flex justify-center items-center cursor-pointer"
+                  >
+                    <AiFillDelete className="text-red-600 w-5 h-5" />
+                  </div>
                 </div>
               ))}
             </Carousel>
+            {openDelete && (
+              <div
+                className={`flex flex-col space-y-3 absolute top-0 bg-gray-700/60 w-full items-center justify-center h-full z-60 trans`}
+              >
+                <div
+                  className={`bg-white w-1/2 flex flex-col items-center justify-center space-y-2 py-3 rounded-lg ${
+                    deletingImg && "animate-pulse opacity-80"
+                  }`}
+                >
+                  <h3 className="text-sm lg:text-base">Are you sure?</h3>
+                  <div
+                    className={`flex items-center space-x-5 text-sm lg:text-base ${
+                      deletingImg && "hidden"
+                    }`}
+                  >
+                    <button className="text-red-500">Yes</button>
+                    <span>/</span>
+                    <button onClick={() => setOpenDelete(false)}>No</button>
+                  </div>
+                  {deletingImg && (
+                    <ImSpinner className="w-6 h-6 animate-spin" />
+                  )}
+                </div>
+              </div>
+            )}
           </div>
         </div>
       </div>

@@ -167,3 +167,11 @@ export interface Following {
   userId: string;
   followingId: string;
 }
+
+export interface miniUser {
+  id: string;
+  name: string;
+  username: string;
+  image: string;
+  bio: string | null;
+}

@@ -11,7 +11,7 @@ const MobileNavigation = ({ notification }: { notification: Notification }) => {
         <Link href={"/home"}>
           <BsHouseFill size={22} color="white" />
         </Link>
-        <Link href={""}>
+        <Link href={"/search"}>
           <FiSearch size={22} color="white" />
         </Link>
         <Link href={"/notification"}>

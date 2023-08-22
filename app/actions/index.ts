@@ -379,3 +379,47 @@ export async function getNotificaions() {
 
   return notifications;
 }
+
+export async function getMiniUsersList(searchOuery: { keyword?: string }) {
+  //if user is authenticated
+  const session = await getCurrentUser();
+
+  if (!session) {
+    return;
+  }
+
+  try {
+    const { keyword } = searchOuery;
+
+    let query: any = {};
+
+    if (keyword !== "") {
+      query.OR = [
+        { name: { contains: keyword, mode: "insensitive" } },
+        { username: { contains: keyword, mode: "insensitive" } },
+      ];
+    } else {
+      query.OR = [
+        { name: { contains: "query", mode: "insensitive" } },
+        { username: { contains: "query", mode: "insensitive" } },
+      ];
+    }
+
+    //get all users by query
+    const usersFound = await prisma.user.findMany({
+      where: query,
+      select: {
+        id: true,
+        name: true,
+        username: true,
+        image: true,
+        bio: true,
+      },
+    });
+
+    const users = usersFound?.filter(
+      (userFound) => userFound?.username !== session?.user?.username
+    );
+    return users;
+  } catch (error) {}
+}

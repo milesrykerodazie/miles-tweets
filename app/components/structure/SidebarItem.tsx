@@ -1,9 +1,5 @@
 "use client";
-import React, { useCallback } from "react";
-import { IconType } from "react-icons";
-import { BsDot } from "react-icons/bs";
-import { signOut } from "next-auth/react";
-import { BiLogOut } from "react-icons/bi";
+import { FiSearch } from "react-icons/fi";
 import { BsHouseFill, BsBellFill } from "react-icons/bs";
 import { FaUser } from "react-icons/fa";
 import { Notification, SessionInterface } from "@/types";
@@ -30,6 +26,22 @@ const SidebarItem = ({ currentUser, notification }: SessionProp) => {
               <BsHouseFill size={28} color="white" />
               <p className="hidden md:block text-white text-sm md:text-xl">
                 Home
+              </p>
+            </div>
+          </div>
+        </Link>
+        {/* search */}
+        <Link href={"/search"}>
+          <div className="flex flex-row items-center hover:bg-slate-300 trans hover:bg-opacity-10 rounded-full">
+            <div className="hidden sm:block trans">
+              <div className="relative h-14 w-14 flex items-center justify-center p-4 cursor-pointer md:hidden">
+                <FiSearch size={28} color="white" />
+              </div>
+            </div>
+            <div className="relative hidden md:flex items-row gap-4 p-4 cursor-pointer items-center">
+              <FiSearch size={28} color="white" />
+              <p className="hidden md:block text-white text-sm md:text-xl">
+                Explore
               </p>
             </div>
           </div>

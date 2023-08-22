@@ -7,10 +7,10 @@ import { signIn } from "next-auth/react";
 const AuthPage = () => {
   return (
     <div className=" bg-primary w-full flex items-center justify-center h-screen">
-      <main className="w-full mx-auto md:max-w-6xl flex flex-col md:flex-row p-6 xl:p-0 md:justify-between md:space-x-2 lg:space-x-20">
+      <main className="w-full mx-auto md:max-w-6xl flex flex-col lg:flex-row p-6 xl:p-0 lg:justify-between lg:space-x-20">
         {/* side one */}
         <div className="flex justify-center items-center w-full">
-          <div className="h-48 w-48 lg:h-[500px] md:w-[500px] relative trans">
+          <div className="h-40 w-40 lg:h-[500px] md:w-80 relative trans">
             <Image
               fill
               src="/images/tweet.png"

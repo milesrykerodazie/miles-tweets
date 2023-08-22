@@ -99,7 +99,7 @@ const PostDetails: FC<PostDataTypes> = ({ postData, userImage, userId }) => {
                     key={image?.id}
                     className={`relative w-full trans ${
                       postData?.postImages.length < 3
-                        ? "h-[450px]"
+                        ? "h-80"
                         : "h-44 md:h-60 lg:h-72"
                     }`}
                   >

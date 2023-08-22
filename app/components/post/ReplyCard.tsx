@@ -27,20 +27,22 @@ const ReplyCard: FC<ReplyPropTypes> = ({ reply, userId }) => {
         </div>
         <div className="flex-1">
           <div className="flex items-center justify-between">
-            <div className="flex items-center space-x-2 text-sm md:text-base trans">
+            <div className="flex items-center space-x-2 text-sm trans">
               <Link
                 href={`/profile/${reply?.user?.username}`}
                 onClick={(e) => e.stopPropagation()}
               >
-                <p className="text-white">{reply?.user?.name}</p>
+                <p className="text-white truncate">{reply?.user?.name}</p>
               </Link>
               <Link
                 href={`/profile/${reply?.user?.username}`}
                 onClick={(e) => e.stopPropagation()}
               >
-                <p className="text-gray-600">{reply?.user?.username}</p>
+                <p className="text-gray-600 truncate">
+                  {reply?.user?.username}
+                </p>
               </Link>
-              <p className="text-gray-600">
+              <p className="text-gray-600 truncate">
                 . {format(reply?.createdAt, "MMM-dd")}
               </p>
             </div>

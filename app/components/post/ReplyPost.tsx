@@ -66,7 +66,7 @@ const ReplyPost: FC<ReplyPropTypes> = ({ postId, userImage, secondary }) => {
           value={reply}
           onChange={(e) => setReply(e.target.value)}
           cacheMeasurements
-          className="disabled:opacity-80 peer resize-none w-full mb-4 bg-black ring-0 outline-none text-sm md:text-[20px] placeholder-neutral-500 text-white overflow-y-hidden placeholder:text-sm placeholder:md:text-base"
+          className="disabled:opacity-80 peer resize-none w-full mb-4 bg-black ring-0 outline-none text-sm placeholder-neutral-500 text-white overflow-y-hidden placeholder:text-sm placeholder:md:text-base"
           placeholder="Post your reply!"
         />
         {/* post button */}
@@ -75,7 +75,7 @@ const ReplyPost: FC<ReplyPropTypes> = ({ postId, userImage, secondary }) => {
             type="button"
             disabled={replying}
             onClick={handleReply}
-            className={`trans disabled:opacity-30 disabled:cursor-not-allowed mt-2 px-4 py-1 rounded-full bg-sky-500 hover:bg-opacity-90 cursor-pointer text-sm md:text-base text-white ${
+            className={`trans disabled:opacity-30 disabled:cursor-not-allowed mt-2 px-4 py-1 rounded-full bg-sky-500 hover:bg-opacity-90 cursor-pointer text-sm text-white ${
               !canSubmit && "opacity-30 cursor-not-allowed"
             }`}
           >

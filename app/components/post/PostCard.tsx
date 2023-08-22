@@ -74,7 +74,9 @@ const PostCard: FC<PostPropType> = ({ post, userId }) => {
             href={`/tweet/${post?.user?.username}/status/${post?.id}`}
             onClick={(e) => e.stopPropagation()}
           >
-            <div className="cursor-pointer text-white mt-2">{post?.body}</div>
+            <div className="cursor-pointer text-white mt-2 text-sm md:text-base">
+              {post?.body}
+            </div>
           </Link>
           {/* image section */}
           {post?.postImages && (
@@ -94,7 +96,7 @@ const PostCard: FC<PostPropType> = ({ post, userId }) => {
                     key={image?.id}
                     className={`relative w-full trans ${
                       post?.postImages.length < 3
-                        ? "h-[450px]"
+                        ? "h-80"
                         : "h-44 md:h-60 lg:h-72"
                     }`}
                   >

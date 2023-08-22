@@ -113,7 +113,7 @@ const EditProfile: FC<ModalProps> = ({ setOpenEdit, userData }) => {
           if (response?.data?.success === true) {
             toast.success(response?.data?.message);
             setOpenEdit(false);
-            route.push(`/profile/${response?.data?.userId}`);
+            route.push(`/profile/${response?.data?.username}`);
           }
           if (response?.data?.success === false) {
             toast.error(response?.data?.message);

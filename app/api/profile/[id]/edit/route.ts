@@ -166,6 +166,6 @@ export async function PATCH(
   return NextResponse.json({
     success: true,
     message: "User Updated Successfully.",
-    userId: exists?.id,
+    username: exists?.username,
   });
 }

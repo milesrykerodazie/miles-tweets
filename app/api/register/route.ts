@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import * as argon from "argon2";
 
 import prisma from "@/app/lib/prismadb";
+import { nanoid } from "nanoid";
 
 export async function POST(request: Request) {
   const body = await request.json();
@@ -42,7 +43,7 @@ export async function POST(request: Request) {
     data: {
       name,
       email,
-      username,
+      username: username ? username : nanoid(10),
       image: defaultImage,
       password: hashedPassword,
     },

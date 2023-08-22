@@ -52,7 +52,7 @@ const PostCard: FC<PostPropType> = ({ post, userId }) => {
                 href={`/profile/${post?.user?.username}`}
                 onClick={(e) => e.stopPropagation()}
               >
-                <p className="text-gray-600">{post?.user?.username}</p>
+                <p className="text-gray-600">@{post?.user?.username}</p>
               </Link>
 
               <p className="text-gray-600">
@@ -92,19 +92,14 @@ const PostCard: FC<PostPropType> = ({ post, userId }) => {
                   }/photo/${index + 1}`}
                   key={image?.id}
                 >
-                  <div
-                    key={image?.id}
-                    className={`relative w-full trans ${
-                      post?.postImages.length < 3
-                        ? "h-80"
-                        : "h-44 md:h-60 lg:h-72"
-                    }`}
-                  >
+                  <div key={image?.id} className="relative">
                     <Image
                       src={image?.url}
                       alt="postimage"
-                      fill
-                      className="object-cover rounded-xl"
+                      width={0}
+                      height={0}
+                      sizes="100vw"
+                      style={{ width: "100%", height: "auto" }}
                     />
                   </div>
                 </Link>

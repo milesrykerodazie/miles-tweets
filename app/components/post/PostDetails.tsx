@@ -52,7 +52,7 @@ const PostDetails: FC<PostDataTypes> = ({ postData, userImage, userId }) => {
                 <p className="text-white">{postData?.user?.name}</p>
               </Link>
               <Link href={`/profile/${postData?.user?.username}`}>
-                <p className="text-gray-600">{postData?.user?.username}</p>
+                <p className="text-gray-600">@{postData?.user?.username}</p>
               </Link>
             </div>
             <div
@@ -95,19 +95,14 @@ const PostDetails: FC<PostDataTypes> = ({ postData, userImage, userId }) => {
                   }/photo/${index + 1}`}
                   key={image?.id}
                 >
-                  <div
-                    key={image?.id}
-                    className={`relative w-full trans ${
-                      postData?.postImages.length < 3
-                        ? "h-80"
-                        : "h-44 md:h-60 lg:h-72"
-                    }`}
-                  >
+                  <div key={image?.id} className="relative">
                     <Image
                       src={image?.url}
                       alt="postimage"
-                      fill
-                      className="object-cover rounded-xl"
+                      width={0}
+                      height={0}
+                      sizes="100vw"
+                      style={{ width: "100%", height: "auto" }}
                     />
                   </div>
                 </Link>

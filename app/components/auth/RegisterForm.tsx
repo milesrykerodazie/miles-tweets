@@ -106,7 +106,6 @@ const RegisterForm = () => {
           value={username}
           type="text"
           onChange={(event) => setUsername(event.target.value)}
-          required
           disabled={isLoading}
         />
 

@@ -100,6 +100,7 @@ export async function PATCH(
         body?.Images?.map((image: any) =>
           cloudinary.uploader.upload(image, {
             folder: "miles-tweets/post-images",
+            transformation: [{ width: 640, height: 426, crop: "scale" }],
           })
         )
       );

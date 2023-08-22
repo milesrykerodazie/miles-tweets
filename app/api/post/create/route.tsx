@@ -33,6 +33,7 @@ export async function POST(req: NextRequest) {
       body?.imageFiles?.map((image: any) =>
         cloudinary.uploader.upload(image, {
           folder: "miles-tweets/post-images",
+          transformation: [{ width: 640, height: 426, crop: "scale" }],
         })
       )
     );

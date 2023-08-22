@@ -109,6 +109,7 @@ const PostImageDetails: FC<PostDataTypes> = ({
                   src={image?.url}
                   alt="postimage"
                   className="object-contain w-full h-full"
+                  referrerPolicy="no-referrer"
                 />
               </div>
             ))}

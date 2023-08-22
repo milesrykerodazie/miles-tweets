@@ -70,6 +70,7 @@ export interface Profile {
 export type FormState = {
   name: string;
   bio: string;
+  username: string;
   userImage: string;
   coverImage: string;
 };

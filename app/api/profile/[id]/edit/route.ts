@@ -118,6 +118,7 @@ export async function PATCH(
         },
         data: {
           userImage: uploadedImage?.secure_url,
+          image: uploadedImage?.secure_url,
         },
       });
     }

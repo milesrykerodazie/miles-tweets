@@ -5,7 +5,7 @@ interface InputProps {
   id: string;
   label: string;
   type?: string;
-  required: boolean;
+  required?: boolean;
   disabled: boolean;
   value: string;
   placeholder?: string;

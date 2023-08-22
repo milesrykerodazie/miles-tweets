@@ -22,7 +22,7 @@ const Logout: FC<SessionTypes> = ({ currentUser }) => {
         <div className="hidden md:flex md:items-center  md:justify-between md:flex-1">
           <div className="text-xs lg:text-base trans">
             <p className="text-white truncate">{currentUser?.user?.name}</p>
-            <p className="text-gray-600">{currentUser?.user?.username}</p>
+            <p className="text-gray-600">@{currentUser?.user?.username}</p>
           </div>
           <div onClick={() => setOpen((current) => !current)}>
             <BsThreeDots className="text-gray-600" />

@@ -50,7 +50,7 @@ const MobileSidebar: FC<MobileTypes> = ({
               href={`/profile/${session?.user?.username}`}
               onClick={() => setNavMobile(false)}
             >
-              <p className="text-gray-600">{session?.user?.username}</p>
+              <p className="text-gray-600">@{session?.user?.username}</p>
             </Link>
           </div>
           <div className="flex flex-row items-center mt-4 gap-6">

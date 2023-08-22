@@ -21,16 +21,19 @@ const EditProfile: FC<ModalProps> = ({ setOpenEdit, userData }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [showCount, setShowCount] = useState({
     name: false,
+    username: false,
     bio: false,
   });
   const [form, setForm] = useState<FormState>({
     name: userData?.name,
     bio: userData?.bio,
+    username: userData?.username,
     coverImage: "",
     userImage: "",
   });
   const [count, setCount] = useState({
     name: form?.name?.length > 0 ? form?.name?.length : 0,
+    username: form?.username?.length > 0 ? form?.username?.length : 0,
     bio: form?.bio?.length > 0 ? form?.bio?.length : 0,
   });
 
@@ -39,6 +42,14 @@ const EditProfile: FC<ModalProps> = ({ setOpenEdit, userData }) => {
     setShowCount((prevState) => ({
       ...prevState,
       name: !prevState.name,
+    }));
+  };
+
+  //show the username count
+  const toggleUsername = () => {
+    setShowCount((prevState) => ({
+      ...prevState,
+      username: !prevState.username,
     }));
   };
   // show bio count
@@ -57,6 +68,12 @@ const EditProfile: FC<ModalProps> = ({ setOpenEdit, userData }) => {
       if (fieldName === "name") {
         setCount((prev) => {
           const updatedCount = { ...prev, name: value.length };
+          return updatedCount;
+        });
+      }
+      if (fieldName === "username") {
+        setCount((prev) => {
+          const updatedCount = { ...prev, username: value.length };
           return updatedCount;
         });
       }
@@ -95,6 +112,7 @@ const EditProfile: FC<ModalProps> = ({ setOpenEdit, userData }) => {
   const updateData = {
     name: form?.name,
     bio: form?.bio,
+    username: form?.username,
     userImage: form?.userImage,
     coverImage: form?.coverImage,
   };
@@ -135,6 +153,7 @@ const EditProfile: FC<ModalProps> = ({ setOpenEdit, userData }) => {
         e.preventDefault();
         setShowCount({
           name: false,
+          username: false,
           bio: false,
         });
       }}
@@ -256,6 +275,16 @@ const EditProfile: FC<ModalProps> = ({ setOpenEdit, userData }) => {
               state={form?.name}
               setState={(value) => handleStateChange("name", value)}
               setShowCount={toggleName}
+            />
+            {/* the username */}
+            <FormField
+              title="Username"
+              count={count?.username}
+              maxCount={28}
+              showCount={showCount?.username}
+              state={form?.username}
+              setState={(value) => handleStateChange("username", value)}
+              setShowCount={toggleUsername}
             />
             {/* the name */}
             <FormField

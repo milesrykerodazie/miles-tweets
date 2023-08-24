@@ -101,14 +101,11 @@ const PostImageDetails: FC<PostDataTypes> = ({
         <div className="py-3 flex-1">
           <Carousel infiniteLoop={true} showThumbs={false}>
             {postData?.postImages?.map((image) => (
-              <div
-                key={image?.id}
-                className="w-full h-[550px] xl:h-[650px] trans"
-              >
+              <div key={image?.id} className="">
                 <img
                   src={image?.url}
                   alt="postimage"
-                  className="object-contain w-full h-full"
+                  className="object-contain h-[80vh]"
                   referrerPolicy="no-referrer"
                 />
               </div>

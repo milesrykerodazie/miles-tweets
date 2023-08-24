@@ -61,16 +61,20 @@ const PostCard: FC<PostPropType> = ({ post, userId }) => {
                 href={`/profile/${post?.user?.username}`}
                 onClick={(e) => e.stopPropagation()}
               >
-                <p className="text-white">{post?.user?.name}</p>
+                <p className="text-white truncate whitespace-nowrap">
+                  {post?.user?.name}
+                </p>
               </Link>
               <Link
                 href={`/profile/${post?.user?.username}`}
                 onClick={(e) => e.stopPropagation()}
               >
-                <p className="text-gray-600">@{post?.user?.username}</p>
+                <p className="text-gray-600 truncate whitespace-nowrap">
+                  @{post?.user?.username}
+                </p>
               </Link>
 
-              <p className="text-gray-600">
+              <p className="text-gray-600 truncate whitespace-nowrap">
                 . {format(post?.createdAt, "MMM-dd")}
               </p>
             </div>

@@ -62,10 +62,14 @@ const PostDetails: FC<PostDataTypes> = ({ postData, userImage, userId }) => {
           <div className="flex items-center justify-between flex-1">
             <div className="text-sm md:text-base trans">
               <Link href={`/profile/${postData?.user?.username}`}>
-                <p className="text-white">{postData?.user?.name}</p>
+                <p className="text-white truncate whitespace-nowrap">
+                  {postData?.user?.name}
+                </p>
               </Link>
               <Link href={`/profile/${postData?.user?.username}`}>
-                <p className="text-gray-600">@{postData?.user?.username}</p>
+                <p className="text-gray-600 truncate whitespace-nowrap">
+                  @{postData?.user?.username}
+                </p>
               </Link>
             </div>
             <div

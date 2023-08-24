@@ -66,6 +66,20 @@ export async function PATCH(
     });
   }
 
+  // check if username exists
+  const usernameExists = await prisma.user.findUnique({
+    where: {
+      username: body?.username,
+    },
+  });
+
+  if (exists?.username === usernameExists?.username) {
+    return NextResponse.json({
+      success: false,
+      message: "Same Previous Username.",
+    });
+  }
+
   //update inputs first
   const updateUser = await prisma.user.update({
     where: {
@@ -74,10 +88,12 @@ export async function PATCH(
     data: {
       name: body?.name,
       bio: body?.bio,
+      username: body?.username,
     },
     select: {
       id: true,
       name: true,
+      username: true,
     },
   });
 
@@ -167,6 +183,6 @@ export async function PATCH(
   return NextResponse.json({
     success: true,
     message: "User Updated Successfully.",
-    username: exists?.username,
+    username: updateUser?.username,
   });
 }

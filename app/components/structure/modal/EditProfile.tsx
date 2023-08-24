@@ -144,7 +144,7 @@ const EditProfile: FC<ModalProps> = ({ setOpenEdit, userData }) => {
         route.refresh();
       }
     },
-    [form?.bio, form?.coverImage, form?.name, form?.userImage]
+    [form?.bio, form?.coverImage, form?.name, form?.userImage, form?.username]
   );
 
   return (

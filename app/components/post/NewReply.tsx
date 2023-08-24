@@ -32,11 +32,19 @@ const NewReply: FC<ReplyPropTypes> = ({
           {/* section 1  */}
           <div className="flex items-center justify-between ">
             <div className="flex items-center space-x-2 text-sm md:text-base trans">
-              <p className="text-white">{postData?.user?.name}</p>
-              <p className="text-gray-600">{postData?.user?.username}</p>
-              <p className="text-gray-600">
+              <Link
+                href={`/profile/${postData?.user?.username}`}
+                className="text-white"
+              >
+                {postData?.user?.name}
+              </Link>
+              <p className="text-gray-600">@{postData?.user?.username}</p>
+              <Link
+                href={`/profile/${postData?.user?.username}`}
+                className="text-gray-600"
+              >
                 . {format(postData?.createdAt, "MMM-dd")}
-              </p>
+              </Link>
             </div>
           </div>
           <div className="cursor-pointer text-white mt-2">{postData?.body}</div>

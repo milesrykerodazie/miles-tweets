@@ -13,6 +13,8 @@ import Header from "../structure/Header";
 import ReplyPost from "./ReplyPost";
 import DeleteModal from "../structure/modal/DeleteModal";
 import Link from "next/link";
+import RetweetModal from "../structure/modal/RetweetModal";
+import { format } from "date-fns";
 
 interface PostDataTypes {
   postData: PostTypes;
@@ -24,10 +26,18 @@ const PostDetails: FC<PostDataTypes> = ({ postData, userImage, userId }) => {
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false);
   const [open, setOpen] = useState(false);
+  const [openRepost, setOpenRepost] = useState(false);
 
   //has liked post
   const hasLiked = postData?.likes?.filter((like) => like?.userId === userId);
   const id = postData?.id;
+  const hasReposted = postData?.Repost?.some((post) => post?.userId === userId);
+
+  const maxLength = 100;
+  const truncatedBody =
+    postData?.userPostBody !== null && postData?.userPostBody.length > maxLength
+      ? postData?.userPostBody.slice(0, maxLength - 3) + "..."
+      : postData?.userPostBody;
 
   return (
     <div>
@@ -35,7 +45,10 @@ const PostDetails: FC<PostDataTypes> = ({ postData, userImage, userId }) => {
       <Header title="Post" allowed />
       {/* section 2 */}
       <div
-        onClick={() => setOpen(false)}
+        onClick={() => {
+          setOpen(false);
+          setOpenRepost(false);
+        }}
         className="p-3 border-b border-neutral-800"
       >
         <div className="flex space-x-2 relative">
@@ -77,7 +90,7 @@ const PostDetails: FC<PostDataTypes> = ({ postData, userImage, userId }) => {
           )}
         </div>
         {/* section 2.2 */}
-        <div className="mt-2">
+        <div className="my-2">
           <p className="text-white">{postData?.body}</p>
           {/* image section */}
           {postData?.postImages && (
@@ -110,10 +123,98 @@ const PostDetails: FC<PostDataTypes> = ({ postData, userImage, userId }) => {
             </div>
           )}
         </div>
+
+        {/* reposted post section */}
+        {postData?.userPost && (
+          <div
+            onClick={(e) => {
+              e.stopPropagation();
+              router.push(
+                `/tweet/${postData?.userPostUsername}/status/${postData?.userPost}`
+              );
+            }}
+            className={`border border-neutral-800 rounded-xl ${
+              postData?.postImages?.length > 0 ? "pb-3" : ""
+            }`}
+          >
+            <div className="text-white flex flex-row gap-1 p-3">
+              <div>
+                <Avatar image={postData?.userPostImage} size="h-5 w-5" />
+              </div>
+              {/* other attributes */}
+              <div className="flex items-center justify-between ">
+                <div className="flex items-center space-x-2 text-sm md:text-base trans">
+                  <Link
+                    href={`/profile/${postData?.userPostUsername}`}
+                    className="text-white"
+                  >
+                    {postData?.userPostName}
+                  </Link>
+                  <Link
+                    href={`/profile/${postData?.userPostUsername}`}
+                    className="text-gray-600"
+                  >
+                    @{postData?.userPostUsername}
+                  </Link>
+                  <p className="text-gray-600">
+                    . {format(postData?.userPostDate, "MMM-dd")}
+                  </p>
+                </div>
+              </div>
+            </div>
+            {/* the postData text and images */}
+            <div
+              className={`flex ${
+                postData?.postImages?.length > 0
+                  ? "flex-row space-x-2 space-y-0"
+                  : "flex-col space-y-1"
+              }`}
+            >
+              <div
+                className={`cursor-pointer text-white ${
+                  postData?.postImages?.length > 0
+                    ? "order-1 px-2 flex-1"
+                    : "p-3"
+                }`}
+              >
+                {truncatedBody}
+              </div>
+              <div
+                className={`grid gap-1 ${
+                  postData?.userPostImages?.length === 1
+                    ? "grid-cols-1"
+                    : "grid-cols-2"
+                }`}
+              >
+                {postData?.userPostImages?.length > 0 &&
+                  postData?.userPostImages?.map((img) => (
+                    <div key={img} className="relative">
+                      <Image
+                        src={img}
+                        alt="postimage"
+                        width={0}
+                        height={0}
+                        sizes="100vw"
+                        className={` w-[100%] ${
+                          postData?.postImages?.length > 0
+                            ? "h-16 rounded-lg"
+                            : "rounded-b-lg h-44 lg:h-52"
+                        }`}
+                      />
+                    </div>
+                  ))}
+              </div>
+            </div>
+          </div>
+        )}
+
         {/* section 2.3 */}
         <div className="text-white border-y border-neutral-800 mt-5 py-4 flex items-center space-x-5 text-sm md:text-base trans">
           <div>
-            <span>0</span> <span className="text-gray-600">Reposts</span>
+            <span>{postData?.Repost?.length}</span>{" "}
+            <span className="text-gray-600">
+              {postData?.Repost?.length === 1 ? "Repost" : "Reposts"}
+            </span>
           </div>
           <div>
             <span>{postData?.comments.length}</span>{" "}
@@ -129,7 +230,27 @@ const PostDetails: FC<PostDataTypes> = ({ postData, userImage, userId }) => {
         {/* section 2.4 */}
         <div className="text-gray-500  border-b border-neutral-800 p-4 flex items-center justify-between space-x-5">
           <FaRegComment className="h-4 w-4 md:h-5 md:w-5 trans" />
-          <AiOutlineRetweet className="h-4 w-4 md:h-5 md:w-5 trans" />
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              setOpenRepost(true);
+            }}
+            className="flex items-center space-x-3 relative"
+          >
+            <AiOutlineRetweet
+              className={`h-4 w-4 md:h-5 md:w-5 trans ${
+                hasReposted && "text-green-500"
+              }`}
+            />
+            {openRepost && (
+              <RetweetModal
+                postId={postData?.id}
+                setOpenRepost={setOpenRepost}
+                hasReposted={hasReposted}
+              />
+            )}
+          </button>
+
           <button
             type="button"
             disabled={isLoading}

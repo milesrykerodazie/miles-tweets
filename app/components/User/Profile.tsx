@@ -1,7 +1,5 @@
 "use client";
-import { Profile } from "@/types";
-import { useRouter } from "next/navigation";
-import React, { useState } from "react";
+import { UserProfile } from "@/types";
 import { format } from "date-fns";
 import Hero from "./Hero";
 import Details from "./Details";
@@ -9,19 +7,32 @@ import AllPosts from "../post/Posts";
 import Header from "../structure/Header";
 
 interface UserTypes {
-  userData: Profile;
+  userData: UserProfile;
   userId: string;
 }
 
 const Profile = ({ userData, userId }: UserTypes) => {
-  const router = useRouter();
-  const [isLoading, setIsLoading] = useState(false);
   const canEdit = userData?.id === userId;
 
   //check if user has followed
   const hasFollowed = userData?.Followers?.some(
     (user) => user?.followerId === userId
   );
+
+  // const posts = userData?.posts as PostTypes[];
+  // const reposts = userData?.Repost as Repost[];
+
+  // const filteredRepost = reposts?.filter?.((repost) => repost?.quote === null);
+
+  // //@ts-expect-error
+  // const combinedArray = posts.concat(filteredRepost);
+
+  // // sorted array
+
+  // const sorted = combinedArray.sort(
+  //   //@ts-expect-error
+  //   (a, b) => new Date(b.createdAt) - new Date(a.createdAt)
+  // );
 
   return (
     <div>

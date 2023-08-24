@@ -20,7 +20,7 @@ export async function POST(req: NextRequest) {
 
   const body = await req.json();
 
-  //create the new product
+  //create the new post
   const newPost = await prisma.post.create({
     data: {
       body: body?.post === "" ? "" : body?.post,

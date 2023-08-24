@@ -58,6 +58,31 @@ export async function DELETE(
     );
   }
 
+  //delete reposts with userpostid and userId
+  if (post?.userPost !== null) {
+    //find reposts that i own
+    const reposts = await prisma.repost.findMany({
+      where: {
+        postId: post?.userPost,
+        userId: currentUser?.user?.id,
+      },
+    });
+
+    //find the ones that their reposts have quote == null
+    const notNullReposts = reposts?.filter((repost) => repost?.quote !== null);
+
+    // delete many with the id and username
+    await prisma.$transaction(
+      notNullReposts?.map((repost) =>
+        prisma.repost.deleteMany({
+          where: {
+            id: repost?.id,
+          },
+        })
+      )
+    );
+  }
+
   //   now delete the post
   await prisma.post.delete({
     where: {

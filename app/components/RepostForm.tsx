@@ -9,43 +9,53 @@ import { toast } from "react-hot-toast";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 import { FaSpinner } from "react-icons/fa";
+import { SinglePostTypes } from "@/types";
+import Link from "next/link";
+import { format } from "date-fns";
 
 interface FormProps {
   placeholder: string;
   secondary?: boolean;
   userImage: string;
-  repost?: boolean;
+  postData: SinglePostTypes;
 }
 
 interface FormData {
-  postText: string;
-  postImages: string[];
+  quote: string;
+  quoteImages: string[];
 }
 
-const Form: React.FC<FormProps> = ({
+const RepostForm: React.FC<FormProps> = ({
   placeholder,
   secondary,
   userImage,
-  repost,
+  postData,
 }) => {
   //next route
   const router = useRouter();
   const [isLoading, setIsLoading] = useState(false); //states
-  const [post, setPost] = useState<FormData>({
-    postText: "",
-    postImages: [],
+  const [form, setForm] = useState<FormData>({
+    quote: "",
+    quoteImages: [],
   });
 
-  const { postText, postImages } = post;
+  const { quote, quoteImages } = form;
 
-  const numOfImages = postImages?.length;
+  const numOfImages = quoteImages?.length;
+
+  const maxLength = 100;
+  const truncatedBody = postData?.body
+    ? postData.body.length > maxLength
+      ? postData.body.slice(0, maxLength - 3) + "..."
+      : postData.body
+    : "Say something";
 
   // handle text on change
   const handleChange = (
     event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
   ) => {
     const { name, value } = event.target;
-    setPost((prevFormData) => ({
+    setForm((prevFormData) => ({
       ...prevFormData,
       [name]: value,
     }));
@@ -77,9 +87,9 @@ const Form: React.FC<FormProps> = ({
       // Wait for all images to be converted to base64
       Promise.all(imagePromises)
         .then((base64Images: string[]) => {
-          setPost((prevFormData) => ({
+          setForm((prevFormData) => ({
             ...prevFormData,
-            postImages: [...prevFormData.postImages, ...base64Images],
+            quoteImages: [...prevFormData.quoteImages, ...base64Images],
           }));
         })
         .catch((error) => {
@@ -91,20 +101,20 @@ const Form: React.FC<FormProps> = ({
 
   //removing specific image fom the selected images
   const removeImage = (index: number) => {
-    setPost((prevFormData) => {
-      const updatedImages = [...prevFormData.postImages];
+    setForm((prevFormData) => {
+      const updatedImages = [...prevFormData.quoteImages];
       updatedImages.splice(index, 1);
       return {
         ...prevFormData,
-        postImages: updatedImages,
+        quoteImages: updatedImages,
       };
     });
   };
 
-  const canSubmit = postText !== "" || postImages.length > 0;
+  const canSubmit = quote !== "" || quoteImages.length > 0;
 
   // //post function
-  const handleCreatePost = async (
+  const handleCreateRepost = async (
     e: React.MouseEvent<HTMLButtonElement, MouseEvent>
   ) => {
     e.preventDefault;
@@ -116,22 +126,19 @@ const Form: React.FC<FormProps> = ({
     }
 
     try {
-      const response = await axios.post("/api/post/create", {
-        post: postText ? postText : "",
-        imageFiles: postImages?.length > 0 ? postImages : [],
+      const response = await axios.post(`/api/retweet/${postData?.id}`, {
+        quote: quote ? quote : "",
+        imageFiles: quoteImages?.length > 0 ? quoteImages : [],
       });
       if (response?.data) {
         if (response?.data?.success === true) {
           toast.success(response?.data?.message);
-          setPost({
-            postText: "",
-            postImages: [],
+          setForm({
+            quote: "",
+            quoteImages: [],
           });
-          if (secondary) {
-            router.back();
-          } else {
-            router.refresh();
-          }
+
+          router.back();
         }
         if (response?.data?.success === false) {
           toast.error(response?.data?.message);
@@ -155,25 +162,26 @@ const Form: React.FC<FormProps> = ({
         {/* text area section */}
         <div className="w-full">
           <TextareaAutosize
-            name="postText"
-            value={postText}
+            name="quote"
+            value={quote}
             onChange={handleChange}
             cacheMeasurements
             className="disabled:opacity-80 peer resize-none w-full mb-3 bg-black ring-0 outline-none text-sm lg:text-base placeholder-neutral-500 text-white overflow-y-hidden placeholder:text-sm placeholder:md:text-base"
             placeholder={placeholder}
           />
+
           {/* display images here */}
           <div
-            className={`grid  gap-3 ${
+            className={`grid gap-3 pb-3 ${
               numOfImages === 1 ? "grid-cols-1" : "grid-cols-2"
             }`}
           >
-            {postImages?.length > 0 &&
-              postImages?.map((img, index) => (
+            {quoteImages?.length > 0 &&
+              quoteImages?.map((img, index) => (
                 <div
                   key={index}
                   className={`relative w-full  trans ${
-                    postImages?.length === 1
+                    quoteImages?.length === 1
                       ? "h-[400px] lg:h-[450px]"
                       : "h-44 md:h-60 lg:h-72"
                   }`}
@@ -185,7 +193,7 @@ const Form: React.FC<FormProps> = ({
                     className="object-cover rounded-xl"
                   />
                   {/* close icon */}
-                  <div className=" cursor-pointer absolute top-2 right-1 flex items-center space-x-3">
+                  <div className="cursor-pointer absolute top-2 right-1 flex items-center space-x-3">
                     <div
                       onClick={() => removeImage(index)}
                       className="w-10 h-10 rounded-full bg-black/70 flex justify-center items-center"
@@ -196,6 +204,86 @@ const Form: React.FC<FormProps> = ({
                 </div>
               ))}
           </div>
+
+          {/* post to repost here  */}
+          <div
+            onClick={(e) => {
+              e.stopPropagation();
+              router.push(
+                `/tweet/${postData?.user?.username}/status/${postData?.id}`
+              );
+            }}
+            className={`border border-neutral-800 rounded-xl ${
+              quoteImages?.length > 0 ? "pb-3" : ""
+            }`}
+          >
+            <div className="text-white flex flex-row gap-1 p-3">
+              <div>
+                <Avatar image={postData?.user?.image} size="h-5 w-5" />
+              </div>
+              {/* other attributes */}
+              <div className="flex items-center justify-between ">
+                <div className="flex items-center space-x-2 text-sm md:text-base trans">
+                  <Link
+                    href={`/profile/${postData?.user?.username}`}
+                    className="text-white"
+                  >
+                    {postData?.user?.name}
+                  </Link>
+                  <Link
+                    href={`/profile/${postData?.user?.username}`}
+                    className="text-gray-600"
+                  >
+                    @{postData?.user?.username}
+                  </Link>
+                  <p className="text-gray-600">
+                    . {format(postData?.createdAt, "MMM-dd")}
+                  </p>
+                </div>
+              </div>
+            </div>
+            {/* the post text and images */}
+            <div
+              className={`flex ${
+                quoteImages?.length > 0
+                  ? "flex-row space-x-2 space-y-0"
+                  : "flex-col space-y-1"
+              }`}
+            >
+              <div
+                className={`cursor-pointer text-white ${
+                  quoteImages?.length > 0 ? "order-1 px-2 flex-1" : "p-3"
+                }`}
+              >
+                {truncatedBody}
+              </div>
+              <div
+                className={`grid gap-1 ${
+                  postData?.postImages?.length === 1
+                    ? "grid-cols-1"
+                    : "grid-cols-2"
+                }`}
+              >
+                {postData?.postImages?.length > 0 &&
+                  postData?.postImages?.map((img) => (
+                    <div key={img?.id} className="relative">
+                      <Image
+                        src={img?.url}
+                        alt="postimage"
+                        width={0}
+                        height={0}
+                        sizes="100vw"
+                        className={` w-[100%] ${
+                          quoteImages?.length > 0
+                            ? "h-16 rounded-lg"
+                            : "rounded-b-lg h-52 lg:h-60"
+                        }`}
+                      />
+                    </div>
+                  ))}
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -203,11 +291,11 @@ const Form: React.FC<FormProps> = ({
         <hr className="border-gray-700 mt-3" />
         <div className="flex flex-row items-center justify-between px-3 py-3">
           {/* attibutes of post */}
-          <label htmlFor="postImages" className="">
+          <label htmlFor="quoteImages" className="">
             <BsCardImage className="h-4 w-4 md:h-5 md:w-5 trans text-white" />
           </label>
           <input
-            id="postImages"
+            id="quoteImages"
             type="file"
             accept="image/*"
             multiple
@@ -218,7 +306,7 @@ const Form: React.FC<FormProps> = ({
           {/* post button */}
 
           <button
-            onClick={handleCreatePost}
+            onClick={handleCreateRepost}
             type="button"
             disabled={isLoading}
             className={`trans disabled:opacity-30 disabled:cursor-not-allowed px-4 py-1 rounded-full bg-sky-500 hover:bg-opacity-90 cursor-pointer text-white text-sm md:text-base ${
@@ -234,4 +322,4 @@ const Form: React.FC<FormProps> = ({
   );
 };
 
-export default Form;
+export default RepostForm;

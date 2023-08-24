@@ -1,6 +1,6 @@
 "use client";
 
-import { FormState, Profile } from "@/types";
+import { FormState, UserProfile } from "@/types";
 import Image from "next/image";
 import { FC, useCallback, useState } from "react";
 import { IoMdClose } from "react-icons/io";
@@ -13,7 +13,7 @@ import axios from "axios";
 
 interface ModalProps {
   setOpenEdit: React.Dispatch<React.SetStateAction<boolean>>;
-  userData: Profile;
+  userData: UserProfile;
 }
 
 const EditProfile: FC<ModalProps> = ({ setOpenEdit, userData }) => {

@@ -1,7 +1,7 @@
 import { getUserById } from "@/app/actions";
 import Followers from "@/app/components/audience/Followers";
 import { getCurrentUser } from "@/app/lib/auth";
-import { Profile } from "@/types";
+import { UserProfile } from "@/types";
 import React from "react";
 
 interface UserParams {
@@ -10,7 +10,7 @@ interface UserParams {
 
 const FollowersPage = async ({ params }: { params: UserParams }) => {
   const session = await getCurrentUser();
-  const userData = (await getUserById(params)) as Profile;
+  const userData = (await getUserById(params)) as UserProfile;
 
   return (
     <div className="text-white">

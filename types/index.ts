@@ -51,7 +51,7 @@ export interface Notification {
   hasNotification: number;
 }
 
-export interface Profile {
+export interface UserProfile {
   id: string;
   name: string;
   username: string;
@@ -65,6 +65,13 @@ export interface Profile {
   Followers: Followers[];
   Following: Following[];
   posts: PostTypes[];
+}
+
+export interface Repost {
+  userId: string;
+  quote: string | null;
+  post: PostsTypes;
+  createdAt: Date;
 }
 
 export type FormState = {
@@ -81,6 +88,13 @@ export interface PostTypes {
   userId: string;
   createdAt: Date;
   updatedAt: Date;
+  userPost: string;
+  userPostImage: string;
+  userPostName: string;
+  userPostUsername: string;
+  userPostBody: string;
+  userPostDate: Date;
+  userPostImages: string[];
   user: {
     name: string;
     image: string;
@@ -116,6 +130,12 @@ export interface PostTypes {
       username: string;
     };
   }[];
+  Repost: {
+    id: string;
+    quote: string | null;
+    postId: string;
+    userId: string;
+  }[];
 }
 
 export type PostsTypes = {
@@ -140,6 +160,12 @@ export interface SinglePostTypes {
   id: string;
   body: string;
   userId: string;
+  postImages: {
+    id: string;
+    postId: string;
+    public_id: string;
+    url: string;
+  }[];
   createdAt: Date;
   updatedAt: Date;
   user: {

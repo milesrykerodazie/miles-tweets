@@ -84,6 +84,14 @@ export async function getUserById(params: UserParams) {
               username: true,
             },
           },
+          Repost: {
+            select: {
+              id: true,
+              quote: true,
+              postId: true,
+              userId: true,
+            },
+          },
         },
         orderBy: {
           createdAt: "desc",
@@ -211,6 +219,14 @@ export async function allPosts() {
           username: true,
         },
       },
+      Repost: {
+        select: {
+          id: true,
+          quote: true,
+          postId: true,
+          userId: true,
+        },
+      },
     },
     orderBy: {
       createdAt: "desc",
@@ -299,6 +315,14 @@ export async function getPost(params: PostParams) {
           username: true,
         },
       },
+      Repost: {
+        select: {
+          id: true,
+          quote: true,
+          postId: true,
+          userId: true,
+        },
+      },
     },
   });
 
@@ -323,6 +347,14 @@ export async function getSinglePost(params: { id: string }) {
       id: id,
     },
     include: {
+      postImages: {
+        select: {
+          id: true,
+          postId: true,
+          public_id: true,
+          url: true,
+        },
+      },
       user: {
         select: {
           name: true,

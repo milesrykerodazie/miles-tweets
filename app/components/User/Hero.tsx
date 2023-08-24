@@ -2,13 +2,13 @@
 import Image from "next/image";
 import React, { FC, useState } from "react";
 import Avatar from "../Avatar";
-import { Profile } from "@/types";
+import { UserProfile } from "@/types";
 import EditProfile from "../structure/modal/EditProfile";
 import { handleUserFollow } from "@/app/helper";
 import { useRouter } from "next/navigation";
 
 interface HeroProps {
-  userData: Profile;
+  userData: UserProfile;
   canEdit: boolean;
   userId: string;
   hasFollowed: boolean;

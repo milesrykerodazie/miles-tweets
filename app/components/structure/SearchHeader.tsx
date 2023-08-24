@@ -37,7 +37,7 @@ const SearchHeader = ({ allow }: { allow?: boolean }) => {
     setSearchText("");
   };
   return (
-    <form onSubmit={submitHandler} className="sticky top-0">
+    <form onSubmit={submitHandler} className="sticky top-0 bg-black z-40">
       <div className="relative flex items-center justify-between bg-black/90 py-3">
         {allow && (
           <BiArrowBack

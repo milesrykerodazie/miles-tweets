@@ -16,6 +16,7 @@ import { BiArrowFromLeft, BiArrowFromRight } from "react-icons/bi";
 import { IoMdClose } from "react-icons/io";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
+import RetweetModal from "../structure/modal/RetweetModal";
 
 interface PostDataTypes {
   postData: PostTypes;
@@ -33,6 +34,7 @@ const PostImageDetails: FC<PostDataTypes> = ({
   const [open, setOpen] = useState(false);
   const [fullVeiew, setFullView] = useState(false);
   const [viewPost, setViewPost] = useState(false);
+  const [openRepost, setOpenRepost] = useState(false);
 
   const onDismiss = useCallback(() => {
     router.back();
@@ -40,6 +42,9 @@ const PostImageDetails: FC<PostDataTypes> = ({
 
   //has liked post
   const hasLiked = postData?.likes?.filter((like) => like?.userId === userId);
+  const hasReposted = postData?.Repost?.some(
+    (post) => postData?.userId === userId
+  );
   const id = postData?.id;
   return (
     <div className="text-white grid grid-cols-4 gap-y-3">
@@ -223,7 +228,33 @@ const PostImageDetails: FC<PostDataTypes> = ({
           {/* section 2.4 */}
           <div className="text-gray-500  border-b border-neutral-800 p-4 flex items-center justify-between space-x-5">
             <FaRegComment className="h-4 w-4 md:h-5 md:w-5 trans" />
-            <AiOutlineRetweet className="h-4 w-4 md:h-5 md:w-5 trans" />
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                setOpenRepost(true);
+              }}
+              className="flex items-center space-x-3 relative"
+            >
+              <AiOutlineRetweet
+                className={`h-4 w-4 md:h-5 md:w-5 trans ${
+                  hasReposted && "text-green-500"
+                }`}
+              />
+              <span
+                className={`text-sm md:text-base trans ${
+                  hasReposted && "text-green-500"
+                }`}
+              >
+                {postData?.Repost?.length}
+              </span>
+              {openRepost && (
+                <RetweetModal
+                  postId={postData?.id}
+                  setOpenRepost={setOpenRepost}
+                  hasReposted={hasReposted}
+                />
+              )}
+            </button>
             <button
               type="button"
               disabled={isLoading}

@@ -270,7 +270,7 @@ const EditProfile: FC<ModalProps> = ({ setOpenEdit, userData }) => {
             <FormField
               title="Name"
               count={count?.name}
-              maxCount={50}
+              maxCount={30}
               showCount={showCount?.name}
               state={form?.name}
               setState={(value) => handleStateChange("name", value)}
@@ -280,7 +280,7 @@ const EditProfile: FC<ModalProps> = ({ setOpenEdit, userData }) => {
             <FormField
               title="Username"
               count={count?.username}
-              maxCount={28}
+              maxCount={12}
               showCount={showCount?.username}
               state={form?.username}
               setState={(value) => handleStateChange("username", value)}

@@ -9,6 +9,7 @@ interface InputProps {
   disabled: boolean;
   value: string;
   placeholder?: string;
+  max?: number;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
@@ -21,6 +22,7 @@ const Input: FC<InputProps> = ({
   value,
   placeholder,
   onChange,
+  max,
 }) => {
   return (
     <div className="w-full relative">
@@ -31,6 +33,7 @@ const Input: FC<InputProps> = ({
         placeholder={placeholder}
         onChange={onChange}
         required={required}
+        maxLength={max}
         id={id}
         className="peer w-full px-4 py-2 pt-6 font-light bg-primarywhite border rounded-md outline-none transition-all trans text-primary disabled:opacity-70 disabled:cursor-not-allowed border-primary text-sm md:text-base"
       />

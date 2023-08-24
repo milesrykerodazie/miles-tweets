@@ -17,6 +17,7 @@ export async function middleware(req: NextRequest) {
     "/tweet",
     "/logout",
     "/audience",
+    "/search",
   ];
 
   if (isAuth !== null && pathname.includes("/auth")) {
@@ -55,5 +56,6 @@ export const config = {
     "/tweet/:path*",
     "/logout",
     "/audience/:path*",
+    "/search/:path*",
   ],
 };

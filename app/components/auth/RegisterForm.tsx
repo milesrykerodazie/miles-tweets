@@ -87,6 +87,7 @@ const RegisterForm = () => {
           label="Name"
           value={name}
           type="text"
+          max={25}
           onChange={(event) => setName(event.target.value)}
           required
           disabled={isLoading}
@@ -95,7 +96,7 @@ const RegisterForm = () => {
           id="email"
           label="Email"
           value={email}
-          type="text"
+          type="email"
           onChange={(event) => setEmail(event.target.value)}
           required
           disabled={isLoading}
@@ -105,6 +106,7 @@ const RegisterForm = () => {
           label="Username"
           value={username}
           type="text"
+          max={12}
           onChange={(event) => setUsername(event.target.value)}
           disabled={isLoading}
         />

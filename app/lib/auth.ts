@@ -6,7 +6,6 @@ import * as argon from "argon2";
 import GoogleProvider from "next-auth/providers/google";
 import prisma from "./prismadb";
 import { SessionInterface } from "@/types";
-import { GoogleProfile } from "next-auth/providers/google";
 
 export const authOptions: NextAuthOptions = {
   adapter: PrismaAdapter(prisma),

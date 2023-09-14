@@ -83,6 +83,10 @@ const LoginForm = () => {
           required
           disabled={isLoading}
         />
+        <div className="text-[13px] text-white flex items-center flex-col md:flex-row md:space-x-3 space-y-2 md:space-y-0">
+          <span>test-email: test@gmail.com</span>
+          <span>test-password: 1234567</span>
+        </div>
       </div>
 
       <div className="flex flex-col gap-4 mt-3">
